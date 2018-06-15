@@ -5,19 +5,124 @@
   <meta charset="UTF-8">
   <title></title>
   <!--build:css css/styles.min.css-->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="firebase">
+  <meta name="apple-mobile-web-app-title" content="firebase">
+  <meta name="theme-color" content="#0275d8">
+  <meta name="msapplication-navbutton-color" content="#0275d8">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/print.css">
+
+  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
   <!--endbuild-->
 </head>
 
 <body>
-  This is a gulp starter!
-  
-  <!--build:js js/main.min.js -->
-  <script src="js/lib/a-library.js"></script>
-  <script src="js/lib/another-library.js"></script>
+  <header>
+    <div >
+      <h1>Heren 2</h1>
+      <p>Doelpunten & Assisten</p>
+    </div>
+    <div class="input-field">
+    <select class="browser-default" id="season" onchange="setSeason()">
+      <option value="1">2017/2018</option>
+      <option value="2">2016/2017</option>
+    </select>
+  </div>
+  </header>
+
+  <pre id="output"></pre>
+
+
+  <div class="row" style="margin-top: 39px;">
+    <div>
+      <ul class="tabs">
+        <li class="tab"><a class="active" href="#score"><i class="material-icons">format_list_numbered</i></a></li>
+        <li class="tab"><a href="#drivers"><i class="material-icons">directions_car</i></a></li>
+        <li class="tab"><a href="#player"><i class="material-icons">person_add</i></a></li>
+      </ul>
+    </div>
+    <div id="score">
+      <table class="striped centered" >
+        <thead>
+          <tr>
+            <th>Naam</th>
+            <th>Goals</th>
+            <th>Assists</th>
+            <th>Punten</th>
+          </tr>
+        </thead>
+        <tbody id="player__table">
+        </tbody>
+      </table>
+    </div>
+    <div id="drivers">
+      <div class="container">
+        <ul id="driver__table" class="collapsible">
+        </ul>
+      </div>
+      
+    </div>
+    <div id="player">
+      <div class="row container">
+        <form id="player__form" class="col s12">
+          <div class="row">
+            <div class="input-field">
+              <input id="name" name="name" type="text" class="validate">
+              <label for="name">Naam</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input class="validate" type="number" pattern="-?[0-9]*(\.[0-9]+)?" id="goals" name="goals">
+              <label class="mdl-textfield__label" for="goals">Goals</label>
+              <span class="helper-text" data-error="Input is not a number!" data-success="✓"><span>
+              </div>
+              <div class="input-field col s6">
+                <input class="validate" type="number" pattern="-?[0-9]*(\.[0-9]+)?" id="assists" name="assists">
+                <label class="mdl-textfield__label" for="assists">Assists</label>
+                <span class="helper-text" data-error="Input is not a number!" data-success="✓"><span>
+                </div>
+              </div>
+              <button class="waves-effect waves-light btn">Verzend</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!--build:js js/main.min.js -->
+      <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBzxzU0otHLRpYNm04NLbfosZ16rko8ums",
+      authDomain: "fir-86cac.firebaseapp.com",
+      databaseURL: "https://fir-86cac.firebaseio.com",
+      projectId: "fir-86cac",
+      storageBucket: "",
+      messagingSenderId: "618984433812"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <script src="js/lib/jquery.js"></script>
+  <script src="js/lib/materialize.js"></script>
   <script src="js/main.js"></script>
   <!-- endbuild -->
 </body>
 
 </html>
+
+

@@ -1,5 +1,8 @@
-# Gulp Starter for CSS Tricks Tutorial  
+### Standenmotor
 
-This repo is a gulp starter for this CSS Tricks tutorial. 
+Progressive Web App for MHC-Oss Heren 2 made with Laravel
 
-Remember to do run the `npm install` command after cloning this repo :) 
+- Actuele doelpunten en assisten per speler.
+- Actuele rijschema met vertrektijden.
+- Lijst met rugnummers.
+- Informatie over totale doelpunten, assisten en score.

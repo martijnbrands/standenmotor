@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <!--build:css css/styles.min.css-->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="firebase">
+  <meta name="apple-mobile-web-app-title" content="firebase">
+  <meta name="theme-color" content="#0275d8">
+  <meta name="msapplication-navbutton-color" content="#0275d8">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+  <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
+  <!--endbuild-->
+</head>
+
+<body>
+  <h1>Welcome to My Awesome App</h1>
+  <div id="firebaseui-auth-container"></div>
+  <div id="loader">Loading...</div>
+
+
+
+
+
+      <!--build:js js/main.min.js -->
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBzxzU0otHLRpYNm04NLbfosZ16rko8ums",
+      authDomain: "fir-86cac.firebaseapp.com",
+      databaseURL: "https://fir-86cac.firebaseio.com",
+      projectId: "fir-86cac",
+      storageBucket: "",
+      messagingSenderId: "618984433812"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <script src="js/lib/jquery.js"></script>
+  <script src="js/lib/materialize.js"></script>
+  <script src="js/login.js"></script>
+  <!-- endbuild -->
+</body>
+
+</html>
+
+

@@ -1,0 +1,23 @@
+.tabs
+	position: fixed
+	bottom: 0
+	z-index: 50
+	display: flex
+	.tab
+		flex: 1
+		line-height: 60px
+	.tab a.active
+		color: $primary-color
+
+	.tab a:hover
+  		color: blue
+  		background-color: rgba($primary-color, .2)
+	.tab a
+		color: $primary-color
+
+	.indicator
+		background: $primary-color
+		height: 4px
+
+.tabs .tab a:focus, .tabs .tab a:focus.active
+	background-color: rgba($primary-color, .2)
