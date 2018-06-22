@@ -1,5 +1,7 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync');
 var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
@@ -10,19 +12,28 @@ var cache = require('gulp-cache');
 var del = require('del');
 var runSequence = require('run-sequence');
 
+// Development Tasks 
+// -----------------
 
 // Start browserSync server
 gulp.task('browserSync', function() {
   browserSync({
     server: {
-      baseDir: 'app'
+      baseDir: 'app',
     }
   })
 })
 
+
+
 gulp.task('sass', function() {
+
   return gulp.src('app/sass/**/*.sass') // Gets all files ending with .sass in app/sass and children dirs
-    .pipe(sass().on('error', sass.logError)) // Passes it through a gulp-sass, log errors to console
+    .pipe(sass()) // Passes it through a gulp-sass
+    .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+    }))
     .pipe(gulp.dest('app/css')) // Outputs it in the css folder
     .pipe(browserSync.reload({ // Reloading with Browser Sync
       stream: true
@@ -80,7 +91,7 @@ gulp.task('clean:dist', function() {
 // ---------------
 
 gulp.task('default', function(callback) {
-  runSequence(['sass', 'browserSync'], 'watch',
+  runSequence(['sass', 'browserSync', 'watch'],
     callback
   )
 })
