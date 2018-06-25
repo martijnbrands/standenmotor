@@ -10,6 +10,7 @@ var driverTable = document.querySelector("#driver__table");
 
 var form = document.querySelector("#player__form");
 
+
 function setSeason() {
 	var seasonValue = document.getElementById('season').value;
 
@@ -36,7 +37,7 @@ function setSeason() {
 				renderPlayers(doc);
 			});
 		});
-	} 
+	}
 }
 
 function renderPlayers(doc) {
@@ -76,7 +77,7 @@ function renderPlayers(doc) {
 
 	playerTable.appendChild(tr);
 
-	// db.collection("2017-2018/data/players").doc(doc.id).update({
+	// db.collection( "/data/players/").doc(doc.id).update({
 	// 	points: pointsCount
 	// })
 }
@@ -107,15 +108,14 @@ function renderDrivers(doc) {
 		match.appendChild(clubs);
 	};
 
-	// var utcSeconds = doc.data().tijd.seconds;
-	// var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
-	// d.setUTCSeconds(utcSeconds);
-	// console.log(d);
+	var timestamp = doc.data().time.seconds;
+	var matchTime = moment.unix(timestamp).format("DD-MMMM-YYYY HH:mm");
 
-	// tijd.textContent = d;
-	// console.log(doc.data().tijd.seconds);
+	var time = document.createElement('span');
+	time.setAttribute('class', 'time');
+	time.textContent = matchTime
+	match.appendChild(time);
 
-	// match.textContent = doc.data().match;
 
 	li.appendChild(match);
 	li.appendChild(driver);
@@ -130,14 +130,14 @@ function renderDrivers(doc) {
 // 	})
 // })
 
-db.collection("2017-2018/data/players").orderBy('points', "desc").get().then(function (snapshot) {
-	snapshot.docs.forEach(function (doc) {
-		renderPlayers(doc);
-	});
-});
+// db.collection("2018-2019/data/players").orderBy('points', "desc").get().then(function (snapshot) {
+// 	snapshot.docs.forEach(function (doc) {
+// 		renderPlayers(doc);
+// 	});
+// });
 
 // Getting drivers data
-db.collection("2017-2018/data/drivers").get().then(function (snapshot) {
+db.collection("drivers").get().then(function (snapshot) {
 
 	snapshot.docs.forEach(function (doc) {
 		renderDrivers(doc);
@@ -145,7 +145,7 @@ db.collection("2017-2018/data/drivers").get().then(function (snapshot) {
 });
 
 //Realtime data
-// db.collection("players").orderBy('goals', "desc").onSnapshot(snapshot =>{
+// db.collection("players").orderBy('points', "desc").onSnapshot(snapshot =>{
 // 	let changes = snapshot.docChanges();
 
 // 	changes.forEach(change =>{

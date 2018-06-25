@@ -72,6 +72,13 @@ header {
 span {
   display: block; }
 
+span.team {
+  font-weight: 700; }
+
+span:nth-child(2) {
+  -ms-flex-order: 1;
+  order: 1; }
+
 .tabs {
   position: fixed;
   bottom: 0;
