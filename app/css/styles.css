@@ -70,10 +70,21 @@ header {
   justify-content: space-between; }
 
 span {
-  display: block; }
+  display: block;
+  width: 33.3%; }
+
+span.time {
+  -ms-flex: 2;
+  flex: 2;
+  text-align: center; }
 
 span.team {
+  -ms-flex: 1;
+  flex: 1;
   font-weight: 700; }
+
+span.team:nth-child(2) {
+  text-align: right; }
 
 span:nth-child(2) {
   -ms-flex-order: 1;

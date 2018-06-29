@@ -109,7 +109,7 @@ function renderDrivers(doc) {
 	};
 
 	var timestamp = doc.data().time.seconds;
-	var matchTime = moment.unix(timestamp).format("DD-MMMM-YYYY HH:mm");
+	var matchTime = moment.unix(timestamp).format("DD-MM-YYYY HH:mm");
 
 	var time = document.createElement('span');
 	time.setAttribute('class', 'time');
