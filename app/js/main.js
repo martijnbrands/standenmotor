@@ -5,8 +5,11 @@ $(document).ready(function(){
   
 });
 
-
-
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
 
 
 // var deferredPrompt;
@@ -32,12 +35,3 @@ $(document).ready(function(){
 // 	form.assists.value = "";
 
 // })
-
-// window.addEventListener('load', function() {
-//       var outputElement = document.getElementById('output');
-//       navigator.serviceWorker.register('sw.js', { scope: './' })
-//         .then(function(r) {
-//           console.log('registered service worker');
-//         })
-//         .catch(function(whut) {
-//           console.errlet db = firebase.firestore();
