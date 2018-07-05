@@ -1,8 +1,4 @@
-
 var db = firebase.firestore();
-
-
-
 db.settings({ timestampsInSnapshots: true });
 
 var playerTable = document.querySelector("#player__table");
