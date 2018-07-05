@@ -6,9 +6,9 @@ var driverTable = document.querySelector("#driver__table");
 
 var form = document.querySelector("#player__form");
 
-
+//Set season
 function setSeason() {
-	var seasonValue = document.getElementById('season').value;
+	seasonValue = document.getElementById('season').value;
 
 	$("#player__table").html("");
 
@@ -36,6 +36,7 @@ function setSeason() {
 	}
 }
 
+//Render player data
 function renderPlayers(doc) {
 
 	var tr = document.createElement('tr');
@@ -73,11 +74,13 @@ function renderPlayers(doc) {
 
 	playerTable.appendChild(tr);
 
-	// db.collection( "/data/players/").doc(doc.id).update({
-	// 	points: pointsCount
-	// })
+	db.collection( seasonValue + "/data/players/").doc(doc.id).update({
+		points: pointsCount
+	})
 }
 
+
+// Render driver data
 function renderDrivers(doc) {
 
 	var li = document.createElement('li');
@@ -119,34 +122,9 @@ function renderDrivers(doc) {
 	driverTable.appendChild(li);
 }
 
-// Getting players data
-// db.collection("players").orderBy('points', "desc").get().then((snapshot) =>{
-// 	snapshot.docs.forEach(doc =>{
-// 		renderPlayers(doc);
-// 	})
-// })
-
-// db.collection("2018-2019/data/players").orderBy('points', "desc").get().then(function (snapshot) {
-// 	snapshot.docs.forEach(function (doc) {
-// 		renderPlayers(doc);
-// 	});
-// });
-
 // Getting drivers data
 db.collection("drivers").get().then(function (snapshot) {
-
 	snapshot.docs.forEach(function (doc) {
 		renderDrivers(doc);
 	});
 });
-
-//Realtime data
-// db.collection("players").orderBy('points', "desc").onSnapshot(snapshot =>{
-// 	let changes = snapshot.docChanges();
-
-// 	changes.forEach(change =>{
-// 		if (change.type == 'added'){
-// 			renderPlayers(change.doc);
-// 		}
-// 	})
-// })
