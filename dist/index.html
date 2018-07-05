@@ -91,7 +91,15 @@
       OneSignal.init({
         appId: "8ccc2231-5912-44f9-8caf-2126418f7d79",
         safari_web_id: '2b0cd0f2-3d64-4a96-b6d2-c215d89cc9e7',
-      });
+        autoRegister: true, /* Set to true to automatically prompt visitors */
+        httpPermissionRequest: {
+          enable: true
+        },
+        notifyButton: {
+            enable: false /* Set to false to hide */
+        },
+        subdomainName: "standenmotor" /* The label for your site that you added in Site Setup mylabel.os.tc */
+        });
     });
 
 
