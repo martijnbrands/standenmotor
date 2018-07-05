@@ -5,7 +5,7 @@
   "background_color": "#0071bc",
   "display": "standalone",
   "Scope": "/",
-  "start_url": "standenmotor.netlify.com",
+  "start_url": "./",
   "gcm_sender_id": "482941778795",
   "icons": [
     {
