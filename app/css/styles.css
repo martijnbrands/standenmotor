@@ -28,6 +28,8 @@ header {
   font-size: 14px;
   color: #fff;
   padding: 0 15px; }
+  header a {
+    color: #fff; }
   header h1 {
     font-size: 16px;
     margin: 0;
