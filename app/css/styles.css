@@ -47,6 +47,7 @@ header {
   header .select-wrapper .caret {
     fill: #fff; }
   header select {
+    -webkit-appearance: none;
     background-color: transparent;
     width: auto;
     padding: 0;
