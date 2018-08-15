@@ -99,21 +99,26 @@ function renderDrivers(doc) {
 		driver.appendChild(person);
 	};
 
-	for (var i = 0, len = doc.data().match.length; i < len; i++) {
-		var clubs = document.createElement('span');
-		clubs.setAttribute('class', 'team');
-
-		clubs.textContent = doc.data().match[i];
-		match.appendChild(clubs);
-	};
+	var team = document.createElement('p');
+	team.setAttribute('class', 'team');
+	team.textContent = doc.data().team;
+	match.appendChild(team);
 
 	var timestamp = doc.data().time.seconds;
-	var matchTime = moment.unix(timestamp).format("DD-MM-YYYY HH:mm");
-
-	var time = document.createElement('span');
+	
+	var matchDate = moment.unix(timestamp).format("DD-MM-YYYY");
+	var date = document.createElement('p');
+	date.setAttribute('class', 'date');
+	date.textContent = matchDate
+	match.appendChild(date);
+	
+	var matchTime = moment.unix(timestamp).format("HH:mm");
+	var time = document.createElement('p');
 	time.setAttribute('class', 'time');
 	time.textContent = matchTime
 	match.appendChild(time);
+
+
 
 
 	li.appendChild(match);

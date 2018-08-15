@@ -72,27 +72,21 @@ header {
   flex-direction: row;
   -ms-flex-pack: justify;
   justify-content: space-between; }
+  .collapsible-header p {
+    width: 33.3%; }
+
+p.team {
+  font-weight: bold; }
+
+p.date {
+  text-align: center; }
+
+p.time {
+  text-align: right; }
 
 span {
   display: block;
   width: 33.3%; }
-
-span.time {
-  -ms-flex: 2;
-  flex: 2;
-  text-align: center; }
-
-span.team {
-  -ms-flex: 1;
-  flex: 1;
-  font-weight: 700; }
-
-span.team:nth-child(2) {
-  text-align: right; }
-
-span:nth-child(2) {
-  -ms-flex-order: 1;
-  order: 1; }
 
 .tabs {
   position: fixed;
