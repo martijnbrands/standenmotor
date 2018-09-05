@@ -125,7 +125,7 @@ function renderDrivers(doc) {
 }
 
 // Getting drivers data
-db.collection("drivers").get().then(function (snapshot) {
+db.collection("drivers").orderBy('time', "asc").get().then(function (snapshot) {
 	snapshot.docs.forEach(function (doc) {
 		renderDrivers(doc);
 	});

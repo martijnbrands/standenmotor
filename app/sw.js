@@ -1,66 +1,46 @@
-//je kan hier de bestanden van je App Shell toevoegen
-var bestandenNaarCache = [ 
-    '/',
-    '/index.html',
-    '/js/main.min.js',
-    '/css/style.min.css'
+const cacheName = '300';
+
+const cacheAssets = [
+  'index.html',
+  'css/style.min.css',
+  '/js/main.min.js'
 ];
 
+// Call Install Event
+self.addEventListener('install', e => {
+  console.log('Service Worker: Installed');
 
-var statischeCache = 'de casche'; //je kan hier de naam van je cache zelf bepalen
-
-
-self.addEventListener('install', function(event) {
-  console.log('[Service Worker] Installing Service Worker ...', event);
-  event.waitUntil(
-  		caches.open(statischeCache) 
-  			.then(function(cache){
-  				console.log("precaching the app shell");
-  				cache.addAll(bestandenNaarCache);
-  			})
-  	)
+  e.waitUntil(
+    caches
+      .open(cacheName)
+      .then(cache => {
+        console.log('Service Worker: Caching Files');
+        cache.addAll(cacheAssets);
+      })
+      .then(() => self.skipWaiting())
+  );
 });
 
-
-
-
-self.addEventListener('fetch', function(event) {
-  console.log('[Service Worker] Fetching something ....', event);
-  event.respondWith(
-    //controleer of de fetch van het document in de cache zit
-    caches.match(event.request)
-        .then(function(response){
-            //als dat zo is dan response naar document met dat bestand
-            if(response){
-                return response;
-            } else {
-                //niet in cache dan bestand van netwerk halen en
-                //response naar het aanroepende document geven
-                return fetch(event.request);
-            }
-        })
-    );
-});
-
-
-
-
-//de onderstaande code zorgt dat oude cache wordt verwijderd 
-
-self.addEventListener('activate', function(event) {
-  console.log('[Service Worker] Activating new service worker...');
-
-  var dezeCacheBewaren = [statischeCache];
-
-  event.waitUntil(
-    caches.keys().then(function(cacheNamen) {
+// Call Activate Event
+self.addEventListener('activate', e => {
+  console.log('Service Worker: Activated');
+  // Remove unwanted caches
+  e.waitUntil(
+    caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNamen.map(function(cacheNaam) {
-          if (dezeCacheBewaren.indexOf(cacheNaam) === -1) {
-            return caches.delete(cacheNaam);
+        cacheNames.map(cache => {
+          if (cache !== cacheName) {
+            console.log('Service Worker: Clearing Old Cache');
+            return caches.delete(cache);
           }
         })
       );
     })
   );
+});
+
+// Call Fetch Event
+self.addEventListener('fetch', e => {
+  console.log('Service Worker: Fetching');
+  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
 });

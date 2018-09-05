@@ -65,7 +65,8 @@ header {
   font-weight: 900; }
 
 #drivers {
-  margin-top: 70px; }
+  margin-top: 70px;
+  margin-bottom: 60px; }
 
 .collapsible-header {
   -ms-flex-direction: row;

@@ -84,7 +84,7 @@ gulp.task('clean', function() {
 })
 
 gulp.task('clean:dist', function() {
-  return del.sync(['dist/**/*', '!dist/images', '!dist/images/**/*', '!dist/sw.js/', '!dist/manifest.json']);
+  return del.sync(['dist/**/*', '!dist/images', '!dist/images/**/*', '!dist/sw.js', '!dist/manifest.json']);
 });
 
 // Build Sequences
