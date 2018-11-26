@@ -1,15 +1,11 @@
 <template>
-  <v-layout justify-center>
+  <div v-if="arbiters.length > 0">
+    <v-layout justify-center>
     
     <v-flex>
-      <v-alert v-if="arbiters == ''"
-        :value="true"
-        type="warning">
-        Er zijn op dit moment geen wedstrijden ingepland.
-      </v-alert>
       <v-card>
 
-        <v-list three-line>
+        <v-list v-show="arbiters" three-line>
           <template v-for="(arbiter, index) in arbiters">
             <v-subheader v-if="arbiter.matchDate" :key="arbiter.matchDate">
               {{ arbiter.matchDate }}
@@ -20,8 +16,7 @@
               :key="index"
               
             ></v-divider>
-
-
+            
             <v-list-tile
               :key="arbiter.teams"
             >
@@ -36,11 +31,18 @@
       </v-card>
     </v-flex>
   </v-layout>
+  </div>
+  <div v-else>
+    <v-alert
+        :value="true"
+        type="warning">
+        Er zijn op dit moment geen wedstrijden ingepland.
+      </v-alert>
+  </div>
 
 </template>
 
 <script>
-  import axios from 'axios';
 
   export default {
     data () {
@@ -75,7 +77,7 @@
     },
     mounted () {
     axios
-      .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren3')
+      .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren1')
       .then(response => (this.arbiters = response.data.arbiters))
       // .then( response => console.log(response.data.arbiters))
     }

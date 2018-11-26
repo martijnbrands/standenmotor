@@ -7,7 +7,7 @@
         </v-toolbar-title>
       </router-link>
     <v-spacer></v-spacer>
-    <v-menu :nudge-width="100">
+    <!-- <v-menu :nudge-width="100">
         <v-toolbar-title slot="activator">
           <span>2018/2019</span>
           <v-icon dark>arrow_drop_down</v-icon>
@@ -23,7 +23,7 @@
             <v-list-tile-title v-text="item"></v-list-tile-title>
           </v-list-tile>
         </v-list>
-    </v-menu>
+    </v-menu> -->
   </v-toolbar>
 </template>
 

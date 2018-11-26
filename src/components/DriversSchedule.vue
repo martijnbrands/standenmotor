@@ -1,22 +1,25 @@
 <template>
-  <v-expansion-panel>
-    <v-alert v-if="matches == ''"
+  <div v-if="matches.length > 0">
+    <v-expansion-panel>
+      <v-expansion-panel-content v-for="item in matches" :key="item.date" >
+        <div class="team" slot="header">{{ item.homeTeam }}</div>
+        <div class="date" slot="header">{{ item.playTime }}</div>
+        <v-card >
+          <v-card-text class="driver_names" v-for="item in matches" :key="item.name" >{{item.playTime}}</v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </div>
+  <div v-else>
+    <v-alert
         :value="true"
         type="warning">
         Er zijn op dit moment geen wedstrijden ingepland.
       </v-alert>
-    <v-expansion-panel-content v-for="item in matches" :key="item.date" >
-      <div class="team" slot="header">{{ item.homeTeam }}</div>
-      <div class="date" slot="header">{{ item.playTime }}</div>
-      <v-card >
-        <v-card-text class="driver_names" v-for="item in matches" :key="item.name" >{{item.playTime}}</v-card-text>
-      </v-card>
-    </v-expansion-panel-content>
-  </v-expansion-panel>
+  </div>
 </template>
 
 <script>
-  import axios from 'axios';
 
   export default {
     data () {
