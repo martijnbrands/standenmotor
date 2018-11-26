@@ -1,13 +1,16 @@
 <template>
-  <h1>Score</h1>
+  <div>
+    <v-subheader>Score</v-subheader>
+    <ScoreTable />
+  </div>
 </template>
 
 <script>
-  import Navigation from '../components/Navigation'
+  import ScoreTable from '../components/ScoreTable'
 
   export default {
     components: {
-      Navigation
+      ScoreTable
     }
   }
 </script>

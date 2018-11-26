@@ -1,13 +1,16 @@
 <template>
-  <h1>Drivers</h1>
+  <div>
+    <v-subheader>Rijschema</v-subheader>
+    <DriversSchedule />
+  </div>
 </template>
 
 <script>
-  import Navigation from '../components/Navigation'
+  import DriversSchedule from '../components/DriversSchedule'
 
   export default {
     components: {
-      Navigation
+      DriversSchedule
     }
   }
 </script>

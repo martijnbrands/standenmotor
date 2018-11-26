@@ -1,5 +1,5 @@
 <template>
-    <v-bottom-nav :value="true" fixed color="primary">
+    <v-bottom-nav :value="true" app fixed color="primary">
       <v-btn to="/"
         color="white"
         flat
