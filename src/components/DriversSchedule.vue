@@ -14,7 +14,7 @@
     <v-alert
         :value="true"
         type="warning">
-        Er zijn op dit moment geen wedstrijden ingepland.
+        Er zijn op dit moment geen wedstrijden bekend.
       </v-alert>
   </div>
 </template>
@@ -53,7 +53,7 @@
     },
     mounted () {
     axios
-      .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren3')
+      .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren1_Zaal')
       .then(response => (this.matches = response.data.matches))
       //.then( response => console.log(response.data.matches))
     }

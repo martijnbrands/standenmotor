@@ -4,6 +4,7 @@
       <td>{{ props.item.name }}</td>
       <td class="text-xs-center">{{ props.item.goals }}</td>
       <td class="text-xs-center">{{ props.item.assists }}</td>
+      <td class="text-xs-center">{{ props.item.goals * 2 + props.item.assists }}</td>
     </template>
   </v-data-table>
 </template>
@@ -43,14 +44,14 @@
             name: 'Martijn Brands',
             goals: 1,
             assists: 2,
-            points: 0
+            points: 4
           },
           {
             value: false,
             name: 'Sander Brands',
             goals: 2,
             assists: 4,
-            points: 0
+            points: 1
           }
           ,
           {
@@ -58,7 +59,7 @@
             name: 'Job van Rosmalen',
             goals: 4,
             assists: 4,
-            points: 0
+            points: 6
           }
           ,
           {
@@ -66,7 +67,7 @@
             name: 'Dennis Erren',
             goals: 6,
             assists: 4,
-            points: 0
+            points: 10
           }
           ,
           {
@@ -74,7 +75,7 @@
             name: 'Joep Erren',
             goals: 2,
             assists: 1,
-            points: 0
+            points: 7
           }
           ,
           {
@@ -82,19 +83,15 @@
             name: 'Wout Cox',
             goals: 1,
             assists: 10,
-            points: 0
+            points: 4
           }
         ]
       }
     },
-    methods: {
-        sum: function (item) {
-          // Alternate, if you take valuesum out:
-          // for (var prop in item) {
-          //    val += parseInt(item[prop]);
-          // }
-          return parseInt(item.goals) + parseInt(item.assists);
-        }
+    computed: {
+    fullName: function () {
+      return this.name + ' ' + this.goals
+    }
     }
   }
 </script>

@@ -1,33 +1,16 @@
 <template>
   <div v-if="arbiters.length > 0">
-    <v-layout justify-center>
-    
+    <v-layout>
     <v-flex>
-      <v-card>
-
-        <v-list v-show="arbiters" three-line>
-          <template v-for="(arbiter, index) in arbiters">
-            <v-subheader v-if="arbiter.matchDate" :key="arbiter.matchDate">
-              {{ arbiter.matchDate }}
-            </v-subheader>
-
-            <v-divider
-              v-else
-              :key="index"
-              
-            ></v-divider>
-            
-            <v-list-tile
-              :key="arbiter.teams"
-            >
-              <v-list-tile-content>
-                <v-list-tile-title v-html="arbiter.teams"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="arbiter.matchTime"></v-list-tile-sub-title>
-                <v-list-tile-sub-title v-html="arbiter.umpires"></v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </template>
-        </v-list>
+      <v-card v-for="(arbiter) in arbiters" :key="arbiter.id">
+        <v-card-title primary-title>
+          <div>
+            <h3 class="subheading font-weight-bold">{{ arbiter.matchDate }}</h3>
+            <div class="font-weight-thin">{{ arbiter.teams }}</div>
+            <div class="font-weight-medium">{{ arbiter.matchTime }}</div>
+            <div class="font-weight-light">{{ arbiter.umpires }}</div>
+          </div>
+        </v-card-title>
       </v-card>
     </v-flex>
   </v-layout>
@@ -36,7 +19,7 @@
     <v-alert
         :value="true"
         type="warning">
-        Er zijn op dit moment geen wedstrijden ingepland.
+        Er is op dit moment geen fluitschema bekend.
       </v-alert>
   </div>
 
@@ -77,7 +60,7 @@
     },
     mounted () {
     axios
-      .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren1')
+      .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren1_Zaal')
       .then(response => (this.arbiters = response.data.arbiters))
       // .then( response => console.log(response.data.arbiters))
     }
