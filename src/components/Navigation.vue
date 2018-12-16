@@ -5,7 +5,7 @@
         flat
         value="standen"
       >
-        <span style="font-size: 24px;" class="mdi mdi-format-list-numbers"></span>
+        <span class="mdi mdi-format-list-numbers"></span>
       </v-btn>
 
       <v-btn to="/rijschema"
@@ -13,7 +13,7 @@
         flat
         value="rijschema"
       >
-        <span style="font-size: 24px;" class="mdi mdi-car"></span>
+        <span class="mdi mdi-car"></span>
       </v-btn>
 
       <v-btn to="/fluitschema"
@@ -21,7 +21,13 @@
         flat
         value="fluitdienst"
       >
-        <span style="font-size: 24px;" class="mdi mdi-whistle"></span>
+        <span class="mdi mdi-whistle"></span>
       </v-btn>
     </v-bottom-nav>
 </template>
+
+
+<style lang="sass">
+span
+  font-size: 24px
+</style>

@@ -17,7 +17,6 @@ export default new Router({
       path: '/rijschema',
       name: 'Drivers',
       component: () => import(/* webpackChunkName: "Drivers" */ './views/Drivers.vue')
-
     },
     {
       path: '/fluitschema',

@@ -2,7 +2,7 @@
   <div v-if="arbiters.length > 0">
     <v-layout>
     <v-flex>
-      <v-card v-for="(arbiter) in arbiters" :key="arbiter.id">
+      <v-card tile v-for="(arbiter) in arbiters" :key="arbiter.id">
         <v-card-title primary-title>
           <div>
             <h3 class="subheading font-weight-bold">{{ arbiter.matchDate }}</h3>
@@ -16,17 +16,18 @@
   </v-layout>
   </div>
   <div v-else>
-    <v-alert
+    <v-progress-linear :indeterminate="true"></v-progress-linear>
+    <!-- <v-alert
         :value="true"
         type="warning">
-        Er is op dit moment geen fluitschema bekend.
-      </v-alert>
+        Er zijn op dit moment geen wedstrijden bekend.
+      </v-alert> -->
   </div>
 
 </template>
 
 <script>
-
+import axios from 'axios'
   export default {
     data () {
       return {

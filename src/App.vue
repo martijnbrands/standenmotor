@@ -15,6 +15,7 @@ import Header from './components/Header'
 import Navigation from './components/Navigation'
 
 
+
 export default {
   name: 'App',
   components: {
@@ -28,3 +29,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.v-subheader
+  padding: 0
+</style>

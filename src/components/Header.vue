@@ -1,9 +1,9 @@
 <template>
-  <v-toolbar app fixed dark color="primary">
-    <router-link to="/">
-          <v-toolbar-title>
+  <v-toolbar app fixed color="primary">
+    <router-link to="/" color="secondary">
+          <v-toolbar-title class="subheading font-weight-bold white--text"> 
           Heren 2
-          <div class="subheading">Doelpunten & Assists</div>
+          <div class="body-1" >Doelpunten & Assists</div>
         </v-toolbar-title>
       </router-link>
     <v-spacer></v-spacer>
@@ -37,5 +37,5 @@
   }
 </script>
 
-<style module lang="sass">
+<style lang="sass">
 </style>

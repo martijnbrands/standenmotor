@@ -5,21 +5,18 @@
         <div class="team" slot="header">{{ item.homeTeam }}</div>
         <div class="date" slot="header">{{ item.playTime }}</div>
         <v-card >
-          <v-card-text class="driver_names" v-for="item in matches" :key="item.name" >{{item.playTime}}</v-card-text>
+          <v-card-text class="driver_names"  v-for="item in matches" :key="item.name" >{{item.playTime}}</v-card-text>
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </div>
   <div v-else>
-    <v-alert
-        :value="true"
-        type="warning">
-        Er zijn op dit moment geen wedstrijden bekend.
-      </v-alert>
+    <v-progress-linear :indeterminate="true"></v-progress-linear>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 
   export default {
     data () {
@@ -53,7 +50,8 @@
     },
     mounted () {
     axios
-      .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren1_Zaal')
+      .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren2')
+      // .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren1_Zaal')
       .then(response => (this.matches = response.data.matches))
       //.then( response => console.log(response.data.matches))
     }
