@@ -1,11 +1,11 @@
 <template>
-  <div v-if="matches.length > 0">
+  <div v-if="drivers.length > 0">
     <v-expansion-panel>
-      <v-expansion-panel-content v-for="item in matches" :key="item.date" >
-        <div class="team" slot="header">{{ item.homeTeam }}</div>
-        <div class="date" slot="header">{{ item.playTime }}</div>
-        <v-card >
-          <v-card-text class="driver_names"  v-for="item in matches" :key="item.name" >{{item.playTime}}</v-card-text>
+      <v-expansion-panel-content v-for="driver in drivers" :key="driver.id" >
+        <div class="team font-weight-medium" slot="header">{{ driver.team }}</div>
+        <div class="date" slot="header">{{ driver.time }}</div>
+        <v-card class="driver_body">
+          <v-card-text class="driver_names" v-for="driverName in driver.driver" :key="driverName.id" >{{ driverName }}</v-card-text>
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -17,36 +17,27 @@
 
 <script>
 import axios from 'axios'
+import db from '@/firebase'
 
   export default {
     data () {
       return {
-        matches: [],
-        driverList: [
-          {
-            date: 'Zaterdag 23 Oktober', 
-            drivers: [
-              {
-                name: 'Martijn Brands'
-              },
-              { 
-                name: 'Sander Brands'
-              }
-            ]
-          },
-          {
-            date: 'Zondag 17 November', 
-            drivers: [
-              {
-                name: 'Sander Brands'
-              },
-              { 
-                name: 'Martijn Brands'
-              }
-            ]
-          }
-        ]
+        drivers: []
       }
+    },
+    created(){
+      db.collection('/drivers').onSnapshot(res =>{
+        const changes = res.docChanges();
+
+        changes.forEach(change => {
+          if (change.type === 'added'){
+            this.drivers.push({
+              ...change.doc.data(),
+              id: change.doc.id
+            })
+          }  
+        });
+      })
     },
     mounted () {
     axios
@@ -58,7 +49,9 @@ import axios from 'axios'
   }
 </script>
 
-<style module lang="sass">
-  .v-card__text.driver_names
-    padding: 5px 0 !important
+<style lang="sass">
+.driver_body
+  padding: 16px
+.driver_names
+  padding: 0 0 0 16px
 </style>
