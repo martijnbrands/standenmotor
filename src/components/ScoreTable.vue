@@ -11,7 +11,7 @@
         <td>{{ props.item.name }}</td>
         <td class="text-xs-center">{{ props.item.goals }}</td>
         <td class="text-xs-center">{{ props.item.assists }}</td>
-        <td class="text-xs-center">{{ props.item.points }}</td>
+        <td class="text-xs-center font-weight-bold">{{ props.item.points }}</td>
       </template>
     </v-data-table>
   </div>
