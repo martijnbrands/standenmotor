@@ -107,9 +107,22 @@ export default {
       changes.forEach(change => {
         if (change.type === "added") {
           this.players.push({
-            ...change.doc.data(),
-            id: change.doc.id
+            ...change.doc.data()
           });
+        }
+        if (change.type === "modified") {
+          var goalsCount = change.doc.data().goals;
+          var assistsCount = change.doc.data().assists;
+
+          var goalsToInt = parseInt(goalsCount);
+          var assistsToInt = parseInt(assistsCount);
+          var pointsCount = goalsToInt * 2 + assistsToInt;
+
+          db.collection("/2018-2019/data/players")
+            .doc(change.doc.id)
+            .update({
+              points: pointsCount
+            });
         }
       });
     });
