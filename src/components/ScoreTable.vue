@@ -49,54 +49,6 @@ export default {
           align: "center"
         }
       ],
-      // players: [
-      //   {
-      //     value: false,
-      //     name: 'Martijn Brands',
-      //     goals: 1,
-      //     assists: 2,
-      //     points: 4
-      //   },
-      //   {
-      //     value: false,
-      //     name: 'Sander Brands',
-      //     goals: 2,
-      //     assists: 4,
-      //     points: 1
-      //   }
-      //   ,
-      //   {
-      //     value: false,
-      //     name: 'Job van Rosmalen',
-      //     goals: 4,
-      //     assists: 4,
-      //     points: 6
-      //   }
-      //   ,
-      //   {
-      //     value: false,
-      //     name: 'Dennis Erren',
-      //     goals: 6,
-      //     assists: 4,
-      //     points: 10
-      //   }
-      //   ,
-      //   {
-      //     value: false,
-      //     name: 'Joep Erren',
-      //     goals: 2,
-      //     assists: 1,
-      //     points: 7
-      //   }
-      //   ,
-      //   {
-      //     value: false,
-      //     name: 'Wout Cox',
-      //     goals: 1,
-      //     assists: 10,
-      //     points: 4
-      //   }
-      // ]
       players: []
     };
   },
