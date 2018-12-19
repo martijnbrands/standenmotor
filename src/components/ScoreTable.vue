@@ -85,8 +85,6 @@ export default {
 <style lang="sass">
 .v-datatable thead th.column.sortable
   padding: 0 12px
-table.v-table tbody tr:nth-child(odd)
-  background: rgba(242,242,242,0.5)
 table.v-table tbody td
   padding: 0 12px !important
 </style>
