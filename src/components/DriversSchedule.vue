@@ -3,7 +3,8 @@
     <v-expansion-panel>
       <v-expansion-panel-content v-for="driver in drivers" :key="driver.id">
         <div class="team font-weight-medium" slot="header">{{ driver.team }}</div>
-        <div class="date" slot="header">{{ driver.time }}</div>
+        <div class="date" slot="header">{{ moment.unix(driver.time.seconds).format("DD-MM-YYYY") }}</div>
+        <!-- {{ moment.unix(driver.time.seconds).format("DD-MM-YYYY") }} -->
         <v-card class="driver_body">
           <v-card-text
             class="driver_names"
@@ -22,10 +23,12 @@
 <script>
 import axios from "axios";
 import db from "@/firebase";
+var moment = require("moment");
 
 export default {
   data() {
     return {
+      moment: moment,
       drivers: []
     };
   },
@@ -52,8 +55,12 @@ export default {
 </script>
 
 <style lang="sass">
+.v-expansion-panel__header > *:not(.v-expansion-panel__header__icon)
+  flex: 1 1
+
 .driver_body
   padding: 16px
+  
 .driver_names
   padding: 0 0 0 16px
 </style>
