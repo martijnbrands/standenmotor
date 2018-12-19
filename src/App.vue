@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Header />
+    <Header/>
     <v-content>
       <v-container>
         <router-view></router-view>
@@ -11,26 +11,14 @@
 </template>
 
 <script>
-import Header from './components/Header'
-import Navigation from './components/Navigation'
-
-
+import Header from "./components/Header";
+import Navigation from "./components/Navigation";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Header,
     Navigation
-  },
-  data () {
-    return {
-      //
-    }
   }
-}
+};
 </script>
-
-<style lang="sass">
-.v-subheader
-  padding: 0
-</style>
