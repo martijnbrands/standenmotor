@@ -46,9 +46,7 @@ export default {
   mounted() {
     axios
       .get("https://mhc-oss-api.herokuapp.com/api/teams/Heren2")
-      // .get('https://mhc-oss-api.herokuapp.com/api/teams/Heren1_Zaal')
       .then(response => (this.matches = response.data.matches));
-    //.then( response => console.log(response.data.matches))
   }
 };
 </script>
