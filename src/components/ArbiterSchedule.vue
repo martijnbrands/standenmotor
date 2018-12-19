@@ -6,9 +6,9 @@
           <v-card-title primary-title>
             <div>
               <h3 class="subheading font-weight-bold">{{ arbiter.matchDate }}</h3>
-              <div class="font-weight-thin">{{ arbiter.teams }}</div>
+              <div class="font-weight-light">{{ arbiter.teams }}</div>
               <div class="font-weight-medium">{{ arbiter.matchTime }}</div>
-              <div class="font-weight-light">{{ arbiter.umpires }}</div>
+              <div class="font-weight-regular">{{ arbiter.umpires }}</div>
             </div>
           </v-card-title>
         </v-card>
