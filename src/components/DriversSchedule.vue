@@ -33,7 +33,7 @@ export default {
     };
   },
   created() {
-    db.collection("/drivers").onSnapshot(res => {
+    db.collection("/drivers").orderBy('time', "asc").onSnapshot(res => {
       const changes = res.docChanges();
 
       changes.forEach(change => {
