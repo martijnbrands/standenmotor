@@ -33,18 +33,20 @@ export default {
     };
   },
   created() {
-    db.collection("/drivers").orderBy('time', "asc").onSnapshot(res => {
-      const changes = res.docChanges();
+    db.collection("/drivers")
+      .orderBy("time", "asc")
+      .onSnapshot(res => {
+        const changes = res.docChanges();
 
-      changes.forEach(change => {
-        if (change.type === "added") {
-          this.drivers.push({
-            ...change.doc.data(),
-            id: change.doc.id
-          });
-        }
+        changes.forEach(change => {
+          if (change.type === "added") {
+            this.drivers.push({
+              ...change.doc.data(),
+              id: change.doc.id
+            });
+          }
+        });
       });
-    });
   },
   mounted() {
     axios

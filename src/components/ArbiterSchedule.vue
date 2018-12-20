@@ -5,10 +5,14 @@
         <v-card tile v-for="(arbiter) in arbiters" :key="arbiter.id">
           <v-card-title primary-title>
             <div>
-              <h3 class="subheading font-weight-bold">{{ arbiter.matchDate }}</h3>
-              <div class="font-weight-light">{{ arbiter.teams }}</div>
-              <div class="font-weight-medium">{{ arbiter.matchTime }}</div>
-              <div class="font-weight-regular">{{ arbiter.umpires }}</div>
+              <div v-if="arbiter.matchDate">
+                <h3 class="subheading font-weight-bold">{{ arbiter.matchDate }}</h3>
+              </div>
+
+              <div class="team font-weight-medium">{{ arbiter.teams }}</div>
+              <div class="match_time font-weight-medium">{{ arbiter.matchTime }}</div>
+              <div class="umpires font-weight-regular">{{ arbiter.umpires }}</div>
+              <div class="location font-weight-light">{{ arbiter.location }}</div>
             </div>
           </v-card-title>
         </v-card>
@@ -41,3 +45,17 @@ export default {
   }
 };
 </script>
+
+<style lang="sass">
+.subheading
+  padding-bottom: 12px
+.match_time
+    background: #f1f1f1
+    padding: 4px
+    border-radius: 4px
+.team
+  margin-right: 16px
+.team,
+.match_time
+  display: inline-block 
+</style>
