@@ -3,7 +3,7 @@
     <v-layout>
       <v-flex>
         <v-card tile v-for="(arbiter) in arbiters" :key="arbiter.id">
-          <v-card-title primary-title>
+          <v-card-title primary-title class="py-4">
             <div>
               <div v-if="arbiter.matchDate">
                 <h3 class="subheading match_date font-weight-bold pb-3">{{ arbiter.matchDate }}</h3>
