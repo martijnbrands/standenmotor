@@ -1,20 +1,25 @@
 <template>
-  <div v-if="drivers.length > 0">
-    <v-expansion-panel>
-      <v-expansion-panel-content v-for="driver in drivers" :key="driver.id">
-        <div class="team font-weight-medium" slot="header">{{ driver.team }}</div>
-        <div class="date" slot="header">{{ moment.unix(driver.time.seconds).format("DD-MM-YYYY") }}</div>
-        <!-- {{ moment.unix(driver.time.seconds).format("DD-MM-YYYY") }} -->
-        <v-card class="driver_body">
-          <v-card-text
-            class="driver_names"
-            v-for="driverName in driver.driver"
-            :key="driverName.id"
-          >{{ driverName }}</v-card-text>
-        </v-card>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-  </div>
+  <v-card v-if="drivers.length > 0">
+    <v-card-text class="py-0">
+      <v-timeline align-top dense v-for="driver in drivers" :key="driver.id">
+        <v-timeline-item color="warning" small>
+          <v-layout wrap pt-3>
+            <v-flex xs5>
+              <strong>{{ moment.unix(driver.time.seconds).format("DD-MM-YYYY") }}</strong>
+            </v-flex>
+            <v-flex>
+              <strong class="d-block pb-3">{{ driver.team }}</strong>
+              <div
+                v-for="driverName in driver.driver"
+                :key="driverName.id"
+                class="mb-2"
+              >{{ driverName }}</div>
+            </v-flex>
+          </v-layout>
+        </v-timeline-item>
+      </v-timeline>
+    </v-card-text>
+  </v-card>
   <div v-else>
     <v-progress-linear :indeterminate="true"></v-progress-linear>
   </div>
@@ -55,14 +60,3 @@ export default {
   }
 };
 </script>
-
-<style lang="sass">
-.v-expansion-panel__header > *:not(.v-expansion-panel__header__icon)
-  flex: 1 1
-
-.driver_body
-  padding: 16px
-  
-.driver_names
-  padding: 0 0 0 16px
-</style>

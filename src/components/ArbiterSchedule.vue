@@ -6,10 +6,10 @@
           <v-card-title primary-title>
             <div>
               <div v-if="arbiter.matchDate">
-                <h3 class="subheading match_date font-weight-bold">{{ arbiter.matchDate }}</h3>
+                <h3 class="subheading match_date font-weight-bold pb-3">{{ arbiter.matchDate }}</h3>
               </div>
-              <div class="team font-weight-medium">{{ arbiter.teams }}</div>
-              <div class="match_time font-weight-medium">{{ arbiter.matchTime }}</div>
+              <div class="team font-weight-medium d-inline-block mr-4">{{ arbiter.teams }}</div>
+              <div class="match_time font-weight-medium d-inline-block">{{ arbiter.matchTime }}</div>
               <div class="umpires font-weight-regular">{{ arbiter.umpires }}</div>
               <div class="location font-weight-light">{{ arbiter.location }}</div>
             </div>
@@ -46,15 +46,8 @@ export default {
 </script>
 
 <style lang="sass">
-.match_date
-  padding-bottom: 12px
 .match_time
     background: #f1f1f1
     padding: 4px
     border-radius: 4px
-.team
-  margin-right: 16px
-.team,
-.match_time
-  display: inline-block 
 </style>
