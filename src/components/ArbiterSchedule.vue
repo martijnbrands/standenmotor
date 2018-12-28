@@ -40,6 +40,7 @@ export default {
     axios
       .get("https://mhc-oss-api.herokuapp.com/api/teams/Heren1_Zaal")
       .then(response => (this.arbiters = response.data.arbiters));
+      
     // .then( response => console.log(response.data.arbiters))
   }
 };
