@@ -30,6 +30,7 @@
           <v-layout wrap pt-3>
             <v-flex xs5>
                <strong>{{ moment.unix(driver.playTime.seconds).format("DD-MM-YYYY") }}</strong>
+               <div>{{ moment.unix(driver.playTime.seconds).format("LT") }}</div>
             </v-flex>
             <v-flex>
               <strong class="d-block pb-3">{{ driver.homeTeam }}</strong>
@@ -39,8 +40,6 @@
                 class="mb-2"
               >{{ driverName }}</div>
             </v-flex>
-              
-            
           </v-layout>
         </v-timeline-item>
       </v-timeline>
@@ -55,6 +54,7 @@
 import axios from "axios";
 import db from "@/firebase";
 var moment = require("moment");
+moment.locale('nl');
 
 export default {
   data() {
@@ -86,7 +86,7 @@ export default {
 
         for (let index = 0; index < response.data.matches.length; index++) {
            db.collection("users").doc(response.data.matches[index].gameId).set({
-            playTime: new Date(moment(response.data.matches[index].playTime, "DD-MM-YYYY").format("MM-DD-YYYY")),
+            playTime: new Date(moment(response.data.matches[index].playTime, "DD-MM-YYYY, h:mm").format("MM-DD-YYYY, H:mm")),
             homeTeam: response.data.matches[index].homeTeam,
             awayTeam: response.data.matches[index].awayTeam
         },{merge: true})
