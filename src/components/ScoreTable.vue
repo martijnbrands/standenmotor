@@ -89,34 +89,34 @@ export default {
     return {
       players: db.collection("/2018-2019/data/players")
     };
+  },
+  created() {
+    db.collection("/2018-2019/data/players").onSnapshot(res => {
+      const changes = res.docChanges();
+
+      changes.forEach(change => {
+        if (change.type === "added") {
+          this.players.push({
+            ...change.doc.data()
+          });
+        }
+        if (change.type === "modified") {
+          var goalsCount = change.doc.data().goals;
+          var assistsCount = change.doc.data().assists;
+
+          var goalsToInt = parseInt(goalsCount);
+          var assistsToInt = parseInt(assistsCount);
+          var pointsCount = goalsToInt * 2 + assistsToInt;
+
+          db.collection("/2018-2019/data/players")
+            .doc(change.doc.id)
+            .update({
+              points: pointsCount
+            });
+        }
+      });
+    });
   }
-  // created() {
-  //   db.collection("/2018-2019/data/players").onSnapshot(res => {
-  //     const changes = res.docChanges();
-
-  //     changes.forEach(change => {
-  //       if (change.type === "added") {
-  //         this.players.push({
-  //           ...change.doc.data()
-  //         });
-  //       }
-  //       if (change.type === "modified") {
-  //         var goalsCount = change.doc.data().goals;
-  //         var assistsCount = change.doc.data().assists;
-
-  //         var goalsToInt = parseInt(goalsCount);
-  //         var assistsToInt = parseInt(assistsCount);
-  //         var pointsCount = goalsToInt * 2 + assistsToInt;
-
-  //         db.collection("/2018-2019/data/players")
-  //           .doc(change.doc.id)
-  //           .update({
-  //             points: pointsCount
-  //           });
-  //       }
-  //     });
-  //   });
-  // }
 };
 </script>
 

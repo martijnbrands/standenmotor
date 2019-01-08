@@ -6,5 +6,19 @@
       </v-toolbar-title>
     </router-link>
     <v-spacer></v-spacer>
+    <v-menu bottom left origin="center center" transition="slide-y-transition">
+      <v-btn slot="activator" dark icon>
+        <v-icon>more_vert</v-icon>
+      </v-btn>
+
+      <v-list>
+        <v-list-tile>
+          <router-link to="/login">
+            <v-list-tile-title>Log-in</v-list-tile-title>
+          </router-link>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
   </v-toolbar>
 </template>
+
