@@ -19,9 +19,6 @@
       <template slot="expand" slot-scope="props">
         <v-card flat>
           <v-layout column>
-            <!-- <v-btn fab dark small color="warning">
-              <v-icon dark>remove</v-icon>
-            </v-btn>-->
             <v-text-field
               type="number"
               label="Goals"
@@ -44,7 +41,7 @@
           </v-layout>
           <v-flex text-xs-right>
             <div>
-              <v-btn color="primary">Opslaan</v-btn>
+              <v-btn @click.prevent="log" color="primary">Opslaan</v-btn>
             </div>
           </v-flex>
         </v-card>
@@ -57,7 +54,7 @@
 </template>
 
 <script>
-import db from "@/firebase";
+import { db } from "../main";
 export default {
   data() {
     return {
@@ -88,33 +85,38 @@ export default {
       players: []
     };
   },
-  created() {
-    db.collection("/2018-2019/data/players").onSnapshot(res => {
-      const changes = res.docChanges();
-
-      changes.forEach(change => {
-        if (change.type === "added") {
-          this.players.push({
-            ...change.doc.data()
-          });
-        }
-        if (change.type === "modified") {
-          var goalsCount = change.doc.data().goals;
-          var assistsCount = change.doc.data().assists;
-
-          var goalsToInt = parseInt(goalsCount);
-          var assistsToInt = parseInt(assistsCount);
-          var pointsCount = goalsToInt * 2 + assistsToInt;
-
-          db.collection("/2018-2019/data/players")
-            .doc(change.doc.id)
-            .update({
-              points: pointsCount
-            });
-        }
-      });
-    });
+  firestore() {
+    return {
+      players: db.collection("/2018-2019/data/players")
+    };
   }
+  // created() {
+  //   db.collection("/2018-2019/data/players").onSnapshot(res => {
+  //     const changes = res.docChanges();
+
+  //     changes.forEach(change => {
+  //       if (change.type === "added") {
+  //         this.players.push({
+  //           ...change.doc.data()
+  //         });
+  //       }
+  //       if (change.type === "modified") {
+  //         var goalsCount = change.doc.data().goals;
+  //         var assistsCount = change.doc.data().assists;
+
+  //         var goalsToInt = parseInt(goalsCount);
+  //         var assistsToInt = parseInt(assistsCount);
+  //         var pointsCount = goalsToInt * 2 + assistsToInt;
+
+  //         db.collection("/2018-2019/data/players")
+  //           .doc(change.doc.id)
+  //           .update({
+  //             points: pointsCount
+  //           });
+  //       }
+  //     });
+  //   });
+  // }
 };
 </script>
 
