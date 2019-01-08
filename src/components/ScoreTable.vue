@@ -5,13 +5,49 @@
       v-bind:pagination.sync="pagination"
       :items="players"
       hide-actions
+      item-key="name"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-center">{{ props.item.goals }}</td>
-        <td class="text-xs-center">{{ props.item.assists }}</td>
-        <td class="text-xs-center font-weight-bold">{{ props.item.points }}</td>
+        <tr id="test" @click="props.expanded = !props.expanded">
+          <td>{{ props.item.name }}</td>
+          <td class="text-xs-center">{{ props.item.goals }}</td>
+          <td class="text-xs-center">{{ props.item.assists }}</td>
+          <td class="text-xs-center font-weight-bold">{{ props.item.points }}</td>
+        </tr>
+      </template>
+      <template slot="expand" slot-scope="props">
+        <v-card flat>
+          <v-layout column>
+            <!-- <v-btn fab dark small color="warning">
+              <v-icon dark>remove</v-icon>
+            </v-btn>-->
+            <v-text-field
+              type="number"
+              label="Goals"
+              append-outer-icon="add"
+              @click:append-outer="props.item.goals++"
+              prepend-icon="remove"
+              @click:prepend="props.item.goals--"
+              :value="props.item.goals"
+            ></v-text-field>
+
+            <v-text-field
+              type="number"
+              label="Assists"
+              append-outer-icon="add"
+              @click:append-outer="props.item.assists++"
+              prepend-icon="remove"
+              @click:prepend="props.item.assists--"
+              :value="props.item.assists"
+            ></v-text-field>
+          </v-layout>
+          <v-flex text-xs-right>
+            <div>
+              <v-btn color="primary">Opslaan</v-btn>
+            </div>
+          </v-flex>
+        </v-card>
       </template>
     </v-data-table>
   </div>
