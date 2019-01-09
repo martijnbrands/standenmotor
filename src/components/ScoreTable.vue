@@ -85,11 +85,6 @@ export default {
       players: []
     };
   },
-  firestore() {
-    return {
-      players: db.collection("/2018-2019/data/players")
-    };
-  },
   created() {
     db.collection("/2018-2019/data/players").onSnapshot(res => {
       const changes = res.docChanges();
