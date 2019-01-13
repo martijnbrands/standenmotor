@@ -6,7 +6,7 @@
           <v-layout wrap pt-3>
             <v-flex xs5>
               <strong>{{ moment.unix(driver.playTime.seconds).format("DD-MM-YYYY") }}</strong>
-              <div>{{ moment.unix(driver.playTime.seconds).format("LT") }}</div>
+              <div>{{ moment.unix(driver.playTime.seconds,  'Europe/Amsterdam').format("HH:mm") }}</div>
             </v-flex>
             <v-flex>
               <strong class="d-block pb-3">{{ driver.homeTeam }}</strong>
@@ -29,8 +29,7 @@
 <script>
 import axios from "axios";
 import { db } from "../main";
-var moment = require("moment");
-moment.locale("nl");
+var moment = require('moment-timezone');
 
 export default {
   data() {
@@ -67,7 +66,7 @@ export default {
                 playTime: new Date(
                   moment(
                     response.data.matches[index].playTime,
-                    "DD-MM-YYYY, h:mm"
+                    "DD-MM-YYYY, h:mm", 'Europe/Amsterdam'
                   ).format("MM-DD-YYYY, H:mm")
                 ),
                 homeTeam: response.data.matches[index].homeTeam,
