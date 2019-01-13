@@ -1,8 +1,17 @@
 <template>
-  <div v-if="arbiters.length > 0">
-    <v-layout>
+  <div>
+    <div v-if="loading">
+      <v-progress-linear :indeterminate="true"></v-progress-linear>
+    </div>
+    <div v-if="!loading">
+        <v-alert v-if="arbiters.length <= 0"
+        :value="true"
+        type="warning">
+        Er zijn op dit moment geen wedstrijden bekend.
+        </v-alert>
+
       <v-flex>
-        <v-card tile v-for="(arbiter) in arbiters" :key="arbiter.id">
+         <v-card tile v-for="(arbiter) in arbiters" :key="arbiter.id">
           <v-card-title primary-title class="py-4">
             <div>
               <div v-if="arbiter.matchDate">
@@ -16,15 +25,7 @@
           </v-card-title>
         </v-card>
       </v-flex>
-    </v-layout>
-  </div>
-  <div v-else>
-    <v-progress-linear :indeterminate="true"></v-progress-linear>
-    <!-- <v-alert
-        :value="true"
-        type="warning">
-        Er zijn op dit moment geen wedstrijden bekend.
-    </v-alert>-->
+    </div>
   </div>
 </template>
 
@@ -33,15 +34,20 @@ import axios from "axios";
 export default {
   data() {
     return {
-      arbiters: []
+      arbiters: [],
+      loading: false
     };
   },
   mounted() {
+    this.loading = true
+
     axios
       .get("https://mhc-oss-api.herokuapp.com/api/teams/Heren1_Zaal")
-      .then(response => (this.arbiters = response.data.arbiters));
-      
-    // .then( response => console.log(response.data.arbiters))
+      .then(response => {
+         this.loading = false
+          this.arbiters = response.data.arbiters
+          }
+        );
   }
 };
 </script>
