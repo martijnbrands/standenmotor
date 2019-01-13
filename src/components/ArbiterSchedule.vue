@@ -42,7 +42,7 @@ export default {
     this.loading = true
 
     axios
-      .get("https://mhc-oss-api.herokuapp.com/api/teams/Heren1_Zaal")
+      .get("https://mhc-oss-api.herokuapp.com/api/teams/Heren2")
       .then(response => {
          this.loading = false
           this.arbiters = response.data.arbiters
