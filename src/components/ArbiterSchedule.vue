@@ -7,7 +7,7 @@
         <v-alert v-if="arbiters.length <= 0"
         :value="true"
         type="warning">
-        Er zijn op dit moment geen wedstrijden bekend.
+        Er zijn op dit moment geen wedstrijden om te fluiten.
         </v-alert>
 
       <v-flex>
