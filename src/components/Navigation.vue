@@ -8,7 +8,7 @@
       <span class="mdi mdi-car"></span>
     </v-btn>
 
-    <v-btn to="/fluitschema" color="white" flat value="fluitdienst">
+    <v-btn to="/fluitschema" color="white" flat value="fluitschema">
       <span class="mdi mdi-whistle"></span>
     </v-btn>
   </v-bottom-nav>

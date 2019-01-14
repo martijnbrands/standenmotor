@@ -9,7 +9,7 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <tr id="test" @click="props.expanded = !props.expanded">
+        <tr>
           <td>{{ props.item.name }}</td>
           <td class="text-xs-center">{{ props.item.goals }}</td>
           <td class="text-xs-center">{{ props.item.assists }}</td>
