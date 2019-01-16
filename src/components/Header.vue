@@ -14,7 +14,7 @@
       <v-list>
         <v-list-tile>
           <router-link to="/login">
-            <v-list-tile-title>Log-in</v-list-tile-title>
+            <v-list-tile-title>Login</v-list-tile-title>
           </router-link>
         </v-list-tile>
       </v-list>
