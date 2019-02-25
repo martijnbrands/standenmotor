@@ -1,43 +1,26 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 mb-4">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                <ul class="nav nav-pills">
-                    <li class="nav-item dropdown mr-2">
-                        <a class="nav-link dropdown-toggle disabled" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-disabled="true">Users</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Create</a>
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Read</a>
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Update</a>
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Delete</a>
-                        </div>
-                    </li>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-                    <li class="nav-item dropdown mr-2">
-                        <a class="nav-link dropdown-toggle disabled" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-disabled="true">Teams</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Create</a>
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Read</a>
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Update</a>
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Delete</a>
-                        </div>
-                    </li>
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Players</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Create</a>
-                            <a class="dropdown-item" href="{{ route('players') }}">Read</a>
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Update</a>
-                            <a class="dropdown-item disabled" href="#" aria-disabled="true">Delete</a>
-                        </div>
-                    </li>
-                </ul>
-                
-            </div>
-        </div>
-    </div>
-@endsection
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div id="app"></div>
+    
+    <!-- Scripts -->
+    <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
+    <script src="{{ asset('js/main.js') }}" defer></script>
+</body>
+</html>

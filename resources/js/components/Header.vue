@@ -8,7 +8,7 @@
     <v-spacer></v-spacer>
     <v-menu bottom left origin="center center" transition="slide-y-transition">
       <v-btn slot="activator" dark icon>
-        <v-icon>more_vert</v-icon>
+         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
 
       <v-list>

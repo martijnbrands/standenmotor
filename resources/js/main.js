@@ -1,47 +1,90 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-require("./bootstrap");
-
-import Vue from 'vue';
-import "./plugins/vuetify";
+import Vue from "vue";
 import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
+import '@mdi/font/css/materialdesignicons.css';
+import VueRouter from 'vue-router';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import App from "./App.vue";
 
-import router from "@/js/router.js";
-import App from "@/js/views/App.vue";
 
 
-Vue.use(Vuetify);
+import Score from "./views/Score.vue";
+import Drivers from "./views/Drivers.vue";
+import Arbiters from "./views/Arbiters.vue";
+import Register from "./views/Register.vue";
+import Login from "./views/Login.vue";
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.use(VueRouter);
+Vue.use(VueAxios, axios);
 
-const app = new Vue({
-    el: "#app",
-    router,
-    render: h => h(App),
+Vue.use( Vuetify, {
+  theme: {
+  primary: "#304FFE",
+  secondary: "#304FFE",
+  accent: "#FFD600",
+  error: "#f44336",
+  warning: "#FFC107",
+  info: "#2196f3",
+  success: "#4caf50",
+},
+  iconfont: 'mdi',
 });
 
-export default app;
 
-// window.Vue = require('vue');
-// // import Vue from "vue";
-// import Vuetify from 'vuetify'
-// import App from "./views/App.vue";
-// import router from "./router";
-// // import "@mdi/font/css/materialdesignicons.css"; // Ensure you are using css-loader
+const router = new VueRouter({
+  routes: [
+    {
+      path: "/",
+      name: "Score",
+      component: Score
+    },
+    {
+      path: "/rijschema",
+      name: "Drivers",
+      component: Drivers
+    },
+    {
+      path: "/fluitschema",
+      name: "Arbiters",
+      component: Arbiters,
+      meta: {
+        auth: true
+      }
+    },
+    {
+      path: "/register",
+      name: "Register",
+      component: Register,
+      meta: {
+        auth: false
+      }
+    },
+    {
+      path: "/login",
+      name: "Login",
+      component: Login,
+      meta: {
+        auth: false
+      }
+    },
 
+  ]
+});
 
-// Vue.config.productionTip = false
+Vue.router = router;
 
-// new Vue({
-//   router,
-//   render: h => h(App)
-// }).$mount('#app')
+Vue.use(require('@websanova/vue-auth'), {
+  auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
+  router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js')
+});
 
+App.router = Vue.router;
+
+Vue.config.productionTip = false
+
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount('#app');

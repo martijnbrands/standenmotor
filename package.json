@@ -10,8 +10,11 @@
     "watch-poll": "npm run watch -- --watch-poll"
   },
   "dependencies": {
+    "@mdi/font": "^3.5.94",
+    "@websanova/vue-auth": "^2.21.14-beta",
     "font-awesome": "^4.7.0",
-    "uiv": "^0.14.2"
+    "uiv": "^0.14.2",
+    "vue-axios": "^2.1.4"
   },
   "devDependencies": {
     "axios": "^0.16.2",
