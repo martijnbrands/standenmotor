@@ -14,7 +14,16 @@
       <v-list>
         <v-list-tile>
           <router-link to="/login">
-            <v-list-tile-title>Login</v-list-tile-title>
+            <ul>
+                <li v-if="!$auth.check()" class="pull-right">
+                  <router-link :to="{ name: 'login' }">Login</router-link>
+                </li>
+              <li v-if="!$auth.check()" class="pull-right">
+                        <router-link :to="{ name: 'register' }">Register</router-link>
+            <li v-if="$auth.check()" class="pull-right">
+                        <a href="#" @click.prevent="$auth.logout()">Logout</a>
+                    </li>
+              </ul>
           </router-link>
         </v-list-tile>
       </v-list>

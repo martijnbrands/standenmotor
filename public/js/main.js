@@ -18720,12 +18720,56 @@ var render = function() {
               _c(
                 "v-list-tile",
                 [
-                  _c(
-                    "router-link",
-                    { attrs: { to: "/login" } },
-                    [_c("v-list-tile-title", [_vm._v("Login")])],
-                    1
-                  )
+                  _c("router-link", { attrs: { to: "/login" } }, [
+                    _c("ul", [
+                      !_vm.$auth.check()
+                        ? _c(
+                            "li",
+                            { staticClass: "pull-right" },
+                            [
+                              _c(
+                                "router-link",
+                                { attrs: { to: { name: "login" } } },
+                                [_vm._v("Login")]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.$auth.check()
+                        ? _c(
+                            "li",
+                            { staticClass: "pull-right" },
+                            [
+                              _c(
+                                "router-link",
+                                { attrs: { to: { name: "register" } } },
+                                [_vm._v("Register")]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm.$auth.check()
+                        ? _c("li", { staticClass: "pull-right" }, [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.$auth.logout()
+                                  }
+                                }
+                              },
+                              [_vm._v("Logout")]
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  ])
                 ],
                 1
               )

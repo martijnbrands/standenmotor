@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RegisterFormRequest;
 use App\User;
 use JWTAuth;
 
@@ -55,5 +56,14 @@ class AuthController extends Controller
         return response([
                 'status' => 'success'
             ]);
+    }
+
+    public function logout()
+    {
+        JWTAuth::invalidate();
+        return response([
+                'status' => 'success',
+                'msg' => 'Logged out Successfully.'
+            ], 200);
     }
 }
