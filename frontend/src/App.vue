@@ -1,17 +1,23 @@
 <template>
-  <v-app>
-    <v-content>
-      <v-container>
-        <router-view></router-view>
-      </v-container>
-    </v-content>
-  </v-app>
+	<v-app>
+		<Header/>
+		<v-content>
+			<v-container>
+				<router-view></router-view>
+			</v-container>
+		</v-content>
+		<Navigation/>
+	</v-app>
 </template>
 
 <script>
+import Header from "./components/Header";
+import Navigation from "./components/Navigation";
 export default {
-  name: 'App',
-  components: {
-  }
-}
+	name: "App",
+	components: {
+		Header,
+		Navigation
+	}
+};
 </script>

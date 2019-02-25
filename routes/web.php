@@ -11,6 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::get('/', function () {
+        return view('index');
+    });
+
+    Route::get('/players', 'PlayerController@index')->name('players');
+    Route::get('/players/create', 'PlayerController@index')->name('players.create');
+
 });
+
+Route::get('/{any}', 'SinglePageController@index')->where('any', '.*');
