@@ -58,7 +58,7 @@ export default {
   methods: {
     getPlayers(){
       axios
-        .get('/api/players')
+        .get('/players')
         .then(response =>{
           const {data:{data}} = response
           this.players = data

@@ -1,3 +1,5 @@
+require('./bootstrap');
+
 import Vue from "vue";
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
@@ -7,13 +9,13 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import App from "./App.vue";
 
-
-
 import Score from "./views/Score.vue";
 import Drivers from "./views/Drivers.vue";
 import Arbiters from "./views/Arbiters.vue";
 import Register from "./views/Register.vue";
 import Login from "./views/Login.vue";
+
+axios.defaults.baseURL = '/api';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -30,7 +32,6 @@ Vue.use( Vuetify, {
 },
   iconfont: 'mdi',
 });
-
 
 const router = new VueRouter({
   routes: [
