@@ -12,7 +12,10 @@ class Team extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'goals', 'assists', 'points', 'user_id'
+        'name',
+        'user_id',
+        'team_account_id',
+        'teamId'
     ];
 
     public function players()

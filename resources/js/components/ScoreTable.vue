@@ -62,7 +62,7 @@ export default {
     getPlayers(){
     this.isLoading = true
         axios
-            .get('/api/players/1')
+            .get('/api/Heren2/players')
             .then(response =>{
             const {data:{data}} = response
             this.players = data

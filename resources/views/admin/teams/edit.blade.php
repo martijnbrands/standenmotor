@@ -18,10 +18,14 @@
         <div class="form-group">
             <label for="team_admin">Team Admin</label>
             <select class="form-control" name="team_admin">
-                <option value="{{ $team->user->id }}" selected>{{ $team->user->name }}, [ {{ $team->user->email }} ]</option>
-                @foreach($teamAdmins as $admin)
+                @if(isset($team->user))
+                    <option value="{{ $team->user->id }}" selected>{{ $team->user->name }}, [ {{ $team->user->email }} ]</option>
+                @endif
+                @forelse($teamAdmins as $admin)
                     <option value="{{ $admin->id }}">{{ $admin->name }}, [ {{ $admin->email }} ]</option>
-                @endforeach
+                @empty
+                    <option>Create more team admins to choose from.</option>
+                @endforelse
             </select>
             @if ($errors->has('team_admin'))
                 <div class="alert alert-danger py-1 mt-1" role="alert">

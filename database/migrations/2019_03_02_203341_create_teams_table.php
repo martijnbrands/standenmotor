@@ -16,9 +16,11 @@ class CreateTeamsTable extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->bigIncrements('id');
             
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('team_account_id')->nullable();
 
             $table->string('name');
+            $table->string('teamId');
             
             $table->timestamps();
         });

@@ -16,7 +16,12 @@
                 @forelse($teams as $team)
                     <tr>
                         <td><a href="/admin/teams/{{ $team->id }}">{{ $team->name }}</a></td>
-                        <td>{{ $team->user->name }}</td>
+                        <td>
+                            @if(isset($team->user))
+                                {{ $team->user->name }}
+                            @endif
+                            <!-- Team admin here -->
+                        </td>
                         <td>
                             
                             <form class="form-inline" method="POST" action="{{ route('admin.teams.destroy', $team) }}">

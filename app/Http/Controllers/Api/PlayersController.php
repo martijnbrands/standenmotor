@@ -16,8 +16,9 @@ class PlayersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Team $team)
+    public function index($teamId)
     {
+        $team = Team::where('teamId', $teamId)->firstOrFail();
         return new PlayerCollection(Player::where('team_id', $team->id)->get(), $team);
     }
 

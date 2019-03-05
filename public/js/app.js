@@ -2021,7 +2021,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.isLoading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/players/1').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/Heren2/players').then(function (response) {
         var data = response.data.data;
         _this.players = data;
         console.log(response);

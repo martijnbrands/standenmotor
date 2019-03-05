@@ -18,6 +18,7 @@ use Faker\Generator as Faker;
 $factory->define(Team::class, function (Faker $faker) {
     $name = $faker->name;
     return [
-        'name' => $name
+        'name' => $name,
+        'teamId' => $name
     ];
 });
