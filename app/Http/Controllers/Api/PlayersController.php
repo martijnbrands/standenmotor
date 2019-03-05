@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Player;
+use App\Team;
+use App\Http\Resources\PlayerCollection;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,9 +16,9 @@ class PlayersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Team $team)
     {
-        return Player::with('team')->get();
+        return new PlayerCollection(Player::where('team_id', $team->id)->get(), $team);
     }
 
     /**

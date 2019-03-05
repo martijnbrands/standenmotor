@@ -23,5 +23,5 @@ Route::group(['namespace' => 'Api'], function(){
      * Example: php artisan make:controller Api/PlayersController -r --model=Player
      */
 
-    Route::get('/players', 'PlayersController@index');
+    Route::get('/players/{team}', 'PlayersController@index');
 });
