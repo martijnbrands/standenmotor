@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['namespace' => 'Api'], function(){
+    /* Place all your api routes here.
+     * The controllers will be place in App\Http\Controllers\Api
+     * Example: php artisan make:controller Api/PlayersController -r --model=Player
+     */
+
+    Route::get('/players', 'PlayersController@index');
+});

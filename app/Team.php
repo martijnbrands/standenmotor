@@ -12,11 +12,16 @@ class Team extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'admin_id'
+        'name', 'goals', 'assists', 'points', 'user_id'
     ];
 
-    public function admin()
+    public function players()
     {
-        return $this->hasOne(User::class);
+        return $this->hasMany(Player::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
