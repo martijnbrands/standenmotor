@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user()->with('team');
 });
 
 Route::group(['namespace' => 'Api'], function(){
@@ -23,7 +23,6 @@ Route::group(['namespace' => 'Api'], function(){
      * Example: php artisan make:controller Api/PlayersController -r --model=Player
      */
 
-    
+    // Route::get('/teamId', 'TeamsController@getId');
     Route::get('/{teamId}/players', 'PlayersController@index');
-    // Route::get('/{teamId}/matches', 'PlayersController@index');
 });

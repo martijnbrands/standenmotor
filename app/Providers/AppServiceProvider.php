@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Auth;
+use View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,5 +28,7 @@ class AppServiceProvider extends ServiceProvider
         \Blade::if('superAdmin', function(){
             return auth()->user()->isSuperAdmin();
         });
+
+        // View::share('teamId', Auth::user()->team()->teamId);
     }
 }

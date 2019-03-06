@@ -32,17 +32,36 @@ const router = new VueRouter({
         {
           path: "/",
           name: "Score",
-          component: Score
+          component: Score,
+          meta: {
+            auth: true
+          }
         },
         {
           path: "/rijschema",
           name: "Drivers",
-          component: Drivers
+          component: Drivers,
+          meta: {
+            auth: true
+          }
         },
         {
           path: "/fluitschema",
           name: "Arbiters",
-          component: Arbiters
+          component: Arbiters,
+          meta: {
+            auth: true
+          }
+        },
+        {
+          path: "/login",
+          name: "Login",
+          component: Login
+        },
+        {
+          path: "/register",
+          name: "Register",
+          component: Register
         }
       ]
 });

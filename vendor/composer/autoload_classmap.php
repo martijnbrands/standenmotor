@@ -14,6 +14,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\TeamsController' => $baseDir . '/app/Http/Controllers/Admin/TeamsController.php',
     'App\\Http\\Controllers\\Admin\\UsersController' => $baseDir . '/app/Http/Controllers/Admin/UsersController.php',
     'App\\Http\\Controllers\\Api\\PlayersController' => $baseDir . '/app/Http/Controllers/Api/PlayersController.php',
+    'App\\Http\\Controllers\\Api\\TeamsController' => $baseDir . '/app/Http/Controllers/Api/TeamsController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',

@@ -25,6 +25,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      teamId: null,
       isLoading: true,
       pagination: { sortBy: "points", descending: true, rowsPerPage: -1 },
       headers: [
@@ -56,13 +57,21 @@ export default {
     };
   },
   created() {
-        this.getPlayers()
+        this.getTeamId();
   },
   methods: {
+    getTeamId(){
+      axios
+        .get('/teamId')
+        .then(response => {
+          this.teamId = response.data.teamId;
+          this.getPlayers();
+        });
+    },
     getPlayers(){
     this.isLoading = true
         axios
-            .get('/api/Heren2/players')
+            .get('/api/' + this.teamId + '/players')
             .then(response =>{
             const {data:{data}} = response
             this.players = data
@@ -78,6 +87,7 @@ export default {
 <style lang="sass">
 .v-datatable thead th.column.sortable
   padding: 0 12px
+
 table.v-table tbody td
   padding: 0 12px !important
 </style>

@@ -54,13 +54,15 @@ class TeamsController extends Controller
 
         request()->validate([
             'name' => 'required|string',
-            'team_admin' => 'required'
+            'teamId' => 'required|string'
         ]);
 
-        Team::create([
+        $team = Team::create([
             'name' => request('name'),
-            'user_id' => request('team_admin')
+            'teamId' => request('teamId')
         ]);
+
+        if(request('team_admin') !== null) { $team->update([ 'user_id' => request('team_admin') ]); }
 
         return redirect()->route('admin.teams.index');
     }
@@ -74,8 +76,6 @@ class TeamsController extends Controller
     public function show(Team $team)
     {
         $this->authorize('store', Team::Class);
-
-        // $team = $team->with('players');
 
         return view('admin.teams.show')->with('team', $team);
     }
@@ -116,13 +116,16 @@ class TeamsController extends Controller
 
         request()->validate([
             'name' => 'required|string',
-            'team_admin' => 'required'
+            'teamId' => 'required|string'
         ]);
 
         $team->update([
             'name' => request('name'),
-            'user_id' => request('team_admin')
+            'teamId' => request('teamId')
         ]);
+
+        if(request('team_admin') !== null) { $team->update([ 'user_id' => request('team_admin') ]); }
+
 
         return redirect()->route('admin.teams.index');
     }

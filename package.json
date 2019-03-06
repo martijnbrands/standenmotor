@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "@mdi/font": "^3.5.95",
+        "@websanova/vue-auth": "^2.21.14-beta",
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",

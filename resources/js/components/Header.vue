@@ -11,22 +11,17 @@
          <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
 
-      <!-- <v-list>
-        <v-list-tile>
-          <router-link to="/login">
-            <ul>
-                <li v-if="!$auth.check()" class="pull-right">
-                  <router-link :to="{ name: 'login' }">Login</router-link>
-                </li>
-              <li v-if="!$auth.check()" class="pull-right">
-                        <router-link :to="{ name: 'register' }">Register</router-link>
-            <li v-if="$auth.check()" class="pull-right">
-                        <a href="#" @click.prevent="$auth.logout()">Logout</a>
-                    </li>
-              </ul>
-          </router-link>
+      <v-list>
+        <v-list-tile to="/login">
+          <v-list-tile-title>Login</v-list-tile-title>
         </v-list-tile>
-      </v-list> -->
+        <v-list-tile to="/register">
+          <v-list-tile-title>Register</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
     </v-menu>
   </v-toolbar>
 </template>
+
+<style lang="sass">
+</style>

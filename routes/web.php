@@ -55,4 +55,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admi
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', 'PlayerController@index');
+
+    Route::get('/teamId', 'Api\TeamsController@getId');
 });

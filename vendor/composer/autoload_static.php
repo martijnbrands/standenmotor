@@ -356,6 +356,7 @@ class ComposerStaticInit54da95fceffe9892e7e3c0e00644f615
         'App\\Http\\Controllers\\Admin\\TeamsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/TeamsController.php',
         'App\\Http\\Controllers\\Admin\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UsersController.php',
         'App\\Http\\Controllers\\Api\\PlayersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PlayersController.php',
+        'App\\Http\\Controllers\\Api\\TeamsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/TeamsController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
