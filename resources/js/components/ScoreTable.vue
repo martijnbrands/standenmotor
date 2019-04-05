@@ -64,20 +64,19 @@ export default {
       axios
         .get('/teamId')
         .then(response => {
-          this.teamId = response.data.teamId;
+          this.teamId = response.data;
           this.getPlayers();
         });
     },
     getPlayers(){
     this.isLoading = true
         axios
-            .get('/api/' + this.teamId + '/players')
+            .get(this.teamId + '/players')
             .then(response =>{
-            const {data:{data}} = response
-            this.players = data
-            console.log(response)
-            this.isLoading = false
-        })
+              const {data:{data}} = response;
+              this.players = data;
+              this.isLoading = false;
+            })
     }
   }
 

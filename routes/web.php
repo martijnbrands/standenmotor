@@ -13,12 +13,16 @@
 
 Auth::routes();
 
-Route::group(['namespace' => 'Admin'], function(){
-    Route::get('/admin', 'AdminController@index');
-    Route::post('/admin', 'LoginController@login')->name('admin.login');
+Route::get('/', function() {
+    return view('layouts.app');
 });
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function(){
+Route::group(['namespace' => 'Admin'], function(){
+    Route::get('/admin/login', 'AdminController@index')->name('admin.index');
+    Route::post('/admin/login', 'LoginController@login')->name('admin.login');
+});
+
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['admin', 'auth']], function(){
 
     /* PLAYERS */
     Route::get('/players', 'PlayersController@index')->name('admin.players.index');
@@ -40,7 +44,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admi
 
     Route::delete('/teams/delete/{team}', 'TeamsController@destroy')->name('admin.teams.destroy');
 
-    Route::get('/teams/{team}', 'TeamsController@show');
+    Route::get('/teams/{team}', 'TeamsController@show')->name('admin.teams.show');
 
     /* USERS */
     Route::get('/users', 'UsersController@index')->name('admin.users.index');
@@ -51,10 +55,4 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admi
     Route::post('/users/edit/{user}', 'UsersController@update')->name('admin.users.update');
 
     Route::delete('/users/delete/{user}', 'UsersController@destroy')->name('admin.users.destroy');
-});
-
-Route::group(['middleware' => 'auth'], function(){
-    Route::get('/', 'PlayerController@index');
-
-    Route::get('/teamId', 'Api\TeamsController@getId');
 });

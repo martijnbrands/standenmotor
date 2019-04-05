@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use Auth;
+use JWTAuth;
+use App\User;
 use App\Team;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -87,7 +89,8 @@ class TeamsController extends Controller
 
     public function getId()
     {
-        $teamId = Auth::user()->team->teamId;
-        return ['teamId' => $teamId];
+        $JWTUser = JWTAuth::user();
+        $user = User::find($JWTUser['id']);
+        return $user->team->teamId;
     }
 }

@@ -49,9 +49,9 @@ export default {
     getTeamId(){
       this.loading = true
       axios
-        .get('/teamId')
+      .get('/teamId')
         .then(response => {
-          this.teamId = response.data.teamId;
+          this.teamId = response.data;
           this.getArbiters();
         });
     },

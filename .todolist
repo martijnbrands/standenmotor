@@ -9,6 +9,11 @@
 
 3)
     a. Vue players CRUD
+        - Vue templates
+        - Controllers
         - TeamAdminPolicy
     b. Vue driver schedule combine remote api data with database data
     c. Vue Register and Login templating ✅
+    d. Vue Register and Login using JWT Auth , https://github.com/tymondesigns/jwt-auth
+
+    
