@@ -20,11 +20,11 @@
 
 <script>
 export default {
-  	data() {
+  data() {
 		return {
-		email: null,
-		password: null,
-		error: false
+			email: null,
+			password: null,
+			error: false
 		};
 	},
 	methods: {

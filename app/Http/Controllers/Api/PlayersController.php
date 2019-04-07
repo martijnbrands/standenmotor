@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use JWTAuth;
+use App\User;
 use App\Player;
 use App\Team;
 use App\Http\Resources\PlayerCollection;
@@ -40,7 +42,22 @@ class PlayersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'name' => 'required|string'
+        ]);
+
+        $JWTUser        = JWTAuth::user();
+        $user           = User::find($JWTUser['id']);
+
+        $player = Player::create([
+            'name'      => request('name'),
+            'team_id'   => $user->team->id,
+            'goals'     => 0,
+            'assists'   => 0,
+            'points'    => 0
+        ]);
+
+        return $player;
     }
 
     /**
@@ -85,6 +102,8 @@ class PlayersController extends Controller
      */
     public function destroy(Player $player)
     {
-        //
+        $player->delete();
+
+        return;
     }
 }

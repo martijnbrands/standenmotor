@@ -3177,10 +3177,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      expand: false,
+      dialog: false,
+      playerName: "",
+      hasError: false,
+      errorMessage: "",
       teamId: null,
       isLoading: true,
       pagination: {
@@ -3216,7 +3273,7 @@ __webpack_require__.r(__webpack_exports__);
     getTeamId: function getTeamId() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/teamId').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/teamId").then(function (response) {
         _this.teamId = response.data;
 
         _this.getPlayers();
@@ -3226,10 +3283,41 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.isLoading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.teamId + '/players').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/teams/" + this.teamId + "/players").then(function (response) {
         var data = response.data.data;
         _this2.players = data;
         _this2.isLoading = false;
+      });
+    },
+    addPlayer: function addPlayer() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/players/create", {
+        name: this.playerName
+      }).then(function (response) {
+        _this3.players.push(response.data);
+
+        _this3.playerName = "";
+        _this3.dialog = false;
+        _this3.hasError = false;
+        _this3.errorMessage = "";
+        console.log(_this3.players);
+      })["catch"](function (error) {
+        console.log(error.response.data.errors.name[0]);
+        _this3.hasError = true;
+        _this3.errorMessage = error.response.data.errors.name[0];
+      });
+    },
+    removePlayer: function removePlayer(player) {
+      this.removeConfirm(player);
+    },
+    removeConfirm: function removeConfirm(player) {
+      var _this4 = this;
+
+      var index = this.players.indexOf(player);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/players/delete/" + player.id).then(function (response) {
+        _this4.players.splice(index, 1);
+      })["catch"](function (error) {//
       });
     }
   }
@@ -3495,7 +3583,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".v-datatable thead th.column.sortable {\n  padding: 0 12px;\n}\ntable.v-table tbody td {\n  padding: 0 12px !important;\n}", ""]);
+exports.push([module.i, ".v-datatable thead th.column.sortable {\n  padding: 0 12px;\n}\ntable.v-table tbody td {\n  padding: 0 12px !important;\n}\n.v-btn--bottom:not(.v-btn--absolute) {\n  bottom: 74px;\n}", ""]);
 
 // exports
 
@@ -5408,60 +5496,262 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-data-table",
-    {
-      staticClass: "elevation-1",
-      attrs: {
-        headers: _vm.headers,
-        pagination: _vm.pagination,
-        items: _vm.players,
-        "hide-actions": "",
-        loading: _vm.isLoading,
-        "item-key": "name"
-      },
-      on: {
-        "update:pagination": function($event) {
-          _vm.pagination = $event
-        }
-      },
-      scopedSlots: _vm._u([
-        {
-          key: "items",
-          fn: function(props) {
-            return [
-              _c("tr", [
-                _c("td", [_vm._v(_vm._s(props.item.name))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-center" }, [
-                  _vm._v(_vm._s(props.item.goals))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-center" }, [
-                  _vm._v(_vm._s(props.item.assists))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-center font-weight-bold" }, [
-                  _vm._v(_vm._s(props.item.points))
-                ])
-              ])
-            ]
-          }
-        }
-      ])
-    },
+    "div",
     [
-      _c("v-progress-linear", {
-        attrs: { color: "blue", indeterminate: "" },
-        scopedSlots: _vm._u([
-          {
-            key: "progress",
-            fn: function() {
-              return undefined
+      _c(
+        "v-data-table",
+        {
+          staticClass: "elevation-1",
+          attrs: {
+            headers: _vm.headers,
+            pagination: _vm.pagination,
+            items: _vm.players,
+            "hide-actions": "",
+            expand: _vm.expand,
+            loading: _vm.isLoading,
+            "item-key": "name"
+          },
+          on: {
+            "update:pagination": function($event) {
+              _vm.pagination = $event
+            }
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "items",
+              fn: function(props) {
+                return [
+                  _c(
+                    "tr",
+                    {
+                      on: {
+                        click: function($event) {
+                          props.expanded = !props.expanded
+                        }
+                      }
+                    },
+                    [
+                      _c("td", [_vm._v(_vm._s(props.item.name))]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-xs-center" }, [
+                        _vm._v(_vm._s(props.item.goals))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-xs-center" }, [
+                        _vm._v(_vm._s(props.item.assists))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "text-xs-center font-weight-bold" },
+                        [_vm._v(_vm._s(props.item.points))]
+                      )
+                    ]
+                  )
+                ]
+              }
             },
-            proxy: true
+            {
+              key: "expand",
+              fn: function(props) {
+                return [
+                  _c(
+                    "v-card",
+                    { attrs: { flat: "" } },
+                    [
+                      _c(
+                        "v-text-field",
+                        { attrs: { label: "Naam:", value: props.item.name } },
+                        [_vm._v(_vm._s(props.item.name))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-text-field",
+                        {
+                          attrs: {
+                            type: "number",
+                            label: "Goals:",
+                            value: props.item.goals
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t" +
+                              _vm._s(props.item.goals) +
+                              "\n\t\t\t\t\t"
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-text-field",
+                        {
+                          attrs: {
+                            type: "number",
+                            label: "Assists:",
+                            value: props.item.assists
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t" +
+                              _vm._s(props.item.assists) +
+                              "\n\t\t\t\t\t"
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        [
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "error" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.removePlayer(props.item)
+                                }
+                              }
+                            },
+                            [_vm._v("Verwijderen")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "primary" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.updatePlayer()
+                                }
+                              }
+                            },
+                            [_vm._v("Opslaan")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _c("v-progress-linear", {
+            attrs: { color: "blue", indeterminate: "" },
+            scopedSlots: _vm._u([
+              {
+                key: "progress",
+                fn: function() {
+                  return undefined
+                },
+                proxy: true
+              }
+            ])
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
+        { staticStyle: { height: "100px" }, attrs: { position: "relative" } },
+        [
+          _c(
+            "v-btn",
+            {
+              attrs: {
+                fixed: "",
+                fab: "",
+                bottom: "",
+                right: "",
+                color: "warning"
+              },
+              on: {
+                click: function($event) {
+                  _vm.dialog = !_vm.dialog
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("mdi-plus")])],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "500px" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
           }
-        ])
-      })
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-text",
+                [
+                  _vm.hasError
+                    ? _c("v-alert", {
+                        attrs: { value: true, type: "error" },
+                        domProps: { textContent: _vm._s(_vm.errorMessage) }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: { label: "Speler naam:" },
+                    model: {
+                      value: _vm.playerName,
+                      callback: function($$v) {
+                        _vm.playerName = $$v
+                      },
+                      expression: "playerName"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "", color: "primary" },
+                      on: {
+                        click: function($event) {
+                          return _vm.addPlayer()
+                        }
+                      }
+                    },
+                    [_vm._v("Opslaan")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )

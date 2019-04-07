@@ -23,6 +23,7 @@ Route::group(['namespace' => 'Api'], function(){
      * Example: php artisan make:controller Api/PlayersController -r --model=Player
      */
 
+    /* AUTHENTICATION */
     Route::post('/auth/register', 'AuthController@register');
     Route::post('auth/login', 'AuthController@login');
     Route::group(['middleware' => 'jwt.auth'], function(){
@@ -34,6 +35,12 @@ Route::group(['namespace' => 'Api'], function(){
         Route::get('auth/refresh', 'AuthController@refresh');
     });
 
-    // Route::get('/teamId', 'TeamsController@getId');
-    Route::get('/{teamId}/players', 'PlayersController@index');
+    /* PLAYERS */
+    Route::group(['middleware' => 'jwt.auth'], function(){
+        Route::post('/players/create', 'PlayersController@store');
+    });
+
+    Route::delete('/players/delete/{player}', 'PlayersController@destroy');
+
+    Route::get('/teams/{teamId}/players', 'PlayersController@index');
 });
