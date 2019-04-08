@@ -1,22 +1,19 @@
 <template>
   <div>
-    <div v-if="loading">
-      <v-progress-linear :indeterminate="true"></v-progress-linear>
-    </div>
-    <div v-if="!loading">
+   
       <v-card >
         <v-btn flat color="primary" @click="checkMatches();">Check wedstrijden</v-btn>
 
         <v-card-text class="py-0">
-          <v-timeline align-top dense>
+          <v-timeline align-top dense v-for="match in matches" :key="match.matchId">
             <v-timeline-item color="warning" small>
               <v-layout wrap pt-3>
                 <v-flex xs5>
-                  <strong>12-01-2019</strong>
-                  <div>12:00</div>
+                  <strong>{{ moment(match.matchDate) }}</strong>
+                  <div>{{ match.matchTime }}</div>
                 </v-flex>
                 <v-flex>
-                  <strong class="d-block pb-3">Oss H2</strong>
+                  <strong class="d-block pb-3">{{ match.homeTeam }}</strong>
                   <!-- <div
                     v-for="driverName in driver.driverNames"
                     :key="driverName.id"
@@ -28,11 +25,11 @@
           </v-timeline>
         </v-card-text>
       </v-card>
-    </div>
   </div>
 </template>
 
 <script>
+  import moment from 'moment';
   import axios from "axios";
   export default {
     data() {
@@ -74,6 +71,7 @@
           .then((response) => {
             console.log(response)
             this.loading = false
+            this.matches = response.data;
           })
           .catch((error) => {
             //
@@ -81,13 +79,17 @@
       },
 
       getTeamId(){
-      this.loading = true
+      this.loading = false;
       axios.get('/teamId')
         .then(response => {
           this.teamId = response.data;
           this.getSchedule();
         });
-    },
+      },
+
+      moment: function(date) {
+        return moment(date).format("DD-MM-YYYY");
+      }
     }
   }
 </script>

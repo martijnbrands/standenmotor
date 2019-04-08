@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import App from './App.vue';
+import moment from 'moment';
 
 import Score from "./views/Score.vue";
 import Drivers from "./views/Drivers.vue";

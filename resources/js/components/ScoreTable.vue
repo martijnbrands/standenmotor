@@ -54,7 +54,7 @@
     	</v-data-table>
     
 		<v-card-text style="height: 100px;" position="relative">
-      		<v-btn fixed fab bottom right color="warning" @click="dialog = !dialog">
+      		<v-btn fixed small fab bottom right color="warning" @click="dialog = !dialog">
         		<v-icon>mdi-plus</v-icon>
       		</v-btn>
     	</v-card-text>

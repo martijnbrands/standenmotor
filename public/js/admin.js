@@ -48912,7 +48912,7 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/martijn/Desktop/websites/standenmotor/resources/js/admin.js */"./resources/js/admin.js");
+module.exports = __webpack_require__(/*! /Users/dannyklaren/Desktop/projects/sm3/resources/js/admin.js */"./resources/js/admin.js");
 
 
 /***/ })

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use JWTAuth;
 use App\User;
 use App\Match;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +18,12 @@ class MatchesController extends Controller
      */
     public function index()
     {
-        //
+        $JWTUser = JWTAuth::user();
+        $user = User::find($JWTUser['id']);
+
+        $matches = Match::where('teamId', $user->team->teamId)->orderBy('matchDate')->get();
+
+        return $matches;
     }
 
     /**
@@ -31,12 +37,28 @@ class MatchesController extends Controller
         $user = User::find($JWTUser['id']);
 
         $matches = $request->all();
+
         foreach($matches as $match){
-            $m = Match::where('matchId', '=', $match->matchId)->count();
-            if($m > 0) {
-                return "Match does not exist";
+            if(!Match::where('matchId', $match['matchId'])->exists()) {
+                $m = Match::create([
+                    'teamId' => $user->team->teamId,
+                    'matchId' => $match['matchId'],
+                    'matchDate' => Carbon::parse($match['matchDate'])->format('Y-m-d'),
+                    'matchTime' => $match['matchTime'],
+                    'awayTeam' => $match['awayTeam'],
+                    'homeTeam' => $match['homeTeam'],
+                    'field' => $match['field']
+                ]);
+
+                // if($match['awayUniform']) $m->update(['awayUniform' => $match['awayUniform']]);
+
             } else {
-                return "match does exist";
+                $m = Match::where('matchId', $match['matchId'])->first();
+
+                $m->update([
+                    'matchDate' => Carbon::parse($match['matchDate'])->format('Y-m-d'),
+                    'matchTime' => $match['matchTime']
+                ]);
             }
         }
         
