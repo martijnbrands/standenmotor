@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use JWTAuth;
+use App\User;
 use App\Match;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,9 +27,18 @@ class MatchesController extends Controller
      */
     public function create(Request $request)
     {
-        // foreach($request->all() as $match){
-            
-        // }
+        $JWTUser = JWTAuth::user();
+        $user = User::find($JWTUser['id']);
+
+        $matches = $request->all();
+        foreach($matches as $match){
+            $m = Match::where('matchId', '=', $match->matchId)->count();
+            if($m > 0) {
+                return "Match does not exist";
+            } else {
+                return "match does exist";
+            }
+        }
         
         return $request;
     }

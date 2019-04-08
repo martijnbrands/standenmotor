@@ -3212,12 +3212,16 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkedMatches = checkedMatches;
 
         _this.updateMatches(checkedMatches);
-      })["catch"](function (error) {});
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     updateMatches: function updateMatches(checkedMatches) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/matches/create', checkedMatches).then(function (response) {
         console.log(response);
-      })["catch"](function (error) {});
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     getSchedule: function getSchedule() {
       var _this2 = this;

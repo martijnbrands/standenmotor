@@ -54,7 +54,9 @@
             this.checkedMatches = checkedMatches;
             this.updateMatches(checkedMatches);
         })
-        .catch((error) => { });
+        .catch((error) => {
+           console.log(error);
+         });
       },
 
       updateMatches(checkedMatches) {
@@ -62,7 +64,9 @@
         .then((response) => {
           console.log(response);
         })
-        .catch((error) => { });
+        .catch((error) => {
+          console.log(error);
+         });
       },
 
       getSchedule() {
