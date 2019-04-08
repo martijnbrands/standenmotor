@@ -25,5 +25,12 @@ class UsersTableSeeder extends Seeder
             'password'      => bcrypt('secret'),
             'account_type'  => 'super_admin'
         ]);
+
+        DB::table('users')->insert([
+            'name'          => 'Martijn Brands',
+            'email'         => 'martijnbrands@standenmotor.nl',
+            'password'      => bcrypt('secret'),
+            'account_type'  => 'team_admin'
+        ]);
     }
 }

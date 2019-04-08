@@ -91,7 +91,20 @@ class PlayersController extends Controller
      */
     public function update(Request $request, Player $player)
     {
-        //
+        request()->validate([
+            'name' => 'required|string',
+            'goals' => 'nullable|integer|min:0',
+            'assists' => 'nullable|integer|min:0'
+        ]);
+
+        $player->update([
+            'name' => request('name'),
+            'goals' => request('goals'),
+            'assists' => request('assists'),
+            'points' => $this->calculatePoints($request)
+        ]);
+
+        return $request;
     }
 
     /**
@@ -105,5 +118,10 @@ class PlayersController extends Controller
         $player->delete();
 
         return;
+    }
+
+    public function calculatePoints($request)
+    {
+        return ($request->goals * 2) + $request->assists;
     }
 }

@@ -38,6 +38,13 @@ Route::group(['namespace' => 'Api'], function(){
     /* PLAYERS */
     Route::group(['middleware' => 'jwt.auth'], function(){
         Route::post('/players/create', 'PlayersController@store');
+        Route::patch('/players/update/{player}', 'PlayersController@update');
+    });
+
+    /* MATCHES */
+    Route::group(['middleware' => 'jwt.auth'], function(){
+        Route::get('/matches/{teamId}', 'MatchesController@index');
+        Route::post('/matches/create', 'MatchesController@create');
     });
 
     Route::delete('/players/delete/{player}', 'PlayersController@destroy');

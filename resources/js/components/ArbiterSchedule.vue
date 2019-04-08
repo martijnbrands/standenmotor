@@ -5,6 +5,7 @@
     </div>
     <div v-if="!loading">
         <v-alert v-if="arbiters.length <= 0"
+        class="black--text"
         :value="true"
         type="warning">
         Er zijn op dit moment geen wedstrijden om te fluiten.

@@ -3108,6 +3108,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3144,6 +3145,104 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DriversSchedule.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DriversSchedule.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loading: true,
+      teamId: null,
+      checkedMatches: [],
+      matches: []
+    };
+  },
+  created: function created() {
+    this.getTeamId();
+  },
+  methods: {
+    checkMatches: function checkMatches() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('https://mhc-oss-api.herokuapp.com/api/teams/' + this.teamId).then(function (response) {
+        var checkedMatches = response.data.matches;
+        _this.checkedMatches = checkedMatches;
+
+        _this.updateMatches(checkedMatches);
+      })["catch"](function (error) {});
+    },
+    updateMatches: function updateMatches(checkedMatches) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/matches/create', checkedMatches).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {});
+    },
+    getSchedule: function getSchedule() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/matches/' + this.teamId).then(function (response) {
+        console.log(response);
+        _this2.loading = false;
+      })["catch"](function (error) {//
+      });
+    },
+    getTeamId: function getTeamId() {
+      var _this3 = this;
+
+      this.loading = true;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/teamId').then(function (response) {
+        _this3.teamId = response.data;
+
+        _this3.getSchedule();
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ScoreTable.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ScoreTable.vue?vue&type=script&lang=js& ***!
@@ -3155,6 +3254,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
 //
 //
 //
@@ -3301,24 +3403,42 @@ __webpack_require__.r(__webpack_exports__);
         _this3.dialog = false;
         _this3.hasError = false;
         _this3.errorMessage = "";
-        console.log(_this3.players);
       })["catch"](function (error) {
-        console.log(error.response.data.errors.name[0]);
         _this3.hasError = true;
         _this3.errorMessage = error.response.data.errors.name[0];
       });
     },
-    removePlayer: function removePlayer(player) {
-      this.removeConfirm(player);
-    },
-    removeConfirm: function removeConfirm(player) {
+    updatePlayer: function updatePlayer(player) {
       var _this4 = this;
 
-      var index = this.players.indexOf(player);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/players/delete/" + player.id).then(function (response) {
-        _this4.players.splice(index, 1);
-      })["catch"](function (error) {//
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch("/players/update/" + player.id, {
+        name: player.name,
+        goals: player.goals,
+        assists: player.assists
+      }).then(function (response) {
+        _this4.hasError = false;
+        _this4.errorMessage = "";
+      })["catch"](function (error) {
+        _this4.hasError = true;
+        _this4.errorMessage = error.response.data.errors.name[0];
       });
+    },
+    removePlayer: function removePlayer(player) {
+      var _this5 = this;
+
+      var index = this.players.indexOf(player);
+      confirm('Weet je zeker dat je deze speler wilt verwijderen?') && axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/players/delete/" + player.id).then(function (response) {
+        _this5.players.splice(index, 1);
+      })["catch"](function (error) {});
+    },
+    playerChanged: function playerChanged(player) {
+      if (player.goals && player.assists) {
+        player.points = player.goals * 2 + parseInt(player.assists);
+      } else if (player.assists) {
+        player.points = player.assists;
+      } else {
+        player.points = player.goals * 2;
+      }
     }
   }
 });
@@ -5163,11 +5283,18 @@ var render = function() {
           "div",
           [
             _vm.arbiters.length <= 0
-              ? _c("v-alert", { attrs: { value: true, type: "warning" } }, [
-                  _vm._v(
-                    "\n      Er zijn op dit moment geen wedstrijden om te fluiten.\n      "
-                  )
-                ])
+              ? _c(
+                  "v-alert",
+                  {
+                    staticClass: "black--text",
+                    attrs: { value: true, type: "warning" }
+                  },
+                  [
+                    _vm._v(
+                      "\n      Er zijn op dit moment geen wedstrijden om te fluiten.\n      "
+                    )
+                  ]
+                )
               : _vm._e(),
             _vm._v(" "),
             _c(
@@ -5276,32 +5403,84 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-card",
-    [
-      _c(
-        "v-card-text",
-        { staticClass: "py-0" },
-        [
-          _c(
-            "v-timeline",
-            { attrs: { "align-top": "", dense: "" } },
-            [
-              _c(
-                "v-timeline-item",
-                { attrs: { color: "warning", small: "" } },
-                [_c("v-layout", { attrs: { wrap: "", "pt-3": "" } })],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+  return _c("div", [
+    _vm.loading
+      ? _c(
+          "div",
+          [_c("v-progress-linear", { attrs: { indeterminate: true } })],
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.loading
+      ? _c(
+          "div",
+          [
+            _c(
+              "v-card",
+              [
+                _c(
+                  "v-btn",
+                  {
+                    attrs: { flat: "", color: "primary" },
+                    on: {
+                      click: function($event) {
+                        return _vm.checkMatches()
+                      }
+                    }
+                  },
+                  [_vm._v("Check wedstrijden")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-card-text",
+                  { staticClass: "py-0" },
+                  [
+                    _c(
+                      "v-timeline",
+                      { attrs: { "align-top": "", dense: "" } },
+                      [
+                        _c(
+                          "v-timeline-item",
+                          { attrs: { color: "warning", small: "" } },
+                          [
+                            _c(
+                              "v-layout",
+                              { attrs: { wrap: "", "pt-3": "" } },
+                              [
+                                _c("v-flex", { attrs: { xs5: "" } }, [
+                                  _c("strong", [_vm._v("12-01-2019")]),
+                                  _vm._v(" "),
+                                  _c("div", [_vm._v("12:00")])
+                                ]),
+                                _vm._v(" "),
+                                _c("v-flex", [
+                                  _c(
+                                    "strong",
+                                    { staticClass: "d-block pb-3" },
+                                    [_vm._v("Oss H2")]
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -5508,8 +5687,7 @@ var render = function() {
             items: _vm.players,
             "hide-actions": "",
             expand: _vm.expand,
-            loading: _vm.isLoading,
-            "item-key": "name"
+            loading: _vm.isLoading
           },
           on: {
             "update:pagination": function($event) {
@@ -5557,49 +5735,62 @@ var render = function() {
                 return [
                   _c(
                     "v-card",
-                    { attrs: { flat: "" } },
+                    { staticClass: "py-3", attrs: { flat: "" } },
                     [
-                      _c(
-                        "v-text-field",
-                        { attrs: { label: "Naam:", value: props.item.name } },
-                        [_vm._v(_vm._s(props.item.name))]
-                      ),
+                      _c("v-text-field", {
+                        attrs: { label: "Naam:" },
+                        model: {
+                          value: props.item.name,
+                          callback: function($$v) {
+                            _vm.$set(props.item, "name", $$v)
+                          },
+                          expression: "props.item.name"
+                        }
+                      }),
                       _vm._v(" "),
-                      _c(
-                        "v-text-field",
-                        {
-                          attrs: {
-                            type: "number",
-                            label: "Goals:",
-                            value: props.item.goals
+                      _c("v-text-field", {
+                        attrs: {
+                          type: "tel",
+                          label: "Goals:",
+                          value: props.item.goals,
+                          min: 0,
+                          placeholder: "0"
+                        },
+                        on: {
+                          keyup: function($event) {
+                            return _vm.playerChanged(props.item)
                           }
                         },
-                        [
-                          _vm._v(
-                            "\n\t\t\t\t\t\t" +
-                              _vm._s(props.item.goals) +
-                              "\n\t\t\t\t\t"
-                          )
-                        ]
-                      ),
+                        model: {
+                          value: props.item.goals,
+                          callback: function($$v) {
+                            _vm.$set(props.item, "goals", $$v)
+                          },
+                          expression: "props.item.goals"
+                        }
+                      }),
                       _vm._v(" "),
-                      _c(
-                        "v-text-field",
-                        {
-                          attrs: {
-                            type: "number",
-                            label: "Assists:",
-                            value: props.item.assists
+                      _c("v-text-field", {
+                        attrs: {
+                          type: "tel",
+                          label: "Assists:",
+                          value: props.item.assists,
+                          min: 0,
+                          placeholder: "0"
+                        },
+                        on: {
+                          keyup: function($event) {
+                            return _vm.playerChanged(props.item)
                           }
                         },
-                        [
-                          _vm._v(
-                            "\n\t\t\t\t\t\t" +
-                              _vm._s(props.item.assists) +
-                              "\n\t\t\t\t\t"
-                          )
-                        ]
-                      ),
+                        model: {
+                          value: props.item.assists,
+                          callback: function($$v) {
+                            _vm.$set(props.item, "assists", $$v)
+                          },
+                          expression: "props.item.assists"
+                        }
+                      }),
                       _vm._v(" "),
                       _c(
                         "v-card-actions",
@@ -5609,7 +5800,7 @@ var render = function() {
                           _c(
                             "v-btn",
                             {
-                              attrs: { color: "error" },
+                              attrs: { small: "", flat: "", color: "error" },
                               on: {
                                 click: function($event) {
                                   return _vm.removePlayer(props.item)
@@ -5622,10 +5813,10 @@ var render = function() {
                           _c(
                             "v-btn",
                             {
-                              attrs: { color: "primary" },
+                              attrs: { small: "", color: "primary" },
                               on: {
                                 click: function($event) {
-                                  return _vm.updatePlayer()
+                                  return _vm.updatePlayer(props.item)
                                 }
                               }
                             },
@@ -5644,7 +5835,7 @@ var render = function() {
         },
         [
           _c("v-progress-linear", {
-            attrs: { color: "blue", indeterminate: "" },
+            attrs: { color: "primary", indeterminate: "" },
             scopedSlots: _vm._u([
               {
                 key: "progress",
@@ -47035,15 +47226,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DriversSchedule_vue_vue_type_template_id_1a22a467___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DriversSchedule.vue?vue&type=template&id=1a22a467& */ "./resources/js/components/DriversSchedule.vue?vue&type=template&id=1a22a467&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _DriversSchedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DriversSchedule.vue?vue&type=script&lang=js& */ "./resources/js/components/DriversSchedule.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DriversSchedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _DriversSchedule_vue_vue_type_template_id_1a22a467___WEBPACK_IMPORTED_MODULE_0__["render"],
   _DriversSchedule_vue_vue_type_template_id_1a22a467___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -47057,6 +47250,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/DriversSchedule.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/DriversSchedule.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/DriversSchedule.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DriversSchedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DriversSchedule.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DriversSchedule.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DriversSchedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -47742,8 +47949,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/dannyklaren/Desktop/projects/sm3/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/dannyklaren/Desktop/projects/sm3/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/martijn/Desktop/websites/standenmotor/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/martijn/Desktop/websites/standenmotor/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

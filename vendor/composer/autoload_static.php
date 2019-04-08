@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit54da95fceffe9892e7e3c0e00644f615
+class ComposerStaticIniteb95d7d70424e191e725b2991be220b7
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -390,10 +390,12 @@ class ComposerStaticInit54da95fceffe9892e7e3c0e00644f615
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Admin\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminController.php',
         'App\\Http\\Controllers\\Admin\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LoginController.php',
+        'App\\Http\\Controllers\\Admin\\MatchesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MatchesController.php',
         'App\\Http\\Controllers\\Admin\\PlayersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/PlayersController.php',
         'App\\Http\\Controllers\\Admin\\TeamsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/TeamsController.php',
         'App\\Http\\Controllers\\Admin\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UsersController.php',
         'App\\Http\\Controllers\\Api\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthController.php',
+        'App\\Http\\Controllers\\Api\\MatchesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/MatchesController.php',
         'App\\Http\\Controllers\\Api\\PlayersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PlayersController.php',
         'App\\Http\\Controllers\\Api\\TeamsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/TeamsController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -414,6 +416,7 @@ class ComposerStaticInit54da95fceffe9892e7e3c0e00644f615
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\RegisterFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RegisterFormRequest.php',
         'App\\Http\\Resources\\PlayerCollection' => __DIR__ . '/../..' . '/app/Http/Resources/PlayerCollection.php',
+        'App\\Match' => __DIR__ . '/../..' . '/app/Match.php',
         'App\\Player' => __DIR__ . '/../..' . '/app/Player.php',
         'App\\Policies\\PlayerPolicy' => __DIR__ . '/../..' . '/app/Policies/PlayerPolicy.php',
         'App\\Policies\\TeamPolicy' => __DIR__ . '/../..' . '/app/Policies/TeamPolicy.php',
@@ -4058,10 +4061,10 @@ class ComposerStaticInit54da95fceffe9892e7e3c0e00644f615
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit54da95fceffe9892e7e3c0e00644f615::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit54da95fceffe9892e7e3c0e00644f615::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit54da95fceffe9892e7e3c0e00644f615::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit54da95fceffe9892e7e3c0e00644f615::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticIniteb95d7d70424e191e725b2991be220b7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticIniteb95d7d70424e191e725b2991be220b7::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticIniteb95d7d70424e191e725b2991be220b7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticIniteb95d7d70424e191e725b2991be220b7::$classMap;
 
         }, null, ClassLoader::class);
     }

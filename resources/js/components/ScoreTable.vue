@@ -1,50 +1,53 @@
 <template>
   	<div>
     	<v-data-table
-      		:headers="headers"
+      :headers="headers"
 			v-bind:pagination.sync="pagination"
 			:items="players"
 			hide-actions
 			:expand="expand"
 			:loading="isLoading"
-			item-key="name"
 			class="elevation-1"
     	>
       	
-			<v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
+			<v-progress-linear v-slot:progress color="primary" indeterminate></v-progress-linear>
 			
 			<template slot="items" slot-scope="props">
 				<tr @click="props.expanded = !props.expanded">
 					<td>{{ props.item.name }}</td>
 					<td class="text-xs-center">{{ props.item.goals }}</td>
 					<td class="text-xs-center">{{ props.item.assists }}</td>
-					<td class="text-xs-center font-weight-bold">{{ props.item.points }}</td>
+          <td class="text-xs-center font-weight-bold">{{ props.item.points }}</td>
 				</tr>
 			</template>
 		
 			<template v-slot:expand="props">
-				<v-card flat>
-					<v-text-field label="Naam:" v-bind:value="props.item.name">{{ props.item.name }}</v-text-field>
+				<v-card class="py-3" flat>
+					<v-text-field label="Naam:" v-model="props.item.name"></v-text-field>
 					<v-text-field
-						type="number"
+						type="tel"
 						label="Goals:"
 						v-bind:value="props.item.goals"
-					>
-						{{ props.item.goals}}
-					</v-text-field>
+            v-model="props.item.goals"
+            :min="0"
+            placeholder="0"
+            v-on:keyup="playerChanged(props.item)"
+					></v-text-field>
 					<v-text-field
-						type="number"
+						type="tel"
 						label="Assists:"
 						v-bind:value="props.item.assists"
-					>
-						{{ props.item.assists}}
-					</v-text-field>
+            v-model="props.item.assists"
+            :min="0"
+            placeholder="0"
+            v-on:keyup="playerChanged(props.item)"
+					></v-text-field>
 					
 					<v-card-actions>
 						<v-spacer></v-spacer>
 				
-						<v-btn color="error" @click="removePlayer(props.item);">Verwijderen</v-btn>
-						<v-btn color="primary" @click="updatePlayer();">Opslaan</v-btn>
+						<v-btn small flat color="error" @click="removePlayer(props.item);">Verwijderen</v-btn>
+						<v-btn small color="primary" @click="updatePlayer(props.item)">Opslaan</v-btn>
 					</v-card-actions>
 				</v-card>
 			</template>
@@ -142,30 +145,46 @@ export default {
           this.dialog = false;
           this.hasError = false;
           this.errorMessage = "";
-
-          console.log(this.players);
         })
         .catch(error => {
-          console.log(error.response.data.errors.name[0]);
-
           this.hasError = true;
           this.errorMessage = error.response.data.errors.name[0];
         });
     },
-    removePlayer(player) {
-		this.removeConfirm(player);
+    updatePlayer(player) {
+      axios
+        .patch("/players/update/" + player.id, {
+          name: player.name,
+          goals: player.goals,
+          assists: player.assists
+        })
+        .then((response) => {
+          this.hasError = false;
+          this.errorMessage = "";
+        })
+        .catch(error => {
+          this.hasError = true;
+          this.errorMessage = error.response.data.errors.name[0];
+        });
+
     },
-    removeConfirm(player) {
-		const index = this.players.indexOf(player);
-		axios
-			.delete("/players/delete/" + player.id)
-			.then((response) => {
-				this.players.splice(index, 1);
-			})
-			.catch((error) => {
-				//
-			});
-	}
+    removePlayer(player) {
+      const index = this.players.indexOf(player);
+      confirm('Weet je zeker dat je deze speler wilt verwijderen?') && axios
+          .delete("/players/delete/" + player.id)
+          .then((response) => { this.players.splice(index, 1); })
+          .catch((error) => { });
+    },
+    playerChanged(player) {
+
+      if(player.goals && player.assists){
+        player.points = ((player.goals * 2) + parseInt(player.assists));
+      } else if(player.assists) {
+        player.points = player.assists;
+      } else {
+        player.points = (player.goals * 2);
+      }
+    }
   }
 };
 </script>
