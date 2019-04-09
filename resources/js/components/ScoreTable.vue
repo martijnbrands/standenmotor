@@ -57,7 +57,7 @@
       		<v-btn fixed small fab bottom right color="warning" @click="dialog = !dialog">
         		<v-icon>mdi-plus</v-icon>
       		</v-btn>
-    	</v-card-text>
+    </v-card-text>
     
 		<v-dialog v-model="dialog" max-width="500px">
       		<v-card>

@@ -8,7 +8,6 @@
         - combine remote api data with database data
             -   fix for awayUniform / tenue
         - Add players to driving schedule
-        - Check matches button out of v-card (change to icon)
 
 [ GENERAL ]
     - Header -> Get team ID/Name

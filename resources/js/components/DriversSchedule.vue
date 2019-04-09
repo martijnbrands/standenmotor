@@ -1,16 +1,13 @@
 <template>
   <div>
-   
       <v-card >
-        <v-btn flat color="primary" @click="checkMatches();">Check wedstrijden</v-btn>
-
         <v-card-text class="py-0">
           <v-timeline align-top dense v-for="match in matches" :key="match.matchId">
             <v-timeline-item color="warning" small>
               <v-layout wrap pt-3>
                 <v-flex xs5>
-                  <strong>{{ moment(match.matchDate) }}</strong>
-                  <div>{{ match.matchTime }}</div>
+                  <strong>{{ formatDate(match.matchDate) }}</strong>
+                  <div>{{ formatTime(match.matchTime) }}</div>
                 </v-flex>
                 <v-flex>
                   <strong class="d-block pb-3">{{ match.homeTeam }}</strong>
@@ -25,6 +22,11 @@
           </v-timeline>
         </v-card-text>
       </v-card>
+      <v-card-text style="height: 100px;" position="relative">
+      		<v-btn fixed small fab bottom right color="warning" @click="checkMatches();">
+        		<v-icon>mdi-refresh</v-icon>
+      		</v-btn>
+    </v-card-text>
   </div>
 </template>
 
@@ -87,9 +89,12 @@
         });
       },
 
-      moment: function(date) {
+      formatDate: function(date) {
         return moment(date).format("DD-MM-YYYY");
-      }
+      },
+      formatTime: function(time) {
+        return moment(time, "HH:mm:ss").format("HH:mm");
+      },
     }
   }
 </script>
