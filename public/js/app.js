@@ -3190,6 +3190,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3198,7 +3220,8 @@ __webpack_require__.r(__webpack_exports__);
       loading: true,
       teamId: null,
       checkedMatches: [],
-      matches: []
+      matches: [],
+      players: ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
     };
   },
   created: function created() {
@@ -3228,7 +3251,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/matches/' + this.teamId).then(function (response) {
-        console.log(response);
         _this2.loading = false;
         _this2.matches = response.data;
       })["catch"](function (error) {//
@@ -3237,7 +3259,6 @@ __webpack_require__.r(__webpack_exports__);
     getTeamId: function getTeamId() {
       var _this3 = this;
 
-      this.loading = false;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/teamId').then(function (response) {
         _this3.teamId = response.data;
 
@@ -23020,89 +23041,162 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "v-card",
-        [
-          _c(
-            "v-card-text",
-            { staticClass: "py-0" },
-            _vm._l(_vm.matches, function(match) {
-              return _c(
-                "v-timeline",
-                { key: match.matchId, attrs: { "align-top": "", dense: "" } },
-                [
-                  _c(
-                    "v-timeline-item",
-                    { attrs: { color: "warning", small: "" } },
-                    [
-                      _c(
-                        "v-layout",
-                        { attrs: { wrap: "", "pt-3": "" } },
-                        [
-                          _c("v-flex", { attrs: { xs5: "" } }, [
-                            _c("strong", [
-                              _vm._v(_vm._s(_vm.formatDate(match.matchDate)))
-                            ]),
-                            _vm._v(" "),
-                            _c("div", [
-                              _vm._v(_vm._s(_vm.formatTime(match.matchTime)))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("v-flex", [
-                            _c("strong", { staticClass: "d-block pb-3" }, [
-                              _vm._v(_vm._s(match.homeTeam))
-                            ])
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            }),
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-card-text",
-        { staticStyle: { height: "100px" }, attrs: { position: "relative" } },
-        [
-          _c(
-            "v-btn",
-            {
-              attrs: {
-                fixed: "",
-                small: "",
-                fab: "",
-                bottom: "",
-                right: "",
-                color: "warning"
+  return _c("div", [
+    _vm.loading
+      ? _c(
+          "div",
+          [_c("v-progress-linear", { attrs: { indeterminate: true } })],
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.loading
+      ? _c(
+          "div",
+          [
+            _c(
+              "v-card",
+              [
+                _c(
+                  "v-card-text",
+                  { staticClass: "py-0" },
+                  _vm._l(_vm.matches, function(match) {
+                    return _c(
+                      "v-timeline",
+                      {
+                        key: match.matchId,
+                        attrs: { "align-top": "", dense: "" }
+                      },
+                      [
+                        _c(
+                          "v-timeline-item",
+                          { attrs: { color: "warning", small: "" } },
+                          [
+                            _c(
+                              "v-layout",
+                              { attrs: { wrap: "", "pt-3": "" } },
+                              [
+                                _c("v-flex", { attrs: { xs5: "" } }, [
+                                  _c(
+                                    "strong",
+                                    { staticClass: "font-weight-bold" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.formatDate(match.matchDate))
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "font-weight-medium" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.formatTime(match.matchTime))
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "font-weight-light" },
+                                    [_vm._v(_vm._s(match.field))]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("v-flex", [
+                                  _c(
+                                    "strong",
+                                    {
+                                      staticClass:
+                                        "d-block pb-3 font-weight-bold"
+                                    },
+                                    [_vm._v(_vm._s(match.homeTeam))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mb-2" }, [
+                                    _vm._v("Martijn Brands")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mb-2" }, [
+                                    _vm._v("Danny Klaren")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mb-2" }, [
+                                    _vm._v("Martijn Brands")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mb-2" }, [
+                                    _vm._v("Danny Klaren")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mb-2" }, [
+                                    _vm._v("Martijn Brands")
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  attrs: {
+                                    items: _vm.players,
+                                    "menu-props": { maxHeight: "400" },
+                                    label: "Select",
+                                    multiple: "",
+                                    hint: "Rijders toevoegen",
+                                    "persistent-hint": "",
+                                    "single-line": ""
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  }),
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-card-text",
+              {
+                staticStyle: { height: "100px" },
+                attrs: { position: "relative" }
               },
-              on: {
-                click: function($event) {
-                  return _vm.checkMatches()
-                }
-              }
-            },
-            [_c("v-icon", [_vm._v("mdi-refresh")])],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+              [
+                _c(
+                  "v-btn",
+                  {
+                    attrs: {
+                      fixed: "",
+                      small: "",
+                      fab: "",
+                      bottom: "",
+                      right: "",
+                      color: "warning"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.checkMatches()
+                      }
+                    }
+                  },
+                  [_c("v-icon", [_vm._v("mdi-refresh")])],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
