@@ -24,8 +24,11 @@
     <link href="images/splashscreens/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
     <link href="images/splashscreens/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="images/icons/ios/ios-appicon-180-180.png"
-    />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/icons/ios/ios-appicon-76-76.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="images/icons/ios/ios-appicon-120-120.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="images/icons/ios/ios-appicon-152-152.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="images/icons/ios/ios-appicon-180-180.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="images/icons/ios/ios-appicon-1024-1024.png"/>
 
 
     <!-- CSRF Token -->
