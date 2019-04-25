@@ -17,11 +17,6 @@
                 <v-flex>
                   <strong class="d-block pb-3 font-weight-bold">{{ match.homeTeam }}</strong>
                   <div class="mb-2">Martijn Brands</div>
-                  <div class="mb-2">Danny Klaren</div>
-                  <div class="mb-2">Martijn Brands</div>
-                  <div class="mb-2">Danny Klaren</div>
-                  <div class="mb-2">Martijn Brands</div>
-
 
                   <!-- <div
                     v-for="driverName in driver.driverNames"

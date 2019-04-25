@@ -3207,11 +3207,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -23113,22 +23108,6 @@ var render = function() {
                                     },
                                     [_vm._v(_vm._s(match.homeTeam))]
                                   ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "mb-2" }, [
-                                    _vm._v("Martijn Brands")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "mb-2" }, [
-                                    _vm._v("Danny Klaren")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "mb-2" }, [
-                                    _vm._v("Martijn Brands")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "mb-2" }, [
-                                    _vm._v("Danny Klaren")
-                                  ]),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "mb-2" }, [
                                     _vm._v("Martijn Brands")
