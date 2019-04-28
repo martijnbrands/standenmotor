@@ -43,6 +43,9 @@ Route::group(['namespace' => 'Api'], function(){
         Route::post('/players/create', 'PlayersController@store');
         Route::patch('/players/update/{player}', 'PlayersController@update');
 
+        /* DRIVERS */
+        Route::post('/matches/drivers', 'DriversScheduleController@store');
+
         /* MATCHES */
         Route::get('/matches/{teamId}', 'MatchesController@index');
         Route::post('/matches/create', 'MatchesController@create');

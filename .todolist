@@ -5,7 +5,6 @@
     - If teamadmin scoretable show admin tools
 
 [ DRIVER SCHEDULE ]
-    - combine remote api data with database data
     - fix for awayUniform / tenue
     - Add players to driving schedule
 

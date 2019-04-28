@@ -19,4 +19,9 @@ class Player extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    public function matches()
+    {
+        return $this->belongsToMany(Team::class);
+    }
 }

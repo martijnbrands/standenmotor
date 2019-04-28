@@ -16,28 +16,48 @@
                 </v-flex>
                 <v-flex>
                   <strong class="d-block pb-3 font-weight-bold">{{ match.homeTeam }}</strong>
-                  <div class="mb-2">Martijn Brands</div>
-
-                  <!-- <div
-                    v-for="driverName in driver.driverNames"
-                    :key="driverName.id"
+                    <!-- <div
+                    v-for="player in players"
+                    :key="player.id"
                     class="mb-2"
-                  >{{ driverName }}</div> -->
+                  >{{ player.name }}</div> -->
                 </v-flex>
-                <v-select
-                  :items="players"
-                  :menu-props="{ maxHeight: '400' }"
-                  label="Select"
-                  multiple
-                  hint="Rijders toevoegen"
-                  persistent-hint
-                  single-line
-                ></v-select>
               </v-layout>
+              <v-btn flat small right color="warning" @click="dialog = !dialog">
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
             </v-timeline-item>
+            <v-dialog v-model="dialog" max-width="500px" :fullscreen="true">
+              <v-card>
+                <v-card-text>
+                    <!-- <v-alert :value="true" type="error" v-if="hasError" v-text="errorMessage"></v-alert> -->
+                    <v-select
+                      :items="players"
+                      item-text="name"
+                      item-value="id"
+                      :menu-props="{ maxHeight: '300' }"
+                      label="Select"
+                      multiple
+                      hint="Rijders toevoegen"
+                      persistent-hint
+                      single-line
+                      v-model="selectedPlayers"
+                    ></v-select>
+                    <!-- <v-text-field v-model="playerName" label="Speler naam:"></v-text-field> -->
+                </v-card-text>
+                
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn small flat color="error" @click="dialog = !dialog">Annuleren</v-btn>
+                    <v-btn flat color="primary" @click="addDrivers(match);">Opslaan</v-btn>
+                </v-card-actions>
+              </v-card>
+          </v-dialog>
           </v-timeline>
         </v-card-text>
+        
       </v-card>
+      
       <v-card-text style="height: 100px;" position="relative">
       		<v-btn fixed small fab bottom right color="warning" @click="checkMatches();">
         		<v-icon>mdi-refresh</v-icon>
@@ -55,28 +75,18 @@
       return {
         loading: true,
         teamId: null,
+         dialog: false,
         checkedMatches: [],
         matches: [],
-        players: [
-          'Alabama', 'Alaska', 'American Samoa', 'Arizona',
-          'Arkansas', 'California', 'Colorado', 'Connecticut',
-          'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-          'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-          'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-          'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-          'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-          'Missouri', 'Montana', 'Nebraska', 'Nevada',
-          'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-          'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-          'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-          'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-          'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-          'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-        ]
+        players: [],
+        selectedPlayers: []
       }
     },
     created() {
       this.getTeamId();
+     
+
+      
     },
     methods: {
       checkMatches() {
@@ -90,9 +100,22 @@
            console.log(error);
          });
       },
-
+      
       updateMatches(checkedMatches) {
         axios.post('/matches/create', checkedMatches)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+         });
+      },
+
+      addDrivers(match) {
+        axios.post('/matches/drivers',{
+          'match': match,
+          'players': this.selectedPlayers
+        })
         .then((response) => {
           console.log(response);
         })
@@ -109,16 +132,23 @@
             
           })
           .catch((error) => {
-            //
+            console.log(error);
           });
       },
 
       getTeamId(){
-      axios.get('/teamId')
-        .then(response => {
-          this.teamId = response.data;
-          this.getSchedule();
-        });
+        axios.get('/teamId')
+          .then(response => {
+            this.teamId = response.data;
+            this.getSchedule();
+            this.getPlayers();
+          });
+        },
+        getPlayers() {
+          axios.get("/teams/" + this.teamId + "/players")
+          .then((response) => {
+            this.players = response.data.data;
+          });
       },
 
       formatDate: function(date) {

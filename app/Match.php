@@ -21,4 +21,9 @@ class Match extends Model
         'homeTeam',
         'field'
     ];
+
+    public function players()
+    {
+        return $this->belongsToMany(Player::class);
+    }
 }

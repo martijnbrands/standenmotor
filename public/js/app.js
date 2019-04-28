@@ -3207,6 +3207,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3214,9 +3234,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loading: true,
       teamId: null,
+      dialog: false,
       checkedMatches: [],
       matches: [],
-      players: ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+      players: [],
+      selectedPlayers: []
     };
   },
   created: function created() {
@@ -3242,13 +3264,24 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    addDrivers: function addDrivers(match) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/matches/drivers', {
+        'match': match,
+        'players': this.selectedPlayers
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     getSchedule: function getSchedule() {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/matches/' + this.teamId).then(function (response) {
         _this2.loading = false;
         _this2.matches = response.data;
-      })["catch"](function (error) {//
+      })["catch"](function (error) {
+        console.log(error);
       });
     },
     getTeamId: function getTeamId() {
@@ -3258,6 +3291,15 @@ __webpack_require__.r(__webpack_exports__);
         _this3.teamId = response.data;
 
         _this3.getSchedule();
+
+        _this3.getPlayers();
+      });
+    },
+    getPlayers: function getPlayers() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/teams/" + this.teamId + "/players").then(function (response) {
+        _this4.players = response.data.data;
       });
     },
     formatDate: function formatDate(date) {
@@ -23107,24 +23149,114 @@ var render = function() {
                                         "d-block pb-3 font-weight-bold"
                                     },
                                     [_vm._v(_vm._s(match.homeTeam))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "mb-2" }, [
-                                    _vm._v("Martijn Brands")
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("v-select", {
-                                  attrs: {
-                                    items: _vm.players,
-                                    "menu-props": { maxHeight: "400" },
-                                    label: "Select",
-                                    multiple: "",
-                                    hint: "Rijders toevoegen",
-                                    "persistent-hint": "",
-                                    "single-line": ""
+                                  )
+                                ])
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  flat: "",
+                                  small: "",
+                                  right: "",
+                                  color: "warning"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.dialog = !_vm.dialog
                                   }
-                                })
+                                }
+                              },
+                              [_c("v-icon", [_vm._v("mdi-plus")])],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-dialog",
+                          {
+                            attrs: { "max-width": "500px", fullscreen: true },
+                            model: {
+                              value: _vm.dialog,
+                              callback: function($$v) {
+                                _vm.dialog = $$v
+                              },
+                              expression: "dialog"
+                            }
+                          },
+                          [
+                            _c(
+                              "v-card",
+                              [
+                                _c(
+                                  "v-card-text",
+                                  [
+                                    _c("v-select", {
+                                      attrs: {
+                                        items: _vm.players,
+                                        "item-text": "name",
+                                        "item-value": "id",
+                                        "menu-props": { maxHeight: "300" },
+                                        label: "Select",
+                                        multiple: "",
+                                        hint: "Rijders toevoegen",
+                                        "persistent-hint": "",
+                                        "single-line": ""
+                                      },
+                                      model: {
+                                        value: _vm.selectedPlayers,
+                                        callback: function($$v) {
+                                          _vm.selectedPlayers = $$v
+                                        },
+                                        expression: "selectedPlayers"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-card-actions",
+                                  [
+                                    _c("v-spacer"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: {
+                                          small: "",
+                                          flat: "",
+                                          color: "error"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.dialog = !_vm.dialog
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Annuleren")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: { flat: "", color: "primary" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.addDrivers(match)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Opslaan")]
+                                    )
+                                  ],
+                                  1
+                                )
                               ],
                               1
                             )
