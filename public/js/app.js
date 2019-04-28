@@ -23207,16 +23207,33 @@ var render = function() {
         "router-link",
         { attrs: { to: "/", color: "secondary" } },
         [
-          _c(
-            "v-toolbar-title",
-            { staticClass: "subheading font-weight-bold white--text" },
-            [
-              _vm._v("Heren 2\n\t\t\t"),
-              _c("div", { staticClass: "body-1" }, [
-                _vm._v("Doelpunten & Assists")
-              ])
-            ]
-          )
+          !_vm.$auth.check()
+            ? _c(
+                "v-toolbar-title",
+                { staticClass: "subheading font-weight-bold white--text" },
+                [
+                  _vm._v("MHC Oss\n\t\t\t"),
+                  _c("div", { staticClass: "body-1" }, [
+                    _vm._v("Doelpunten & Assists")
+                  ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$auth.check()
+            ? _c(
+                "v-toolbar-title",
+                { staticClass: "subheading font-weight-bold white--text" },
+                [
+                  _vm._v(
+                    "\n\t\t\t" + _vm._s(_vm.$auth.user().team.name) + "\n\t\t\t"
+                  ),
+                  _c("div", { staticClass: "body-1" }, [
+                    _vm._v("Doelpunten & Assists")
+                  ])
+                ]
+              )
+            : _vm._e()
         ],
         1
       ),

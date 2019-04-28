@@ -42,12 +42,14 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        // $user = User::find(Auth::user()->id);
+        $user = User::with('team')->where('id', Auth::user()->id)->first();
         return response([
                 'status' => 'success',
-                'data' => $user
+                'data' => $user,
             ]);
     }
+
     public function refresh()
     {
         return response([

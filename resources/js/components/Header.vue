@@ -1,7 +1,11 @@
 <template>
 	<v-toolbar app fixed color="primary">
 		<router-link to="/" color="secondary">
-			<v-toolbar-title class="subheading font-weight-bold white--text">Heren 2
+			<v-toolbar-title  v-if="!$auth.check()" class="subheading font-weight-bold white--text">MHC Oss
+				<div class="body-1">Doelpunten & Assists</div>
+			</v-toolbar-title>
+			<v-toolbar-title v-if="$auth.check()" class="subheading font-weight-bold white--text">
+				{{ $auth.user().team.name }}
 				<div class="body-1">Doelpunten & Assists</div>
 			</v-toolbar-title>
 		</router-link>

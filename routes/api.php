@@ -31,6 +31,7 @@ Route::group(['namespace' => 'Api'], function(){
         Route::post('auth/logout', 'AuthController@logout');
         Route::get('/teamId', 'TeamsController@getId');
     });
+
     Route::group(['middleware' => 'jwt.refresh'], function(){
         Route::get('auth/refresh', 'AuthController@refresh');
     });
