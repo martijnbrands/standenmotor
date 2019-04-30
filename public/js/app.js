@@ -3401,10 +3401,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      loadingIndicator: false,
       expand: false,
       dialog: false,
       playerName: "",
@@ -3464,6 +3488,7 @@ __webpack_require__.r(__webpack_exports__);
     addPlayer: function addPlayer() {
       var _this3 = this;
 
+      this.loadingIndicator = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/players/create", {
         name: this.playerName
       }).then(function (response) {
@@ -3473,6 +3498,9 @@ __webpack_require__.r(__webpack_exports__);
         _this3.dialog = false;
         _this3.hasError = false;
         _this3.errorMessage = "";
+        setTimeout(function () {
+          return _this3.loadingIndicator = false;
+        }, 1000);
       })["catch"](function (error) {
         _this3.hasError = true;
         _this3.errorMessage = error.response.data.errors.name[0];
@@ -3481,6 +3509,7 @@ __webpack_require__.r(__webpack_exports__);
     updatePlayer: function updatePlayer(player) {
       var _this4 = this;
 
+      this.loadingIndicator = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch("/players/update/" + player.id, {
         name: player.name,
         goals: player.goals,
@@ -3488,6 +3517,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this4.hasError = false;
         _this4.errorMessage = "";
+        setTimeout(function () {
+          return _this4.loadingIndicator = false;
+        }, 1000);
       })["catch"](function (error) {
         _this4.hasError = true;
         _this4.errorMessage = error.response.data.errors.name[0];
@@ -3509,6 +3541,18 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         player.points = player.goals * 2;
       }
+    },
+    incrementGoals: function incrementGoals(player) {
+      player.goals = parseInt(player.goals, 10) + 1;
+    },
+    decrementGoals: function decrementGoals(player) {
+      player.goals = parseInt(player.goals, 10) - 1;
+    },
+    incrementAssists: function incrementAssists(player) {
+      player.assists = parseInt(player.assists, 10) + 1;
+    },
+    decrementAssists: function decrementAssists(player) {
+      player.assists = parseInt(player.assists, 10) - 1;
     }
   }
 });
@@ -23522,6 +23566,43 @@ var render = function() {
     "div",
     [
       _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", width: "300" },
+          model: {
+            value: _vm.loadingIndicator,
+            callback: function($$v) {
+              _vm.loadingIndicator = $$v
+            },
+            expression: "loadingIndicator"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            { attrs: { color: "primary", dark: "" } },
+            [
+              _c(
+                "v-card-text",
+                [
+                  _vm._v(
+                    "\n             Een moment geduld a.u.b.\n              "
+                  ),
+                  _c("v-progress-linear", {
+                    staticClass: "mb-0",
+                    attrs: { indeterminate: "", color: "white" }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-data-table",
         {
           staticClass: "elevation-1",
@@ -23594,15 +23675,21 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-text-field", {
                         attrs: {
+                          min: 0,
+                          value: props.item.goals,
                           type: "tel",
                           label: "Goals:",
-                          value: props.item.goals,
-                          min: 0,
-                          placeholder: "0"
+                          "prepend-icon": "mdi-minus",
+                          "append-outer-icon": "mdi-plus"
                         },
                         on: {
-                          keyup: function($event) {
-                            return _vm.playerChanged(props.item)
+                          "click:prepend": function($event) {
+                            _vm.decrementGoals(props.item),
+                              _vm.playerChanged(props.item)
+                          },
+                          "click:append-outer": function($event) {
+                            _vm.incrementGoals(props.item),
+                              _vm.playerChanged(props.item)
                           }
                         },
                         model: {
@@ -23616,15 +23703,21 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-text-field", {
                         attrs: {
+                          min: 0,
+                          value: props.item.assists,
                           type: "tel",
                           label: "Assists:",
-                          value: props.item.assists,
-                          min: 0,
-                          placeholder: "0"
+                          "prepend-icon": "mdi-minus",
+                          "append-outer-icon": "mdi-plus"
                         },
                         on: {
-                          keyup: function($event) {
-                            return _vm.playerChanged(props.item)
+                          "click:prepend": function($event) {
+                            _vm.decrementAssists(props.item),
+                              _vm.playerChanged(props.item)
+                          },
+                          "click:append-outer": function($event) {
+                            _vm.incrementAssists(props.item),
+                              _vm.playerChanged(props.item)
                           }
                         },
                         model: {

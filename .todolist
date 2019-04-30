@@ -1,16 +1,16 @@
 [ SCORETABLE ]
-    - Check if user belongs to a team on login ( DANNY )
-    - Close expandable datatable after update
-    - Select text of goals and assists when updating (mobile)
-    - If teamadmin scoretable show admin tools
+    - * Close expandable datatable after update
+    - * Select text of goals and assists when updating (mobile)
+    - * If teamadmin scoretable show admin tools // {{ $auth.user().account_type }}
 
 [ DRIVER SCHEDULE ]
-    - fix for awayUniform / tenue
-    - Add players to driving schedule
+    - * fix for awayUniform / tenue
+    - * Show drivers list from that match
+    - *** Show selected players in drivers dialog
+
+[ ADMIN AREA ]
+    - *** Creating a team -> automatically create team account + add to team. ( DANNY )
+    - ** Remove team admins from teams -> No team admin on team ( DANNY )
 
 [ GENERAL ]
     - Cleanup Code
-
-[ ADMIN AREA ]
-    - Creating a team -> automatically create team account + add to team. ( DANNY )
-    - Remove team admins from teams -> No team admin on team ( DANNY )

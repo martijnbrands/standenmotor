@@ -1,5 +1,26 @@
 <template>
   	<div>
+      
+        <v-dialog
+          v-model="loadingIndicator"
+          persistent
+          width="300"
+        >
+          <v-card
+            color="primary"
+            dark
+          >
+            <v-card-text>
+             Een moment geduld a.u.b.
+              <v-progress-linear
+                indeterminate
+                color="white"
+                class="mb-0"
+              ></v-progress-linear>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+ 
     	<v-data-table
       :headers="headers"
 			v-bind:pagination.sync="pagination"
@@ -24,7 +45,9 @@
 			<template v-slot:expand="props">
 				<v-card class="py-3" flat>
 					<v-text-field label="Naam:" v-model="props.item.name"></v-text-field>
-					<v-text-field
+          <v-text-field :min="0" v-model="props.item.goals" v-bind:value="props.item.goals" type="tel" label="Goals:" prepend-icon="mdi-minus" @click:prepend="decrementGoals(props.item), playerChanged(props.item)" append-outer-icon="mdi-plus" @click:append-outer="incrementGoals(props.item), playerChanged(props.item)"></v-text-field>
+          <v-text-field :min="0" v-model="props.item.assists" v-bind:value="props.item.assists" type="tel" label="Assists:" prepend-icon="mdi-minus" @click:prepend="decrementAssists(props.item), playerChanged(props.item)" append-outer-icon="mdi-plus" @click:append-outer="incrementAssists(props.item), playerChanged(props.item)"></v-text-field>
+					<!-- <v-text-field
 						type="tel"
 						label="Goals:"
 						v-bind:value="props.item.goals"
@@ -32,8 +55,8 @@
             :min="0"
             placeholder="0"
             v-on:keyup="playerChanged(props.item)"
-					></v-text-field>
-					<v-text-field
+					></v-text-field> -->
+					<!-- <v-text-field
 						type="tel"
 						label="Assists:"
 						v-bind:value="props.item.assists"
@@ -41,7 +64,7 @@
             :min="0"
             placeholder="0"
             v-on:keyup="playerChanged(props.item)"
-					></v-text-field>
+					></v-text-field> -->
 					
 					<v-card-actions>
 						<v-spacer></v-spacer>
@@ -80,6 +103,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      loadingIndicator: false,
       expand: false,
       dialog: false,
       playerName: "",
@@ -135,6 +159,7 @@ export default {
       });
     },
     addPlayer() {
+      this.loadingIndicator = true;
       axios
         .post("/players/create", {
           name: this.playerName
@@ -145,6 +170,7 @@ export default {
           this.dialog = false;
           this.hasError = false;
           this.errorMessage = "";
+          setTimeout(() => (this.loadingIndicator = false), 1000)
         })
         .catch(error => {
           this.hasError = true;
@@ -152,6 +178,7 @@ export default {
         });
     },
     updatePlayer(player) {
+      this.loadingIndicator = true;
       axios
         .patch("/players/update/" + player.id, {
           name: player.name,
@@ -161,6 +188,7 @@ export default {
         .then((response) => {
           this.hasError = false;
           this.errorMessage = "";
+          setTimeout(() => (this.loadingIndicator = false), 1000)
         })
         .catch(error => {
           this.hasError = true;
@@ -184,6 +212,18 @@ export default {
       } else {
         player.points = (player.goals * 2);
       }
+    },
+    incrementGoals(player) {
+      player.goals = parseInt(player.goals,10) + 1
+    },
+    decrementGoals (player) {
+      player.goals = parseInt(player.goals,10) - 1
+    },
+    incrementAssists(player) {
+      player.assists = parseInt(player.assists,10) + 1
+    },
+    decrementAssists (player) {
+      player.assists = parseInt(player.assists,10) - 1
     }
   }
 };
