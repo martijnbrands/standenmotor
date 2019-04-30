@@ -41,8 +41,7 @@
           <td class="text-xs-center font-weight-bold">{{ props.item.points }}</td>
 				</tr>
 			</template>
-		
-			<template v-slot:expand="props">
+			<template v-if="$auth.user().account_type = 'team_admin'" v-slot:expand="props">
 				<v-card class="py-3" flat>
 					<v-text-field label="Naam:" v-model="props.item.name"></v-text-field>
           <v-text-field :min="0" v-model="props.item.goals" v-bind:value="props.item.goals" type="tel" label="Goals:" prepend-icon="mdi-minus" @click:prepend="decrementGoals(props.item), playerChanged(props.item)" append-outer-icon="mdi-plus" @click:append-outer="incrementGoals(props.item), playerChanged(props.item)"></v-text-field>
@@ -76,7 +75,7 @@
 			</template>
     	</v-data-table>
     
-		<v-card-text style="height: 100px;" position="relative">
+		<v-card-text v-if="$auth.user().account_type ='team_admin'" style="height: 100px;" position="relative">
       		<v-btn fixed small fab bottom right color="warning" @click="dialog = !dialog">
         		<v-icon>mdi-plus</v-icon>
       		</v-btn>

@@ -16,6 +16,14 @@
                 </v-flex>
                 <v-flex>
                   <strong class="d-block pb-3 font-weight-bold">{{ match.homeTeam }}</strong>
+                  <div
+                    v-for="player in players"
+                    :key="player.id"
+                    class="mb-2"
+                  >{{ player.name }}</div>
+                  <v-btn v-if="$auth.user().account_type = 'team_admin'" flat small right color="warning" @click="dialog = !dialog">
+                    <v-icon>mdi-plus</v-icon>
+                  </v-btn>
                     <!-- <div
                     v-for="player in players"
                     :key="player.id"
@@ -23,9 +31,6 @@
                   >{{ player.name }}</div> -->
                 </v-flex>
               </v-layout>
-              <v-btn flat small right color="warning" @click="dialog = !dialog">
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
             </v-timeline-item>
             <v-dialog v-model="dialog" max-width="500px" :fullscreen="true">
               <v-card>
@@ -58,7 +63,7 @@
         
       </v-card>
       
-      <v-card-text style="height: 100px;" position="relative">
+      <v-card-text  v-if="$auth.user().account_type = 'team_admin'" style="height: 100px;" position="relative">
       		<v-btn fixed small fab bottom right color="warning" @click="checkMatches();">
         		<v-icon>mdi-refresh</v-icon>
       		</v-btn>
@@ -75,15 +80,17 @@
       return {
         loading: true,
         teamId: null,
-         dialog: false,
+        dialog: false,
         checkedMatches: [],
         matches: [],
         players: [],
+        drivers: [],
         selectedPlayers: []
       }
     },
     created() {
       this.getTeamId();
+      this.getDrivers();
      
 
       
@@ -109,6 +116,17 @@
         .catch((error) => {
           console.log(error);
          });
+      },
+      // Get drivers
+      getDrivers() {
+        axios.get('/matches/drivers/2')
+          .then((response) => {
+           console.log(response)
+            
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       },
 
       addDrivers(match) {

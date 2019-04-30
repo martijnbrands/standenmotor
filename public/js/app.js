@@ -3227,6 +3227,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3238,11 +3243,13 @@ __webpack_require__.r(__webpack_exports__);
       checkedMatches: [],
       matches: [],
       players: [],
+      drivers: [],
       selectedPlayers: []
     };
   },
   created: function created() {
     this.getTeamId();
+    this.getDrivers();
   },
   methods: {
     checkMatches: function checkMatches() {
@@ -3259,6 +3266,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateMatches: function updateMatches(checkedMatches) {
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/matches/create', checkedMatches).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    // Get drivers
+    getDrivers: function getDrivers() {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/matches/drivers/2').then(function (response) {
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -3324,7 +3339,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-//
 //
 //
 //
@@ -23185,36 +23199,51 @@ var render = function() {
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("v-flex", [
-                                  _c(
-                                    "strong",
-                                    {
-                                      staticClass:
-                                        "d-block pb-3 font-weight-bold"
-                                    },
-                                    [_vm._v(_vm._s(match.homeTeam))]
-                                  )
-                                ])
+                                _c(
+                                  "v-flex",
+                                  [
+                                    _c(
+                                      "strong",
+                                      {
+                                        staticClass:
+                                          "d-block pb-3 font-weight-bold"
+                                      },
+                                      [_vm._v(_vm._s(match.homeTeam))]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.players, function(player) {
+                                      return _c(
+                                        "div",
+                                        { key: player.id, staticClass: "mb-2" },
+                                        [_vm._v(_vm._s(player.name))]
+                                      )
+                                    }),
+                                    _vm._v(" "),
+                                    (_vm.$auth.user().account_type =
+                                      "team_admin")
+                                      ? _c(
+                                          "v-btn",
+                                          {
+                                            attrs: {
+                                              flat: "",
+                                              small: "",
+                                              right: "",
+                                              color: "warning"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                _vm.dialog = !_vm.dialog
+                                              }
+                                            }
+                                          },
+                                          [_c("v-icon", [_vm._v("mdi-plus")])],
+                                          1
+                                        )
+                                      : _vm._e()
+                                  ],
+                                  2
+                                )
                               ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-btn",
-                              {
-                                attrs: {
-                                  flat: "",
-                                  small: "",
-                                  right: "",
-                                  color: "warning"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    _vm.dialog = !_vm.dialog
-                                  }
-                                }
-                              },
-                              [_c("v-icon", [_vm._v("mdi-plus")])],
                               1
                             )
                           ],
@@ -23317,36 +23346,38 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c(
-              "v-card-text",
-              {
-                staticStyle: { height: "100px" },
-                attrs: { position: "relative" }
-              },
-              [
-                _c(
-                  "v-btn",
+            (_vm.$auth.user().account_type = "team_admin")
+              ? _c(
+                  "v-card-text",
                   {
-                    attrs: {
-                      fixed: "",
-                      small: "",
-                      fab: "",
-                      bottom: "",
-                      right: "",
-                      color: "warning"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.checkMatches()
-                      }
-                    }
+                    staticStyle: { height: "100px" },
+                    attrs: { position: "relative" }
                   },
-                  [_c("v-icon", [_vm._v("mdi-refresh")])],
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: {
+                          fixed: "",
+                          small: "",
+                          fab: "",
+                          bottom: "",
+                          right: "",
+                          color: "warning"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.checkMatches()
+                          }
+                        }
+                      },
+                      [_c("v-icon", [_vm._v("mdi-refresh")])],
+                      1
+                    )
+                  ],
                   1
                 )
-              ],
-              1
-            )
+              : _vm._e()
           ],
           1
         )
@@ -23619,156 +23650,166 @@ var render = function() {
               _vm.pagination = $event
             }
           },
-          scopedSlots: _vm._u([
-            {
-              key: "items",
-              fn: function(props) {
-                return [
-                  _c(
-                    "tr",
-                    {
-                      on: {
-                        click: function($event) {
-                          props.expanded = !props.expanded
-                        }
-                      }
-                    },
-                    [
-                      _c("td", [_vm._v(_vm._s(props.item.name))]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-xs-center" }, [
-                        _vm._v(_vm._s(props.item.goals))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-xs-center" }, [
-                        _vm._v(_vm._s(props.item.assists))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-xs-center font-weight-bold" },
-                        [_vm._v(_vm._s(props.item.points))]
-                      )
-                    ]
-                  )
-                ]
-              }
-            },
-            {
-              key: "expand",
-              fn: function(props) {
-                return [
-                  _c(
-                    "v-card",
-                    { staticClass: "py-3", attrs: { flat: "" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: { label: "Naam:" },
-                        model: {
-                          value: props.item.name,
-                          callback: function($$v) {
-                            _vm.$set(props.item, "name", $$v)
-                          },
-                          expression: "props.item.name"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-text-field", {
-                        attrs: {
-                          min: 0,
-                          value: props.item.goals,
-                          type: "tel",
-                          label: "Goals:",
-                          "prepend-icon": "mdi-minus",
-                          "append-outer-icon": "mdi-plus"
-                        },
+          scopedSlots: _vm._u(
+            [
+              {
+                key: "items",
+                fn: function(props) {
+                  return [
+                    _c(
+                      "tr",
+                      {
                         on: {
-                          "click:prepend": function($event) {
-                            _vm.decrementGoals(props.item),
-                              _vm.playerChanged(props.item)
-                          },
-                          "click:append-outer": function($event) {
-                            _vm.incrementGoals(props.item),
-                              _vm.playerChanged(props.item)
+                          click: function($event) {
+                            props.expanded = !props.expanded
                           }
-                        },
-                        model: {
-                          value: props.item.goals,
-                          callback: function($$v) {
-                            _vm.$set(props.item, "goals", $$v)
-                          },
-                          expression: "props.item.goals"
                         }
-                      }),
-                      _vm._v(" "),
-                      _c("v-text-field", {
-                        attrs: {
-                          min: 0,
-                          value: props.item.assists,
-                          type: "tel",
-                          label: "Assists:",
-                          "prepend-icon": "mdi-minus",
-                          "append-outer-icon": "mdi-plus"
-                        },
-                        on: {
-                          "click:prepend": function($event) {
-                            _vm.decrementAssists(props.item),
-                              _vm.playerChanged(props.item)
-                          },
-                          "click:append-outer": function($event) {
-                            _vm.incrementAssists(props.item),
-                              _vm.playerChanged(props.item)
-                          }
-                        },
-                        model: {
-                          value: props.item.assists,
-                          callback: function($$v) {
-                            _vm.$set(props.item, "assists", $$v)
-                          },
-                          expression: "props.item.assists"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { small: "", flat: "", color: "error" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.removePlayer(props.item)
-                                }
+                      },
+                      [
+                        _c("td", [_vm._v(_vm._s(props.item.name))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-center" }, [
+                          _vm._v(_vm._s(props.item.goals))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-center" }, [
+                          _vm._v(_vm._s(props.item.assists))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          { staticClass: "text-xs-center font-weight-bold" },
+                          [_vm._v(_vm._s(props.item.points))]
+                        )
+                      ]
+                    )
+                  ]
+                }
+              },
+              (_vm.$auth.user().account_type = "team_admin")
+                ? {
+                    key: "expand",
+                    fn: function(props) {
+                      return [
+                        _c(
+                          "v-card",
+                          { staticClass: "py-3", attrs: { flat: "" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: { label: "Naam:" },
+                              model: {
+                                value: props.item.name,
+                                callback: function($$v) {
+                                  _vm.$set(props.item, "name", $$v)
+                                },
+                                expression: "props.item.name"
                               }
-                            },
-                            [_vm._v("Verwijderen")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { small: "", color: "primary" },
+                            }),
+                            _vm._v(" "),
+                            _c("v-text-field", {
+                              attrs: {
+                                min: 0,
+                                value: props.item.goals,
+                                type: "tel",
+                                label: "Goals:",
+                                "prepend-icon": "mdi-minus",
+                                "append-outer-icon": "mdi-plus"
+                              },
                               on: {
-                                click: function($event) {
-                                  return _vm.updatePlayer(props.item)
+                                "click:prepend": function($event) {
+                                  _vm.decrementGoals(props.item),
+                                    _vm.playerChanged(props.item)
+                                },
+                                "click:append-outer": function($event) {
+                                  _vm.incrementGoals(props.item),
+                                    _vm.playerChanged(props.item)
                                 }
+                              },
+                              model: {
+                                value: props.item.goals,
+                                callback: function($$v) {
+                                  _vm.$set(props.item, "goals", $$v)
+                                },
+                                expression: "props.item.goals"
                               }
-                            },
-                            [_vm._v("Opslaan")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ]
-              }
-            }
-          ])
+                            }),
+                            _vm._v(" "),
+                            _c("v-text-field", {
+                              attrs: {
+                                min: 0,
+                                value: props.item.assists,
+                                type: "tel",
+                                label: "Assists:",
+                                "prepend-icon": "mdi-minus",
+                                "append-outer-icon": "mdi-plus"
+                              },
+                              on: {
+                                "click:prepend": function($event) {
+                                  _vm.decrementAssists(props.item),
+                                    _vm.playerChanged(props.item)
+                                },
+                                "click:append-outer": function($event) {
+                                  _vm.incrementAssists(props.item),
+                                    _vm.playerChanged(props.item)
+                                }
+                              },
+                              model: {
+                                value: props.item.assists,
+                                callback: function($$v) {
+                                  _vm.$set(props.item, "assists", $$v)
+                                },
+                                expression: "props.item.assists"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "v-card-actions",
+                              [
+                                _c("v-spacer"),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      small: "",
+                                      flat: "",
+                                      color: "error"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.removePlayer(props.item)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Verwijderen")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: { small: "", color: "primary" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.updatePlayer(props.item)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Opslaan")]
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    }
+                  }
+                : null
+            ],
+            null,
+            true
+          )
         },
         [
           _c("v-progress-linear", {
@@ -23787,33 +23828,38 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-card-text",
-        { staticStyle: { height: "100px" }, attrs: { position: "relative" } },
-        [
-          _c(
-            "v-btn",
+      (_vm.$auth.user().account_type = "team_admin")
+        ? _c(
+            "v-card-text",
             {
-              attrs: {
-                fixed: "",
-                small: "",
-                fab: "",
-                bottom: "",
-                right: "",
-                color: "warning"
-              },
-              on: {
-                click: function($event) {
-                  _vm.dialog = !_vm.dialog
-                }
-              }
+              staticStyle: { height: "100px" },
+              attrs: { position: "relative" }
             },
-            [_c("v-icon", [_vm._v("mdi-plus")])],
+            [
+              _c(
+                "v-btn",
+                {
+                  attrs: {
+                    fixed: "",
+                    small: "",
+                    fab: "",
+                    bottom: "",
+                    right: "",
+                    color: "warning"
+                  },
+                  on: {
+                    click: function($event) {
+                      _vm.dialog = !_vm.dialog
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("mdi-plus")])],
+                1
+              )
+            ],
             1
           )
-        ],
-        1
-      ),
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "v-dialog",
