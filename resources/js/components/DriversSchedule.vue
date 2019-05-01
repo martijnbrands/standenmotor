@@ -3,10 +3,29 @@
     <div v-if="loading">
       <v-progress-linear :indeterminate="true"></v-progress-linear>
     </div>
+    <v-dialog
+          v-model="loadingIndicator"
+          persistent
+          width="300"
+        >
+          <v-card
+            color="primary"
+            dark
+          >
+            <v-card-text>
+             Een moment geduld a.u.b.
+              <v-progress-linear
+                indeterminate
+                color="white"
+                class="mb-0"
+              ></v-progress-linear>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
     <div v-if="!loading">
       <v-card >
         <v-card-text class="py-0">
-          <v-timeline align-top dense v-for="match in matches" :key="match.matchId">
+          <v-timeline align-top dense v-for="(match, index) in matches" :key="match.index">
             <v-timeline-item color="warning" small>
               <v-layout wrap pt-3>
                 <v-flex xs5>
@@ -16,51 +35,31 @@
                 </v-flex>
                 <v-flex>
                   <strong class="d-block pb-3 font-weight-bold">{{ match.homeTeam }}</strong>
-                  <div
-                    v-for="player in players"
-                    :key="player.id"
-                    class="mb-2"
-                  >{{ player.name }}</div>
-                  <v-btn v-if="$auth.user().account_type = 'team_admin'" flat small right color="warning" @click="dialog = !dialog">
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
-                    <!-- <div
-                    v-for="player in players"
-                    :key="player.id"
-                    class="mb-2"
-                  >{{ player.name }}</div> -->
+                  <div v-for="driver in match.players" :key="driver.id" class="mb-2">{{ driver.name }}</div>
                 </v-flex>
-              </v-layout>
-            </v-timeline-item>
-            <v-dialog v-model="dialog" max-width="500px" :fullscreen="true">
-              <v-card>
-                <v-card-text>
-                    <!-- <v-alert :value="true" type="error" v-if="hasError" v-text="errorMessage"></v-alert> -->
-                    <v-select
-                      :items="players"
-                      item-text="name"
-                      item-value="id"
-                      :menu-props="{ maxHeight: '300' }"
-                      label="Select"
-                      multiple
-                      hint="Rijders toevoegen"
-                      persistent-hint
-                      single-line
-                      v-model="selectedPlayers"
-                    ></v-select>
-                    <!-- <v-text-field v-model="playerName" label="Speler naam:"></v-text-field> -->
-                </v-card-text>
                 
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn small flat color="error" @click="dialog = !dialog">Annuleren</v-btn>
-                    <v-btn flat color="primary" @click="addDrivers(match);">Opslaan</v-btn>
-                </v-card-actions>
-              </v-card>
-          </v-dialog>
+              </v-layout>
+              <div v-if="$auth.user().account_type = 'team_admin'">
+                   <v-select class="d-block"
+                        clearable
+                        :items="players"
+                        item-text="name"
+                        item-value="id"
+                        :menu-props="{ maxHeight: '300' }"
+                        label="Select"
+                        multiple
+                        single-line
+                        hint="Rijders toevoegen"
+                        v-model="selectedPlayers"
+                      ></v-select>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn small color="primary" @click="addDrivers(match, index);">Opslaan</v-btn>
+                    </v-card-actions>
+              </div>
+            </v-timeline-item>
           </v-timeline>
         </v-card-text>
-        
       </v-card>
       
       <v-card-text  v-if="$auth.user().account_type = 'team_admin'" style="height: 100px;" position="relative">
@@ -78,22 +77,19 @@
   export default {
     data() {
       return {
+        loadingIndicator: false,
         loading: true,
         teamId: null,
         dialog: false,
         checkedMatches: [],
         matches: [],
         players: [],
-        drivers: [],
         selectedPlayers: []
       }
     },
     created() {
       this.getTeamId();
-      this.getDrivers();
-     
-
-      
+            
     },
     methods: {
       checkMatches() {
@@ -117,37 +113,29 @@
           console.log(error);
          });
       },
-      // Get drivers
-      getDrivers() {
-        axios.get('/matches/drivers/2')
-          .then((response) => {
-           console.log(response)
-            
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
-
-      addDrivers(match) {
+      addDrivers(match, index) {
+        this.loadingIndicator = true;
         axios.post('/matches/drivers',{
           'match': match,
           'players': this.selectedPlayers
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response.data);
+          this.matches[index].players = response.data;
+          this.selectedPlayers = [];
+          setTimeout(() => (this.loadingIndicator = false), 1000)
         })
         .catch((error) => {
           console.log(error);
          });
       },
 
+
       getSchedule() {
         axios.get('/matches/' + this.teamId)
           .then((response) => {
             this.loading = false
             this.matches = response.data;
-            
           })
           .catch((error) => {
             console.log(error);

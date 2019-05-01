@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Player;
 use App\Match;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -43,7 +44,9 @@ class DriversScheduleController extends Controller
 
         $match->players()->sync($players);
 
-        return;
+        $players = Player::findMany(request('players'));
+
+        return $players;
     }
 
     /**

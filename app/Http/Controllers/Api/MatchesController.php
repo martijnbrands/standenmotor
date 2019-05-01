@@ -21,7 +21,7 @@ class MatchesController extends Controller
         $JWTUser = JWTAuth::user();
         $user = User::find($JWTUser['id']);
 
-        $matches = Match::where('teamId', $user->team->teamId)->orderBy('matchDate')->get();
+        $matches = Match::with('players')->where('teamId', $user->team->teamId)->orderBy('matchDate')->get();
 
         return $matches;
     }

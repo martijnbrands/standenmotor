@@ -44,6 +44,7 @@ Route::group(['namespace' => 'Api'], function(){
         Route::patch('/players/update/{player}', 'PlayersController@update');
 
         /* DRIVERS */
+        Route::get('/matches/drivers', 'DriversScheduleController@index');
         Route::post('/matches/drivers', 'DriversScheduleController@store');
 
         /* MATCHES */
