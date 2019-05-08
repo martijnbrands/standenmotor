@@ -3231,6 +3231,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3242,8 +3245,7 @@ __webpack_require__.r(__webpack_exports__);
       dialog: false,
       checkedMatches: [],
       matches: [],
-      players: [],
-      selectedPlayers: []
+      players: []
     };
   },
   created: function created() {
@@ -3269,17 +3271,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    addDrivers: function addDrivers(match, index) {
+    addDrivers: function addDrivers(match, players, index) {
       var _this2 = this;
 
       this.loadingIndicator = true;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/matches/drivers', {
         'match': match,
-        'players': this.selectedPlayers
+        'players': players
       }).then(function (response) {
-        //console.log(response.data);
-        _this2.matches[index].players = response.data;
-        _this2.selectedPlayers = [];
+        _this2.matches[index].players = response.data.players;
         setTimeout(function () {
           return _this2.loadingIndicator = false;
         }, 1000);
@@ -3312,6 +3312,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/teams/" + this.teamId + "/players").then(function (response) {
+        console.log(response.data);
         _this5.players = response.data.data;
       });
     },
@@ -23237,31 +23238,35 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _c(
-                                    "v-flex",
-                                    [
-                                      _c(
-                                        "strong",
-                                        {
-                                          staticClass:
-                                            "d-block pb-3 font-weight-bold"
-                                        },
-                                        [_vm._v(_vm._s(match.homeTeam))]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm._l(match.players, function(driver) {
-                                        return _c(
+                                  _c("v-flex", [
+                                    _c(
+                                      "strong",
+                                      {
+                                        staticClass:
+                                          "d-block pb-3 font-weight-bold"
+                                      },
+                                      [_vm._v(_vm._s(match.homeTeam))]
+                                    ),
+                                    _vm._v(" "),
+                                    (_vm.$auth.user().account_type = !"team_admin")
+                                      ? _c(
                                           "div",
-                                          {
-                                            key: driver.id,
-                                            staticClass: "mb-2"
-                                          },
-                                          [_vm._v(_vm._s(driver.name))]
+                                          _vm._l(match.players, function(
+                                            driver
+                                          ) {
+                                            return _c(
+                                              "div",
+                                              {
+                                                key: driver.id,
+                                                staticClass: "mb-2"
+                                              },
+                                              [_vm._v(_vm._s(driver.name))]
+                                            )
+                                          }),
+                                          0
                                         )
-                                      })
-                                    ],
-                                    2
-                                  )
+                                      : _vm._e()
+                                  ])
                                 ],
                                 1
                               ),
@@ -23284,11 +23289,11 @@ var render = function() {
                                           hint: "Rijders toevoegen"
                                         },
                                         model: {
-                                          value: _vm.selectedPlayers,
+                                          value: match.players,
                                           callback: function($$v) {
-                                            _vm.selectedPlayers = $$v
+                                            _vm.$set(match, "players", $$v)
                                           },
-                                          expression: "selectedPlayers"
+                                          expression: "match.players"
                                         }
                                       }),
                                       _vm._v(" "),
@@ -23308,6 +23313,7 @@ var render = function() {
                                                 click: function($event) {
                                                   return _vm.addDrivers(
                                                     match,
+                                                    match.players,
                                                     index
                                                   )
                                                 }

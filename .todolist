@@ -1,11 +1,8 @@
 [ SCORETABLE ]
     - * Close expandable datatable after update
-    - * Select text of goals and assists when updating (mobile)
-    - * If teamadmin scoretable show admin tools // {{ $auth.user().account_type }}
 
 [ DRIVER SCHEDULE ]
     - * fix for awayUniform / tenue
-    - *** Show selected players in drivers dialog
 
 [ ADMIN AREA ]
     - *** Creating a team -> automatically create team account + add to team. ( DANNY )

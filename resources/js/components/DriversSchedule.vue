@@ -35,7 +35,9 @@
                 </v-flex>
                 <v-flex>
                   <strong class="d-block pb-3 font-weight-bold">{{ match.homeTeam }}</strong>
-                  <div v-for="driver in match.players" :key="driver.id" class="mb-2">{{ driver.name }}</div>
+                  <div v-if="$auth.user().account_type =! 'team_admin'">
+                    <div v-for="driver in match.players" :key="driver.id" class="mb-2">{{ driver.name }}</div>
+                  </div>
                 </v-flex>
                 
               </v-layout>
@@ -50,11 +52,12 @@
                         multiple
                         single-line
                         hint="Rijders toevoegen"
-                        v-model="selectedPlayers"
-                      ></v-select>
+                        v-model="match.players"
+                      >
+                      </v-select>
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn small color="primary" @click="addDrivers(match, index);">Opslaan</v-btn>
+                        <v-btn small color="primary" @click="addDrivers(match, match.players, index);">Opslaan</v-btn>
                     </v-card-actions>
               </div>
             </v-timeline-item>
@@ -83,8 +86,7 @@
         dialog: false,
         checkedMatches: [],
         matches: [],
-        players: [],
-        selectedPlayers: []
+        players: []
       }
     },
     created() {
@@ -113,16 +115,14 @@
           console.log(error);
          });
       },
-      addDrivers(match, index) {
+      addDrivers(match, players, index) {
         this.loadingIndicator = true;
         axios.post('/matches/drivers',{
           'match': match,
-          'players': this.selectedPlayers
+          'players': players
         })
         .then((response) => {
-          //console.log(response.data);
-          this.matches[index].players = response.data;
-          this.selectedPlayers = [];
+          this.matches[index].players = response.data.players;
           setTimeout(() => (this.loadingIndicator = false), 1000)
         })
         .catch((error) => {
@@ -134,7 +134,7 @@
       getSchedule() {
         axios.get('/matches/' + this.teamId)
           .then((response) => {
-            this.loading = false
+            this.loading = false;
             this.matches = response.data;
           })
           .catch((error) => {
@@ -153,10 +153,10 @@
         getPlayers() {
           axios.get("/teams/" + this.teamId + "/players")
           .then((response) => {
+            console.log(response.data)
             this.players = response.data.data;
           });
       },
-
       formatDate: function(date) {
         return moment(date).format("DD-MM-YYYY");
       },
@@ -166,3 +166,6 @@
     }
   }
 </script>
+
+<style>
+</style>

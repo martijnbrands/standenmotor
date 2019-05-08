@@ -44,9 +44,12 @@ class DriversScheduleController extends Controller
 
         $match->players()->sync($players);
 
-        $players = Player::findMany(request('players'));
+        $players = Player::findMany($players);
 
-        return $players;
+        return [
+            'match' => $match,
+            'players' => $players
+        ];
     }
 
     /**
