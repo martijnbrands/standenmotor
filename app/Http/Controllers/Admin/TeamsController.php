@@ -53,13 +53,23 @@ class TeamsController extends Controller
         $this->authorize('store', Team::Class);
 
         request()->validate([
-            'name' => 'required|string',
-            'teamId' => 'required|string'
+            'name'      => 'required|string',
+            'teamId'    => 'required|string',
+            'email'     => 'required|string|email|unique:users',
+            'password'  => 'required|string|confirmed'
+        ]);
+
+        $teamAccount = User::create([
+            'name'          => request('name'),
+            'email'         => request('email'),
+            'password'      => bcrypt(request('password')),
+            'account_type'  => 'team'
         ]);
 
         $team = Team::create([
-            'name' => request('name'),
-            'teamId' => request('teamId')
+            'name'              => request('name'),
+            'teamId'            => request('teamId'),
+            'team_account_id'   => $teamAccount->id
         ]);
 
         if(request('team_admin') !== null) { $team->update([ 'user_id' => request('team_admin') ]); }

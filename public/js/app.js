@@ -3126,7 +3126,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/teamId').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/teamId").then(function (response) {
         _this.teamId = response.data;
 
         _this.getArbiters();
@@ -3135,7 +3135,7 @@ __webpack_require__.r(__webpack_exports__);
     getArbiters: function getArbiters() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('https://mhc-oss-api.herokuapp.com/api/teams/' + this.teamId).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://mhc-oss-api.herokuapp.com/api/teams/" + this.teamId).then(function (response) {
         _this2.arbiters = response.data.arbiters;
         _this2.loading = false;
       });
@@ -3234,6 +3234,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3255,7 +3256,7 @@ __webpack_require__.r(__webpack_exports__);
     checkMatches: function checkMatches() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('https://mhc-oss-api.herokuapp.com/api/teams/' + this.teamId).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("https://mhc-oss-api.herokuapp.com/api/teams/" + this.teamId).then(function (response) {
         var checkedMatches = response.data.matches;
         _this.checkedMatches = checkedMatches;
 
@@ -3265,55 +3266,57 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateMatches: function updateMatches(checkedMatches) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/matches/create', checkedMatches).then(function (response) {
-        console.log(response);
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/matches/create", checkedMatches).then(function (response) {
+        _this2.matches = response.data;
+        console.log("The matches should have been updated now");
       })["catch"](function (error) {
         console.log(error);
       });
     },
     addDrivers: function addDrivers(match, players, index) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.loadingIndicator = true;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/matches/drivers', {
-        'match': match,
-        'players': players
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/matches/drivers", {
+        match: match,
+        players: players
       }).then(function (response) {
-        _this2.matches[index].players = response.data.players;
+        _this3.matches[index].players = response.data.players;
         setTimeout(function () {
-          return _this2.loadingIndicator = false;
+          return _this3.loadingIndicator = false;
         }, 1000);
       })["catch"](function (error) {
         console.log(error);
       });
     },
     getSchedule: function getSchedule() {
-      var _this3 = this;
+      var _this4 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/matches/' + this.teamId).then(function (response) {
-        _this3.loading = false;
-        _this3.matches = response.data;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/matches/" + this.teamId).then(function (response) {
+        _this4.loading = false;
+        _this4.matches = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
     },
     getTeamId: function getTeamId() {
-      var _this4 = this;
+      var _this5 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/teamId').then(function (response) {
-        _this4.teamId = response.data;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/teamId").then(function (response) {
+        _this5.teamId = response.data;
 
-        _this4.getSchedule();
+        _this5.getSchedule();
 
-        _this4.getPlayers();
+        _this5.getPlayers();
       });
     },
     getPlayers: function getPlayers() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/teams/" + this.teamId + "/players").then(function (response) {
-        console.log(response.data);
-        _this5.players = response.data.data;
+        _this6.players = response.data.data;
       });
     },
     formatDate: function formatDate(date) {
@@ -3338,6 +3341,18 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3541,7 +3556,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       var index = this.players.indexOf(player);
-      confirm('Weet je zeker dat je deze speler wilt verwijderen?') && axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/players/delete/" + player.id).then(function (response) {
+      confirm("Weet je zeker dat je deze speler wilt verwijderen?") && axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/players/delete/" + player.id).then(function (response) {
         _this5.players.splice(index, 1);
       })["catch"](function (error) {});
     },
@@ -3650,8 +3665,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3713,17 +3726,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      name: '',
-      email: '',
-      password: '',
+      name: "",
+      email: "",
+      password: "",
       error: false,
       errors: {},
       success: false
@@ -23022,7 +23030,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n      Er zijn op dit moment geen wedstrijden om te fluiten.\n      "
+                      "Er zijn op dit moment geen wedstrijden om te fluiten."
                     )
                   ]
                 )
@@ -23165,7 +23173,7 @@ var render = function() {
               _c(
                 "v-card-text",
                 [
-                  _vm._v("\n           Een moment geduld a.u.b.\n            "),
+                  _vm._v("\n        Een moment geduld a.u.b.\n        "),
                   _c("v-progress-linear", {
                     staticClass: "mb-0",
                     attrs: { indeterminate: "", color: "white" }
@@ -23238,40 +23246,55 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _c("v-flex", [
-                                    _c(
-                                      "strong",
-                                      {
-                                        staticClass:
-                                          "d-block pb-3 font-weight-bold"
-                                      },
-                                      [_vm._v(_vm._s(match.homeTeam))]
-                                    ),
-                                    _vm._v(" "),
-                                    (_vm.$auth.user().account_type = !"team_admin")
-                                      ? _c(
+                                  _c(
+                                    "v-flex",
+                                    [
+                                      _c(
+                                        "strong",
+                                        {
+                                          staticClass:
+                                            "d-block pb-3 font-weight-bold"
+                                        },
+                                        [_vm._v(_vm._s(match.homeTeam))]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(match.players, function(driver) {
+                                        return _c(
                                           "div",
-                                          _vm._l(match.players, function(
-                                            driver
-                                          ) {
-                                            return _c(
-                                              "div",
-                                              {
-                                                key: driver.id,
-                                                staticClass: "mb-2"
-                                              },
-                                              [_vm._v(_vm._s(driver.name))]
-                                            )
-                                          }),
-                                          0
+                                          {
+                                            key: driver.id,
+                                            staticClass: "mb-2"
+                                          },
+                                          [_vm._v(_vm._s(driver.name))]
                                         )
-                                      : _vm._e()
-                                  ])
+                                      })
+                                    ],
+                                    2
+                                  ),
+                                  _vm._v(" "),
+                                  match.awayUniform
+                                    ? _c(
+                                        "v-flex",
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            {
+                                              attrs: {
+                                                border: "1px solid black",
+                                                color: "#ffd907"
+                                              }
+                                            },
+                                            [_vm._v("mdi-tshirt-crew")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e()
                                 ],
                                 1
                               ),
                               _vm._v(" "),
-                              (_vm.$auth.user().account_type = "team_admin")
+                              _vm.$auth.user().account_type === "Team Admin"
                                 ? _c(
                                     "div",
                                     [
@@ -23341,7 +23364,7 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              (_vm.$auth.user().account_type = "team_admin")
+              _vm.$auth.user().account_type === "Team Admin"
                 ? _c(
                     "v-card-text",
                     {
@@ -23416,7 +23439,7 @@ var render = function() {
                 "v-toolbar-title",
                 { staticClass: "subheading font-weight-bold white--text" },
                 [
-                  _vm._v("MHC Oss\n\t\t\t"),
+                  _vm._v("\n      MHC Oss\n      "),
                   _c("div", { staticClass: "body-1" }, [
                     _vm._v("Doelpunten & Assists")
                   ])
@@ -23429,9 +23452,14 @@ var render = function() {
                 "v-toolbar-title",
                 { staticClass: "subheading font-weight-bold white--text" },
                 [
-                  _vm._v(
-                    "\n\t\t\t" + _vm._s(_vm.$auth.user().team.name) + "\n\t\t\t"
-                  ),
+                  _vm.$auth.user().account_type === "Team Admin"
+                    ? _c("div", [_vm._v(_vm._s(_vm.$auth.user().team.name))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.$auth.user().account_type === "Team"
+                    ? _c("div", [_vm._v(_vm._s(_vm.$auth.user().name))])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c("div", { staticClass: "body-1" }, [
                     _vm._v("Doelpunten & Assists")
                   ])
@@ -23613,9 +23641,7 @@ var render = function() {
               _c(
                 "v-card-text",
                 [
-                  _vm._v(
-                    "\n             Een moment geduld a.u.b.\n              "
-                  ),
+                  _vm._v("\n          Een moment geduld a.u.b.\n          "),
                   _c("v-progress-linear", {
                     staticClass: "mb-0",
                     attrs: { indeterminate: "", color: "white" }
@@ -23683,7 +23709,7 @@ var render = function() {
                   ]
                 }
               },
-              (_vm.$auth.user().account_type = "team_admin")
+              _vm.$auth.user().account_type === "Team Admin"
                 ? {
                     key: "expand",
                     fn: function(props) {
@@ -23825,7 +23851,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      (_vm.$auth.user().account_type = "team_admin")
+      _vm.$auth.user().account_type === "Team Admin"
         ? _c(
             "v-card-text",
             {
@@ -24025,9 +24051,7 @@ var render = function() {
         [
           _vm.error && !_vm.success
             ? _c("v-alert", { attrs: { value: true, type: "error" } }, [
-                _vm._v(
-                  "\n    There was an error, unable to complete registration\n    "
-                )
+                _vm._v("There was an error, unable to complete registration")
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -24126,9 +24150,7 @@ var render = function() {
         [
           _vm.error && !_vm.success
             ? _c("v-alert", { attrs: { value: true, type: "error" } }, [
-                _vm._v(
-                  "\n        There was an error, unable to complete registration\n        "
-                )
+                _vm._v("There was an error, unable to complete registration")
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -24137,7 +24159,7 @@ var render = function() {
                 "v-alert",
                 { attrs: { value: true, type: "success" } },
                 [
-                  _vm._v("\n        Registration completed. You can now "),
+                  _vm._v("\n      Registration completed. You can now\n      "),
                   _c("router-link", { attrs: { to: "/login" } }, [
                     _vm._v("login.")
                   ])

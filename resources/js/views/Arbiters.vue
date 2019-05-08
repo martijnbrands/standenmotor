@@ -1,20 +1,18 @@
 <template>
-  	<div>
-    	<v-subheader class="page_title">Fluitschema</v-subheader>
-    	<ArbiterSchedule/>
-  	</div>
+  <div>
+    <v-subheader class="page_title">Fluitschema</v-subheader>
+    <ArbiterSchedule/>
+  </div>
 </template>
 
 <script>
-
 import ArbiterSchedule from "../components/ArbiterSchedule";
 
 export default {
-	components: {
-		ArbiterSchedule
-	}
+  components: {
+    ArbiterSchedule
+  }
 };
-
 </script>
 
 <style lang="sass">

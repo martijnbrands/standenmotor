@@ -50,7 +50,7 @@ class MatchesController extends Controller
                     'field' => $match['field']
                 ]);
 
-                // if($match['awayUniform']) $m->update(['awayUniform' => $match['awayUniform']]);
+                if(isset($match['awayUniform'])) $m->update(['awayUniform' => $match['awayUniform']]);
 
             } else {
                 $m = Match::where('matchId', $match['matchId'])->first();
@@ -59,10 +59,12 @@ class MatchesController extends Controller
                     'matchDate' => Carbon::parse($match['matchDate'])->format('Y-m-d'),
                     'matchTime' => $match['matchTime']
                 ]);
+
+                if(isset($match['awayUniform'])) $m->update(['awayUniform' => $match['awayUniform']]);
             }
         }
         
-        return $request;
+        return $matches;
     }
 
     /**

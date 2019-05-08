@@ -83,6 +83,8 @@ class User extends Authenticatable implements JWTSubject
 
     public function team()
     {
+        if($this->account_type == 'Team') return $this->hasOne(Team::class, 'team_account_id');
+
         return $this->hasOne(Team::class);
     }
 

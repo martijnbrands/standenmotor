@@ -46,28 +46,28 @@
             @endif
         </div>
         <div class="form-group">
-            <label for="teamId">Team Email</label>
-            <input type="email" class="form-control" id="teamEmail" name="teamEmail" placeholder="Team Email" value="{{ old('teamEmail') ? old('teamEmail') : '' }}">
-            @if ($errors->has('teamEmail'))
+            <label for="email">Team Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Team Email" value="{{ old('email') ? old('email') : '' }}">
+            @if ($errors->has('email'))
                 <div class="alert alert-danger py-1 mt-1" role="alert">
-                    {{ $errors->first('teamEmail') }}
+                    {{ $errors->first('email') }}
                 </div>
             @endif
         </div>
 
         <div class="form-group">
-            <label for="teamId">Team Password</label>
-            <input type="password" class="form-control" id="teamPassword" name="teamPassword" placeholder="Team Password" value="{{ old('teamPassword') ? old('teamPassword') : '' }}">
-            @if ($errors->has('teamPassword'))
+            <label for="password">Team Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Team Password" value="">
+            @if ($errors->has('password'))
                 <div class="alert alert-danger py-1 mt-1" role="alert">
-                    {{ $errors->first('teamPassword') }}
+                    {{ $errors->first('password') }}
                 </div>
             @endif
         </div>
 
         <div class="form-group">
-            <label for="teamId">Team Password (confirm)</label>
-            <input type="password" class="form-control" id="password-confirm" name="password_confirm" placeholder="Team Password">
+            <label for="password-confirm">Team Password (confirm)</label>
+            <input type="password" class="form-control" id="password-confirm" name="password_confirmation" placeholder="Team Password">
         </div>
 
         <button type="submit" class="btn btn-primary">Add Team</button>

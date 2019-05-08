@@ -4,12 +4,12 @@
       <v-progress-linear :indeterminate="true"></v-progress-linear>
     </div>
     <div v-if="!loading">
-        <v-alert v-if="arbiters.length <= 0"
+      <v-alert
+        v-if="arbiters.length <= 0"
         class="black--text"
         :value="true"
-        type="warning">
-        Er zijn op dit moment geen wedstrijden om te fluiten.
-        </v-alert>
+        type="warning"
+      >Er zijn op dit moment geen wedstrijden om te fluiten.</v-alert>
       <v-flex>
         <v-card>
           <v-card tile flat v-for="arbiter in arbiters" :key="arbiter.id">
@@ -43,29 +43,24 @@ export default {
     };
   },
   created() {
-        this.getTeamId();
+    this.getTeamId();
   },
   methods: {
-    
-    getTeamId(){
-      this.loading = true
-      axios
-      .get('/teamId')
-        .then(response => {
-          this.teamId = response.data;
-          this.getArbiters();
-        });
+    getTeamId() {
+      this.loading = true;
+      axios.get("/teamId").then(response => {
+        this.teamId = response.data;
+        this.getArbiters();
+      });
     },
-    getArbiters(){
-      
-        axios
-            .get('https://mhc-oss-api.herokuapp.com/api/teams/' + this.teamId)
-            .then(response =>{
-            this.arbiters = response.data.arbiters
-            this.loading = false
-        })
+    getArbiters() {
+      axios
+        .get("https://mhc-oss-api.herokuapp.com/api/teams/" + this.teamId)
+        .then(response => {
+          this.arbiters = response.data.arbiters;
+          this.loading = false;
+        });
     }
-    
   }
 };
 </script>

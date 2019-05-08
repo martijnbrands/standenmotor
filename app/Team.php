@@ -27,4 +27,9 @@ class Team extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function teamAccount()
+    {
+        return $this->belongsTo(User::class, 'team_account_id');
+    }
 }

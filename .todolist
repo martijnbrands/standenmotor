@@ -1,12 +1,13 @@
-[ SCORETABLE ]
-    - * Close expandable datatable after update
-
 [ DRIVER SCHEDULE ]
     - * fix for awayUniform / tenue
 
-[ ADMIN AREA ]
-    - *** Creating a team -> automatically create team account + add to team. ( DANNY )
-    - ** Remove team admins from teams -> No team admin on team ( DANNY )
+[ VERSION 2 ]
+    - GENERAL
+        - Cleanup Code
 
-[ GENERAL ]
-    - Cleanup Code
+    - ADMIN AREA
+        - ** Remove team admins from teams -> No team admin on team ( DANNY )
+
+    - DRIVERS SCHEDULE
+        - CAN'T UPLOAD 2 TIMES IN A ROW
+        - CAN'T UPLOAD EMPTY PLAYERS

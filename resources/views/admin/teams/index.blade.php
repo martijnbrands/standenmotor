@@ -9,6 +9,7 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Team Admin</th>
+                    <th scope="col">Team Account</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -20,7 +21,11 @@
                             @if(isset($team->user))
                                 {{ $team->user->name }}
                             @endif
-                            <!-- Team admin here -->
+                        </td>
+                        <td>
+                            @if(isset($team->teamAccount))
+                                {{ $team->teamAccount->email }}
+                            @endif
                         </td>
                         <td>
                             

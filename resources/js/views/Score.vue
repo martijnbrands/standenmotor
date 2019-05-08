@@ -10,7 +10,7 @@ import ScoreTable from "../components/ScoreTable";
 
 export default {
   components: {
-    ScoreTable,
+    ScoreTable
   }
 };
 </script>

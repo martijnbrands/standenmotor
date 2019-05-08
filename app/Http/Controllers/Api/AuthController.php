@@ -44,6 +44,7 @@ class AuthController extends Controller
     {
         // $user = User::find(Auth::user()->id);
         $user = User::with('team')->where('id', Auth::user()->id)->first();
+        
         return response([
                 'status' => 'success',
                 'data' => $user,

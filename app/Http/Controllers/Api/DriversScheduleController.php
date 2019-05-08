@@ -37,18 +37,16 @@ class DriversScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        $match = request('match');
-        $match = Match::find($match['id']);
+        $match = request("match");
+        $match = Match::find($match["id"]);
 
-        $players = request('players');
+        $players = Player::find(request('players'));
 
         $match->players()->sync($players);
 
-        $players = Player::findMany($players);
-
         return [
-            'match' => $match,
-            'players' => $players
+            "match" => $match,
+            "players" => $players
         ];
     }
 

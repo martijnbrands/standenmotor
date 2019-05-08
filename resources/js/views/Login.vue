@@ -4,11 +4,9 @@
     <v-card class="pa-3">
       <v-alert
         :value="true"
-        type="error" 
+        type="error"
         v-if="error && !success"
-        >
-      There was an error, unable to complete registration
-      </v-alert>
+      >There was an error, unable to complete registration</v-alert>
       <v-form ref="form" lazy-validation @submit.prevent="login" method="post" action="/login">
         <v-text-field type="text" v-model="email" label="E-mail"></v-text-field>
         <v-text-field type="password" v-model="password" label="Password"></v-text-field>
@@ -21,28 +19,28 @@
 <script>
 export default {
   data() {
-		return {
-			email: null,
-			password: null,
-			error: false
-		};
-	},
-	methods: {
-		login() {
-			var app = this;
-			this.$auth.login({
-				params: {
-				email: app.email,
-				password: app.password
-				},
-				success: function() {},
-				error: function() {},
-				rememberMe: true,
-				redirect: "/",
-				fetchUser: true
-			});
-		}
-	}
+    return {
+      email: null,
+      password: null,
+      error: false
+    };
+  },
+  methods: {
+    login() {
+      var app = this;
+      this.$auth.login({
+        params: {
+          email: app.email,
+          password: app.password
+        },
+        success: function() {},
+        error: function() {},
+        rememberMe: true,
+        redirect: "/",
+        fetchUser: true
+      });
+    }
+  }
 };
 </script>
 
