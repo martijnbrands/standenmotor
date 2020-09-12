@@ -28,7 +28,7 @@ app.use('/api/user', authRoute)
 app.use('/api/players', playersRoute)
 app.use('/api/matches', matchesRoute)
 
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(`${__dirname}/public`))
 
 const port = process.env.SERVER_PORT || 5000;
 app.listen(port, () => console.log(`Server up and running on port ${port}`))
