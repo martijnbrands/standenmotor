@@ -13,6 +13,7 @@ mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTo
 );
 
 // Middeleware
+app.use(express.static(`${__dirname}/public`))
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
@@ -28,8 +29,7 @@ app.use('/api/user', authRoute)
 app.use('/api/players', playersRoute)
 app.use('/api/matches', matchesRoute)
 
-app.use(express.static(`${__dirname}/public`))
 
-const port = process.env.SERVER_PORT || 3000;
-app.listen(port, () => console.log(`Server up and running on port ${port}`))
+const PORT = process.env.SERVER_PORT || 3000;
+app.listen(PORT, () => console.log(`Server up and running on port ${PORT}`))
 
