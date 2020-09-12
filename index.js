@@ -30,6 +30,6 @@ app.use('/api/matches', matchesRoute)
 
 app.use(express.static(`${__dirname}/public`))
 
-const port = process.env.SERVER_PORT || 8080;
+const port = process.env.SERVER_PORT || 3000;
 app.listen(port, () => console.log(`Server up and running on port ${port}`))
 
