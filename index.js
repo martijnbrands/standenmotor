@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const serveStatic = require('serve-static')
 const path = require('path');
 dotenv.config();
 
@@ -13,7 +14,13 @@ mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTo
 );
 
 // Middeleware
-app.use(express.static(`${__dirname}/public`))
+//here we are configuring dist to serve app files
+app.use('/', serveStatic(path.join(__dirname, '/public')))
+
+// this * route is to serve project on different page routes except root `/`
+app.get(/.*/, function (req, res) {
+	res.sendFile(path.join(__dirname, '/public/index.html'))
+})
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
