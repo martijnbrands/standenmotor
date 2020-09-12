@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const serveStatic = require('serve-static')
 const path = require('path');
+const history = require('connect-history-api-fallback');
 dotenv.config();
 
 // Connect to Database
@@ -24,6 +25,7 @@ app.get(/.*/, function (req, res) {
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
+app.use(history())
 
 
 // Import Routes
