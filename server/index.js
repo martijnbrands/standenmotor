@@ -18,9 +18,6 @@ app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 
-//here we are configuring dist to serve app files
-app.use('/', serveStatic(path.join(__dirname, '/dist')))
-
 
 // Import Routes
 const authRoute = require('./routes/auth');
@@ -32,6 +29,10 @@ app.use('/api/user', authRoute)
 app.use('/api/players', playersRoute)
 app.use('/api/matches', matchesRoute)
 
+//here we are configuring dist to serve app files
+app.use('/', express.static((__dirname + '/public')))
+//Handle SPA
+app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
 
 const PORT = process.env.SERVER_PORT || 3000;
 app.listen(PORT, () => console.log(`Server up and running on port ${PORT}`))
