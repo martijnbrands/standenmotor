@@ -31,17 +31,12 @@ app.use('/api/user', authRoute)
 app.use('/api/players', playersRoute)
 app.use('/api/matches', matchesRoute)
 
-// if(process.env.NODE_ENV === "production") {
-    //here we are configuring dist to serve app files
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '/public'));
-      });
-    // this * route is to serve project on different page routes except root `/`
-    // app.get(/.*/, function (req, res) {
-    //     res.sendFile(path.join(__dirname, '/public/index.html'))
-    // })
-// }
+if(process.env.NODE_ENV === "production") {
+
+    app.use('/', express.static(__dirname + '/public'))
+    app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
+}
 
 
 app.listen(PORT, () => console.log(`Server up and running on port ${PORT}`))
