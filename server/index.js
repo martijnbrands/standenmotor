@@ -33,8 +33,10 @@ app.use('/api/matches', matchesRoute)
 
 // if(process.env.NODE_ENV === "production") {
     //here we are configuring dist to serve app files
-    app.use('/', express.static(path.join(__dirname, '/public')))
 
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '/public'));
+      });
     // this * route is to serve project on different page routes except root `/`
     // app.get(/.*/, function (req, res) {
     //     res.sendFile(path.join(__dirname, '/public/index.html'))
