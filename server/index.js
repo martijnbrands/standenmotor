@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require('dotenv');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const nocache = require('nocache');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 dotenv.config();
@@ -14,11 +15,12 @@ const PORT = process.env.PORT || 3000;
 mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false}, () => 
     console.log("Connected to database")
 );
-res.set('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+
 // Middeleware
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
+app.use(nocache());
 
 
 // Import Routes
