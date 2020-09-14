@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false}, () => 
     console.log("Connected to database")
 );
-
+res.set('Cache-Control', 'private, no-cache, no-store, must-revalidate');
 // Middeleware
 app.use(cors())
 app.use(express.json())
