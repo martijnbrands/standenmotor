@@ -31,7 +31,7 @@ app.use('/api/user', authRoute)
 app.use('/api/players', playersRoute)
 app.use('/api/matches', matchesRoute)
 
-if(process.env.NODE_ENV === "production") {
+// if(process.env.NODE_ENV === "production") {
     //here we are configuring dist to serve app files
     app.use('/', express.static(path.join(__dirname, '/public')))
 
@@ -39,7 +39,7 @@ if(process.env.NODE_ENV === "production") {
     // app.get(/.*/, function (req, res) {
     //     res.sendFile(path.join(__dirname, '/public/index.html'))
     // })
-}
+// }
 
 
 app.listen(PORT, () => console.log(`Server up and running on port ${PORT}`))
