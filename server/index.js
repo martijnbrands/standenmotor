@@ -31,11 +31,11 @@ app.use('/api/players', playersRoute)
 app.use('/api/matches', matchesRoute)
 
 
-// if(process.env.NODE_ENV === "production") {
+if(process.env.NODE_ENV === "production") {
 
     app.use('/', express.static(__dirname + '/public'))
     app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
-// }
+}
 
 
 app.listen(PORT, () => console.log(`Server up and running on port ${PORT}`))
