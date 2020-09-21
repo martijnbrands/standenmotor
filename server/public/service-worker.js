@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.b6f0f756ae3fd4adcae9eaa7f4b77636.js"
+  "/precache-manifest.1f15598a74c59b58b32b119359053295.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "Standenmotor"});
