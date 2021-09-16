@@ -4,23 +4,20 @@
   "description": "",
   "author": "Martijn Brands",
   "scripts": {
-    "dev": "nodemon server/index.js",
-    "start": "node server/index.js"
+    "dev": "nodemon backend/index.js",
+    "start": "node backend/index.js"
   },
   "main": "index.js",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.4",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.0"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-vuex": "^4.5.4"
+    "mongoose": "^5.13.9"
   },
   "license": "ISC"
 }

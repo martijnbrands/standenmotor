@@ -1,7 +1,6 @@
-// Validation
 const Joi = require('@hapi/joi');
 
-// Register Validation
+// Register validation
 const registerValidation = data => {
     const schema = Joi.object( {
         email: Joi.string().email().required(),
@@ -10,7 +9,7 @@ const registerValidation = data => {
     return schema.validate(data)
 }
 
-// Register Validation
+// Login validation
 const loginValidation = data => {
     const schema = Joi.object( {
         email: Joi.string().email().required(),
@@ -19,6 +18,7 @@ const loginValidation = data => {
     return schema.validate(data)
 }
 
+// Player validation
 const playerValidation = data => {
     const schema = Joi.object( {
         name: Joi.string().required(),
@@ -27,8 +27,6 @@ const playerValidation = data => {
     })
     return schema.validate(data)
 }
-
-
 
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;

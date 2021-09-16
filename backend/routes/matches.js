@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const axios = require('axios');
 const authentication = require('../middelware/authentication')
 const Match = require('../models/Match');
 
@@ -29,7 +28,7 @@ router.get('/:id', async (req, res, next) =>{
     }
 })
 
-// UPDATE Match
+// UPDATE MATCH
 router.put('/:id', authentication, async (req, res) =>{
     try {
        const updatedMatch = await Match.findByIdAndUpdate(req.params.id, req.body)
