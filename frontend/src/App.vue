@@ -1,23 +1,23 @@
 <template>
-  <v-app>
-    <v-main>
-      <HelloWorld/>
-    </v-main>
+<v-app>
+  <application-header />
+  <v-main>
+    <v-container>
+      <router-view></router-view>
+    </v-container>
+  </v-main>
+  <bottom-navigation/>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ApplicationHeader from '@/components/ApplicationHeader.vue'
+import BottomNavigation from '@/components/BottomNavigation.vue'
 
 export default {
-  name: 'App',
-
   components: {
-    HelloWorld,
+    ApplicationHeader,
+    BottomNavigation
   },
-
-  data: () => ({
-    //
-  }),
 }
 </script>
