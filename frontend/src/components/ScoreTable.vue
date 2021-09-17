@@ -9,7 +9,8 @@
       sort-by="points"
       sort-desc
       class="elevation-1"
-    />
+      @click:row="showEditDialog($event, payload)"
+     />
   </div>
 </template>
 
@@ -22,7 +23,7 @@ export default {
     const headers = ref([
       {
         text: "Naam",
-        align: "start",
+        align: "left",
         sortable: true,
         value: "name",
       },
@@ -42,11 +43,18 @@ export default {
         value: "points",
       },
     ]);
+
     onMounted(() => {
       store.dispatch("getPlayers");
     });
+
+    const showEditDialog = (payload) => {
+      console.log("hello", payload);
+    };
+
     return {
       headers,
+      showEditDialog,
       players: computed(() => store.state.players),
     };
   },
@@ -55,5 +63,13 @@ export default {
 <style lang="scss" scoped>
 .v-subheader {
   padding: 0 16px 0 0;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > td,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  padding: 0 5px !important;
 }
 </style>
