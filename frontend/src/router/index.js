@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Score from '@/views/Score.vue'
 import Drivers from '@/views/Drivers.vue'
 import Arbiters from '@/views/Arbiters.vue'
+import Login from '@/views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/arbiters',
     name: 'Arbiters',
     component: Arbiters
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
   
 ]

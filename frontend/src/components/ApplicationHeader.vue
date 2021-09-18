@@ -17,20 +17,45 @@
             icon
             v-bind="attrs"
             v-on="on"
+            color="white"
           >
-            <v-icon>mdi-dots-vertical</v-icon>
+            <v-icon >mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
 
         <v-list>
           <v-list-item
-            v-for="n in 5"
-            :key="n"
-            @click="() => {}"
+          v-if="!authenticated"
+            @click="$router.push('/login')"
           >
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+          v-else
+            @click="logout"
+          >
+            <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
   </v-app-bar>
 </template>
+
+<script>
+import { computed } from "@vue/composition-api";
+import store from "@/store";
+
+export default {
+  setup() {
+
+    const logout = () => {
+      store.dispatch("signOut");
+    }
+
+    return {
+      logout,
+      authenticated: computed(() => store.state.authenticated),
+    };
+  },
+};
+</script>

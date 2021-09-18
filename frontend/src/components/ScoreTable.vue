@@ -9,8 +9,46 @@
       sort-by="points"
       sort-desc
       class="elevation-1"
-      @click:row="showEditDialog($event, payload)"
-     />
+    />
+    <v-dialog v-model="newPlayerDialog" width="500">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          v-if="authenticated"
+          block
+          color="secondary"
+          class="mt-4"
+          v-bind="attrs"
+          v-on="on"
+        >
+          Speler toevoegen
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-title> Speler toevoegen </v-card-title>
+
+        <v-divider />
+        <v-form>
+          <v-container>
+            <v-text-field
+              v-model="newPlayerName"
+              label="Naam"
+              placeholder="John Doe"
+            ></v-text-field>
+          </v-container>
+        </v-form>
+
+        <v-divider />
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="grey" text @click="newPlayerDialog = false">
+            Annuleren
+          </v-btn>
+          <v-btn color="primary" text @click="addPlayer"> Toevoegen </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -44,17 +82,34 @@ export default {
       },
     ]);
 
-    onMounted(() => {
-      store.dispatch("getPlayers");
+    const newPlayerDialog = ref(false);
+    const newPlayerName = ref("");
+
+    onMounted(async () => {
+      try {
+        await store.dispatch("getPlayers");
+      } catch (error) {
+        console.error(error);
+      }
     });
 
-    const showEditDialog = (payload) => {
-      console.log("hello", payload);
+    const addPlayer = async () => {
+      try {
+        await store.dispatch("addPlayer", newPlayerName.value);
+        newPlayerDialog.value = false;
+        newPlayerName.value = "";
+        await store.dispatch("getPlayers");
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     return {
       headers,
-      showEditDialog,
+      newPlayerDialog,
+      newPlayerName,
+      addPlayer,
+      authenticated: computed(() => store.state.authenticated),
       players: computed(() => store.state.players),
     };
   },
