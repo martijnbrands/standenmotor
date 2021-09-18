@@ -9,7 +9,60 @@
       sort-by="points"
       sort-desc
       class="elevation-1"
-    />
+    >
+      <template v-slot:[`item`]="{ item }">
+        <tr @click="authenticated ? editPlayer(item) : null">
+          <td>{{ item.name }}</td>
+          <td class="text-center">{{ item.goals }}</td>
+          <td class="text-center">{{ item.assists }}</td>
+          <td class="font-weight-bold text-center">{{ item.points }}</td>
+        </tr>
+      </template>
+    </v-data-table>
+    <v-dialog v-model="editPlayerDialog" width="500">
+      <v-card>
+        <v-card-title> Speler bewerken </v-card-title>
+        <v-divider />
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="selectedPlayer.name"
+                  label="Naam"
+                  placeholder="John Doe"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field
+                  v-model="selectedPlayer.goals"
+                  label="Goals"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field
+                  v-if="selectedPlayer"
+                  v-model="selectedPlayer.assists"
+                  label="Assists"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <v-divider />
+        <v-card-actions>
+          <v-btn @click="deletePlayer" icon color="red">
+            <v-icon>mdi-delete-outline</v-icon>
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="grey" text @click="editPlayerDialog = false">
+            Annuleren
+          </v-btn>
+          <v-btn color="primary" text @click="updatePlayer"> Opslaan </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    
     <v-dialog v-model="newPlayerDialog" width="500">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -69,21 +122,27 @@ export default {
         text: "Goals",
         sortable: true,
         value: "goals",
+        align: "center",
       },
       {
         text: "Assists",
         sortable: true,
         value: "assists",
+        align: "center",
       },
       {
         text: "Punten",
         sortable: true,
         value: "points",
+        align: "center",
       },
     ]);
 
     const newPlayerDialog = ref(false);
     const newPlayerName = ref("");
+
+    const selectedPlayer = ref({});
+    const editPlayerDialog = ref(false);
 
     onMounted(async () => {
       try {
@@ -92,6 +151,11 @@ export default {
         console.error(error);
       }
     });
+
+    const editPlayer = async (currentPlayer) => {
+      editPlayerDialog.value = true;
+      selectedPlayer.value = currentPlayer;
+    };
 
     const addPlayer = async () => {
       try {
@@ -104,11 +168,38 @@ export default {
       }
     };
 
+    const updatePlayer = async () => {
+      try {
+        await store.dispatch("updatePlayer", selectedPlayer.value);
+        editPlayerDialog.value = false;
+        selectedPlayer.value = {};
+        await store.dispatch("getPlayers");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const deletePlayer = async () => {
+      try {
+        await store.dispatch("deletePlayer", selectedPlayer.value.id);
+        editPlayerDialog.value = false;
+        selectedPlayer.value = {};
+        await store.dispatch("getPlayers");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     return {
       headers,
       newPlayerDialog,
       newPlayerName,
+      selectedPlayer,
+      editPlayer,
+      editPlayerDialog,
+      updatePlayer,
       addPlayer,
+      deletePlayer,
       authenticated: computed(() => store.state.authenticated),
       players: computed(() => store.state.players),
     };
@@ -121,10 +212,10 @@ export default {
 }
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
-.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td,
-.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th,
 .v-data-table > .v-data-table__wrapper > table > thead > tr > td,
-.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
-  padding: 0 5px !important;
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  padding: 0 4px !important;
 }
 </style>

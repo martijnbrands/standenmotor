@@ -71,6 +71,26 @@ export default new Vuex.Store({
         });
 
     },
+    updatePlayer(_, player){
+      axios
+        .put("http://localhost:3000/api/players/" + player.id, {
+          name: player.name,
+          goals: parseInt(player.goals),
+          assists: parseInt(player.assists)
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+
+    },
+    deletePlayer(_, id){
+      axios
+        .delete("http://localhost:3000/api/players/" + id)
+        .catch((err) => {
+          console.error(err);
+        });
+
+    },
     getMatches({ commit }) {
       axios
         .get(`http://localhost:3000/api/matches`)
