@@ -24,7 +24,6 @@ export default new Vuex.Store({
     },
   },
   actions: {
-
     signIn({ commit }, user) {
       axios
         .post("http://localhost:3000/api/user/login", {
@@ -32,11 +31,11 @@ export default new Vuex.Store({
           password: user.password,
         })
         .then((response) => {
-          console.log(response)
-          localStorage.setItem("token", response.data.token)
-          axios.defaults.headers.common['auth-token'] = response.data.token
+          console.log(response);
+          localStorage.setItem("token", response.data.token);
+          axios.defaults.headers.common["auth-token"] = response.data.token;
           commit("SET_AUTHENTICATION", true);
-          router.push("/")
+          router.push("/");
         })
         .catch((err) => {
           commit("SET_AUTHENTICATION", false);
@@ -46,9 +45,9 @@ export default new Vuex.Store({
 
     signOut({ commit }) {
       commit("SET_AUTHENTICATION", false);
-      localStorage.removeItem('token')
-      delete axios.defaults.headers.common['auth-token']
-      router.push("/login")
+      localStorage.removeItem("token");
+      delete axios.defaults.headers.common["auth-token"];
+      router.push("/login");
     },
 
     getPlayers({ commit }) {
@@ -61,7 +60,7 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    addPlayer(_, name){
+    addPlayer(_, name) {
       axios
         .post("http://localhost:3000/api/players", {
           name: name,
@@ -69,33 +68,39 @@ export default new Vuex.Store({
         .catch((err) => {
           console.error(err);
         });
-
     },
-    updatePlayer(_, player){
+    updatePlayer(_, player) {
       axios
         .put("http://localhost:3000/api/players/" + player.id, {
           name: player.name,
           goals: parseInt(player.goals),
-          assists: parseInt(player.assists)
+          assists: parseInt(player.assists),
         })
         .catch((err) => {
           console.error(err);
         });
-
     },
-    deletePlayer(_, id){
-      axios
-        .delete("http://localhost:3000/api/players/" + id)
-        .catch((err) => {
-          console.error(err);
-        });
-
+    deletePlayer(_, id) {
+      axios.delete("http://localhost:3000/api/players/" + id).catch((err) => {
+        console.error(err);
+      });
     },
     getMatches({ commit }) {
       axios
         .get(`http://localhost:3000/api/matches`)
         .then((response) => {
           commit("SET_MATCHES", response.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    updateMatch(_, match) {
+      axios
+        .put("http://localhost:3000/api/matches/" + match._id, {
+          driverIDs: match.driverIDs.map((item) => {
+            return item.id;
+          }),
         })
         .catch((err) => {
           console.error(err);

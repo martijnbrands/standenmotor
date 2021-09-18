@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="px-4">
     <v-timeline align-top dense>
       <v-timeline-item
         v-for="match in matches"
@@ -25,8 +25,20 @@
               {{ driver.name }}
             </p>
           </v-col>
-        </v-row></v-timeline-item
-      >
+        </v-row>
+        <div v-if="authenticated">
+          <v-select
+            v-model="match.driverIDs"
+            :items="players"
+            label="Select"
+            multiple
+            item-text="name"
+            return-object
+          />
+
+          <v-btn @click="updateMatch(match)" color="secondary">Opslaan</v-btn>
+        </div>
+      </v-timeline-item>
     </v-timeline>
   </v-card>
 </template>
@@ -37,12 +49,29 @@ import store from "@/store";
 
 export default {
   setup() {
-    onMounted(() => {
-      store.dispatch("getMatches");
+    const updateMatch = async (match) => {
+      try {
+        await store.dispatch("updateMatch", match);
+        await store.dispatch("getMatches");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    onMounted(async () => {
+      try {
+        await store.dispatch("getMatches");
+        await store.dispatch("getPlayers");
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     return {
+      updateMatch,
       matches: computed(() => store.state.matches),
+      players: computed(() => store.state.players),
+      authenticated: computed(() => store.state.authenticated),
     };
   },
 };
