@@ -1,14 +1,19 @@
 const mongoose = require('mongoose');
+const moment = require('moment')
 
 const matchesSchema = new mongoose.Schema({
+    createdAt: { 
+        type: Date,
+        default: Date.now ,
+        expires: function() {
+            return moment.duration(this.matchDateTime).add(12, 'hours');
+          }
+    },
     matchId: {
         type: String
     },
-    matchDate: {
-        type: String
-    },
-    matchTime: {
-        type: String
+    matchDateTime: {
+        type: Date,
     },
     homeTeam: {
         type: String

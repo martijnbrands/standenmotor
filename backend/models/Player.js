@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const schemaOptions = { toJSON: { virtuals: true } };
 
 const playerSchema = new mongoose.Schema({
+    createdAt: { 
+        type: Date,
+        default: Date.now ,
+    },
     name: {
         type: String,
         required: true
