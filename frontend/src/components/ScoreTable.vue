@@ -33,17 +33,26 @@
                   placeholder="John Doe"
                 ></v-text-field>
               </v-col>
-              <v-col cols="6">
+              <v-col cols="12">
                 <v-text-field
                   v-model="selectedPlayer.goals"
                   label="Goals"
+                  type="number"
+                  append-outer-icon="mdi-plus"
+                  prepend-icon="mdi-minus"
+                  @click:append-outer="selectedPlayer.goals ++"
+                  @click:prepend="selectedPlayer.goals --"  
                 ></v-text-field>
               </v-col>
-              <v-col cols="6">
+              <v-col cols="12">
                 <v-text-field
-                  v-if="selectedPlayer"
                   v-model="selectedPlayer.assists"
                   label="Assists"
+                  type="number"
+                  append-outer-icon="mdi-plus"
+                  prepend-icon="mdi-minus"
+                  @click:append-outer="selectedPlayer.assists ++"
+                  @click:prepend="selectedPlayer.assists --"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -102,11 +111,20 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+     <v-snackbar
+      v-model="snackbar.visible"
+      :timeout="3000"
+      :color="snackbar.color"
+      rounded="pill"
+    >
+      {{ snackbar.text }}
+    </v-snackbar>
   </div>
 </template>
 
 <script>
-import { onMounted, computed, ref } from "@vue/composition-api";
+import { onMounted, computed, ref, reactive } from "@vue/composition-api";
 import store from "@/store";
 
 export default {
@@ -144,6 +162,12 @@ export default {
     const selectedPlayer = ref({});
     const editPlayerDialog = ref(false);
 
+    const snackbar = reactive({
+      visible: false,
+      color: '',
+      text: ''
+    })
+
     onMounted(async () => {
       try {
         await store.dispatch("getPlayers");
@@ -160,10 +184,20 @@ export default {
     const addPlayer = async () => {
       try {
         await store.dispatch("addPlayer", newPlayerName.value);
+        
         newPlayerDialog.value = false;
+
+        snackbar.visible = true;
+        snackbar.color = 'success'
+        snackbar.text = `Speler ${newPlayerName.value} toegevoegd.`,
+        
+
         newPlayerName.value = "";
         await store.dispatch("getPlayers");
       } catch (error) {
+        snackbar.visible = true;
+        snackbar.color = 'error'
+        snackbar.text = `Het is niet gelukt om speler ${newPlayerName.value} toe te voegen.`,
         console.error(error);
       }
     };
@@ -172,9 +206,18 @@ export default {
       try {
         await store.dispatch("updatePlayer", selectedPlayer.value);
         editPlayerDialog.value = false;
+
+        snackbar.visible = true;
+        snackbar.color = 'success'
+        snackbar.text = `Speler ${selectedPlayer.value.name} aangepast.`,
+
         selectedPlayer.value = {};
         await store.dispatch("getPlayers");
       } catch (error) {
+
+        snackbar.visible = true;
+        snackbar.color = 'error'
+        snackbar.text = `Het is niet gelukt om speler ${selectedPlayer.value.name} aan te passen.`,
         console.error(error);
       }
     };
@@ -182,10 +225,21 @@ export default {
     const deletePlayer = async () => {
       try {
         await store.dispatch("deletePlayer", selectedPlayer.value.id);
+        
         editPlayerDialog.value = false;
+        
+        snackbar.visible = true;
+        snackbar.color = 'success'
+        snackbar.text = `Speler ${selectedPlayer.value.name} verwijderd.`,
+
         selectedPlayer.value = {};
         await store.dispatch("getPlayers");
       } catch (error) {
+
+        snackbar.visible = true;
+        snackbar.color = 'error'
+        snackbar.text = `Het is niet gelukt om speler ${selectedPlayer.value.name} te verwijderen.`,
+
         console.log(error);
       }
     };
@@ -195,6 +249,7 @@ export default {
       newPlayerDialog,
       newPlayerName,
       selectedPlayer,
+      snackbar,
       editPlayer,
       editPlayerDialog,
       updatePlayer,

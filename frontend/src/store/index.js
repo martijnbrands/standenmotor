@@ -11,6 +11,7 @@ export default new Vuex.Store({
     authenticated: false,
     players: [],
     matches: [],
+    arbiters: [],
   },
   mutations: {
     SET_AUTHENTICATION(state, auth) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     SET_MATCHES(state, matches) {
       state.matches = matches;
     },
+    SET_ARBITERS(state, arbiters) {
+      state.arbiters = arbiters;
+    },
   },
   actions: {
     signIn({ commit }, user) {
@@ -31,7 +35,6 @@ export default new Vuex.Store({
           password: user.password,
         })
         .then((response) => {
-          console.log(response);
           localStorage.setItem("token", response.data.token);
           axios.defaults.headers.common["auth-token"] = response.data.token;
           commit("SET_AUTHENTICATION", true);
@@ -101,6 +104,16 @@ export default new Vuex.Store({
           driverIDs: match.driverIDs.map((item) => {
             return item.id;
           }),
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    getArbiters({ commit }) {
+      axios
+        .get(`https://mhc-oss-api.herokuapp.com/api/teams/Heren2`)
+        .then((response) => {
+          commit("SET_ARBITERS", response.data.arbiters);
         })
         .catch((err) => {
           console.error(err);
