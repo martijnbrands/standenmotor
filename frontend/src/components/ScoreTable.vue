@@ -4,6 +4,8 @@
       :headers="headers"
       :items="players"
       :items-per-page="-1"
+      :loading="loading"
+      loading-text="Loading... Please wait"
       hide-default-footer
       mobile-breakpoint="0"
       sort-by="points"
@@ -155,7 +157,7 @@ export default {
         align: "center",
       },
     ]);
-
+    const loading = ref(true);
     const newPlayerDialog = ref(false);
     const newPlayerName = ref("");
 
@@ -173,6 +175,9 @@ export default {
         await store.dispatch("getPlayers");
       } catch (error) {
         console.error(error);
+      }
+      finally{
+        loading.value = false
       }
     });
 
@@ -246,6 +251,7 @@ export default {
 
     return {
       headers,
+      loading,
       newPlayerDialog,
       newPlayerName,
       selectedPlayer,

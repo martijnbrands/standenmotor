@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div v-if="!arbiters.length && loading">
+    <div v-if="loading">
       <v-progress-linear
       indeterminate
     ></v-progress-linear>
     </div>
     <div v-if="arbiters.length && !loading">
       <div v-for="match in arbiters" :key="match.id">
-        <v-card class="mb-3">
+        <v-card class="mb-4" :class="!match.matchDate ? 'mt-n6 rounded-t-0' : ''">
           <v-card-text>
             <h4 class="text-h6 font-weight-bold">
               {{ match.matchDate }}
@@ -40,15 +40,17 @@ import store from "@/store";
 
 export default {
   setup() {
-    const loading = ref(false);
+    const loading = ref(true);
 
     onMounted(async () => {
       try {
-        loading.value = true;
         await store.dispatch("getArbiters");
-        loading.value = false;
+       
       } catch (error) {
         console.log(error);
+      }
+      finally{
+        loading.value = false;
       }
     });
 

@@ -7,7 +7,7 @@ const matchesSchema = new mongoose.Schema({
         default: Date.now ,
         expires: function() {
             return moment.duration(this.matchDateTime).add(12, 'hours');
-          }
+        }
     },
     matchId: {
         type: String
@@ -23,6 +23,16 @@ const matchesSchema = new mongoose.Schema({
     },
     field: {
         type: String
+    },
+    shirtColor: {
+        type: String,
+        enum : ['white','yellow'],
+        default: 'white'
+    },
+   sockColor: {
+        type: String,
+        enum : ['blue','white'],
+        default: 'blue'
     },
     driverIDs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Players'}] 
 })

@@ -11,6 +11,7 @@ export default new Vuex.Store({
     authenticated: false,
     players: [],
     matches: [],
+    apiMatches: [],
     arbiters: [],
   },
   mutations: {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     SET_MATCHES(state, matches) {
       state.matches = matches;
+    },
+    SET_API_MATCHES(state, apiMatches) {
+      state.apiMatches = apiMatches;
     },
     SET_ARBITERS(state, arbiters) {
       state.arbiters = arbiters;
@@ -53,16 +57,16 @@ export default new Vuex.Store({
       router.push("/login");
     },
 
-    getPlayers({ commit }) {
-      axios
-        .get(`http://localhost:3000/api/players`)
-        .then((response) => {
-          commit("SET_PLAYERS", response.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    async getPlayers({ commit }) {
+      try {
+        const response = await axios.get('http://localhost:3000/api/players')
+        commit("SET_PLAYERS", response.data);
+        }
+        catch (err) {
+          console.log(err)
+        }
     },
+
     addPlayer(_, name) {
       axios
         .post("http://localhost:3000/api/players", {
@@ -72,6 +76,7 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
+
     updatePlayer(_, player) {
       axios
         .put("http://localhost:3000/api/players/" + player.id, {
@@ -83,21 +88,53 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
+
     deletePlayer(_, id) {
       axios.delete("http://localhost:3000/api/players/" + id).catch((err) => {
         console.error(err);
       });
     },
-    getMatches({ commit }) {
+
+
+    createMatch(_, match) {
       axios
-        .get(`http://localhost:3000/api/matches`)
+        .post("http://localhost:3000/api/matches", match)
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+
+    async getMatches({ commit }) {
+      try {
+        const response = await axios.get('http://localhost:3000/api/matches')
+        commit("SET_MATCHES", response.data);
+        }
+        catch (err) {
+          console.log(err)
+        }
+    },
+    // getMatches({ commit }) {
+    //   axios
+    //     .get(`http://localhost:3000/api/matches`)
+    //     .then((response) => {
+    //       commit("SET_MATCHES", response.data);
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    // },
+
+    getApiMatches({ commit }) {
+      axios
+        .get(`https://mhc-oss-api.herokuapp.com/api/teams/Heren2`)
         .then((response) => {
-          commit("SET_MATCHES", response.data);
+          commit("SET_API_MATCHES", response.data.matches);
         })
         .catch((err) => {
           console.error(err);
         });
     },
+
     updateMatch(_, match) {
       axios
         .put("http://localhost:3000/api/matches/" + match._id, {
@@ -109,15 +146,15 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    getArbiters({ commit }) {
-      axios
-        .get(`https://mhc-oss-api.herokuapp.com/api/teams/Heren2`)
-        .then((response) => {
-          commit("SET_ARBITERS", response.data.arbiters);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
+
+      async getArbiters({ commit }) {
+        try {
+          const response = await axios.get('https://mhc-oss-api.herokuapp.com/api/teams/Heren2')
+            commit('SET_ARBITERS', response.data.arbiters)
+          }
+          catch (err) {
+            console.log(err)
+          }
+      }
   },
 });
