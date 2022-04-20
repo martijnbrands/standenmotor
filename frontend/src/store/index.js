@@ -113,16 +113,6 @@ export default new Vuex.Store({
           console.log(err)
         }
     },
-    // getMatches({ commit }) {
-    //   axios
-    //     .get(`http://localhost:3000/api/matches`)
-    //     .then((response) => {
-    //       commit("SET_MATCHES", response.data);
-    //     })
-    //     .catch((err) => {
-    //       console.error(err);
-    //     });
-    // },
 
     getApiMatches({ commit }) {
       axios

@@ -19,7 +19,7 @@
                   .format("DD/MM/YYYY")
               }}</strong>
               <p class="subtitle-2 font-weight-light">
-                {{ moment(match.matchDateTime).format("H:mm") }}
+                {{ moment.parseZone(match.matchDateTime).utc().format("H:mm") }}
               </p>
             </v-col>
             <v-col cols="6" class="px-0">
