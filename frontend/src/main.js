@@ -6,6 +6,8 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import VueCompositionAPI from '@vue/composition-api'
 import axios from 'axios';
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 const token = localStorage.getItem('token')
 

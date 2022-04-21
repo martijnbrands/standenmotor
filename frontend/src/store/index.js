@@ -12,7 +12,7 @@ export default new Vuex.Store({
     players: [],
     matches: [],
     apiMatches: [],
-    arbiters: [],
+    arbiters: []
   },
   mutations: {
     SET_AUTHENTICATION(state, auth) {
@@ -29,25 +29,26 @@ export default new Vuex.Store({
     },
     SET_ARBITERS(state, arbiters) {
       state.arbiters = arbiters;
-    },
+    }
   },
   actions: {
-    signIn({ commit }, user) {
-      axios
-        .post("http://localhost:3000/api/user/login", {
-          email: user.email,
-          password: user.password,
-        })
-        .then((response) => {
-          localStorage.setItem("token", response.data.token);
-          axios.defaults.headers.common["auth-token"] = response.data.token;
-          commit("SET_AUTHENTICATION", true);
-          router.push("/");
-        })
-        .catch((err) => {
-          commit("SET_AUTHENTICATION", false);
-          console.error(err);
-        });
+    async signIn({ commit }, user) {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/user/login",
+          {
+            email: user.email,
+            password: user.password
+          }
+        );
+        localStorage.setItem("token", response.data.token);
+        axios.defaults.headers.common["auth-token"] = response.data.token;
+        commit("SET_AUTHENTICATION", true);
+        router.push("/");
+      } catch (err) {
+        commit("SET_AUTHENTICATION", false);
+        console.log(err);
+      }
     },
 
     signOut({ commit }) {
@@ -59,92 +60,95 @@ export default new Vuex.Store({
 
     async getPlayers({ commit }) {
       try {
-        const response = await axios.get('http://localhost:3000/api/players')
+        const response = await axios.get("http://localhost:3000/api/players");
         commit("SET_PLAYERS", response.data);
-        }
-        catch (err) {
-          console.log(err)
-        }
+      } catch (err) {
+        console.log(err);
+      }
     },
 
-    addPlayer(_, name) {
-      axios
-        .post("http://localhost:3000/api/players", {
-          name: name,
-        })
-        .catch((err) => {
-          console.error(err);
+    async addPlayer(_, name) {
+      try {
+        await axios.post("http://localhost:3000/api/players", {
+          name: name
         });
+      } catch (err) {
+        console.log(err);
+      }
     },
 
-    updatePlayer(_, player) {
-      axios
-        .put("http://localhost:3000/api/players/" + player.id, {
+    async updatePlayer(_, player) {
+      try {
+        await axios.put("http://localhost:3000/api/players/" + player.id, {
           name: player.name,
           goals: parseInt(player.goals),
-          assists: parseInt(player.assists),
-        })
-        .catch((err) => {
-          console.error(err);
+          assists: parseInt(player.assists)
         });
+      } catch (err) {
+        console.log(err);
+      }
     },
 
-    deletePlayer(_, id) {
-      axios.delete("http://localhost:3000/api/players/" + id).catch((err) => {
-        console.error(err);
-      });
+    async deletePlayer(_, id) {
+      try {
+        await axios.delete("http://localhost:3000/api/players/" + id);
+      } catch (err) {
+        console.log(err);
+      }
     },
 
-
-    createMatch(_, match) {
-      axios
-        .post("http://localhost:3000/api/matches", match)
-        .catch((err) => {
-          console.error(err);
-        });
+    async createMatch(_, match) {
+      try {
+        await axios.post("http://localhost:3000/api/matches", match);
+      } catch (err) {
+        console.log(err);
+      }
     },
 
     async getMatches({ commit }) {
       try {
-        const response = await axios.get('http://localhost:3000/api/matches')
+        const response = await axios.get("http://localhost:3000/api/matches");
         commit("SET_MATCHES", response.data);
-        }
-        catch (err) {
-          console.log(err)
-        }
+      } catch (err) {
+        console.log(err);
+      }
     },
 
     getApiMatches({ commit }) {
       axios
-        .get(`https://mhc-oss-api.herokuapp.com/api/teams/Heren2`)
-        .then((response) => {
+        .get(`https://mhc-oss-api.herokuapp.com/api/teams/Heren1`)
+        .then(response => {
           commit("SET_API_MATCHES", response.data.matches);
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
     },
 
-    updateMatch(_, match) {
-      axios
-        .put("http://localhost:3000/api/matches/" + match._id, {
-          driverIDs: match.driverIDs.map((item) => {
+    async updateMatch(_, match) {
+      try {
+        await axios.put("http://localhost:3000/api/matches/" + match._id, {
+          driverIDs: match.driverIDs.map(item => {
             return item.id;
           }),
-        })
-        .catch((err) => {
-          console.error(err);
+          shirtColor: match.shirtColor,
+          sockColor: match.sockColor,
+
         });
+      } catch (err) {
+        console.log(err);
+      }
     },
 
-      async getArbiters({ commit }) {
-        try {
-          const response = await axios.get('https://mhc-oss-api.herokuapp.com/api/teams/Heren2')
-            commit('SET_ARBITERS', response.data.arbiters)
-          }
-          catch (err) {
-            console.log(err)
-          }
+    async getArbiters({ commit }) {
+      try {
+        const response = await axios.get(
+          "https://mhc-oss-api.herokuapp.com/api/teams/Heren2"
+        );
+        commit("SET_ARBITERS", response.data.arbiters);
+      } catch (err) {
+        console.log(err);
       }
-  },
+    }
+  }
 });

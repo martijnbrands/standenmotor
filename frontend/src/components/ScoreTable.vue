@@ -25,7 +25,7 @@
       <v-card>
         <v-card-title> Speler bewerken </v-card-title>
         <v-divider />
-        <v-form>
+         <v-form>
           <v-container>
             <v-row>
               <v-col cols="12">
@@ -42,8 +42,10 @@
                   type="number"
                   append-outer-icon="mdi-plus"
                   prepend-icon="mdi-minus"
-                  @click:append-outer="selectedPlayer.goals ++"
-                  @click:prepend="selectedPlayer.goals --"  
+                  :hint="oldGoals + ' ' + '(' + goalsCount + ')'"
+                  persistent-hint
+                  @click:append-outer="selectedPlayer.goals ++ , goalsCount++"
+                  @click:prepend="selectedPlayer.goals --, goalsCount--"  
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -53,8 +55,10 @@
                   type="number"
                   append-outer-icon="mdi-plus"
                   prepend-icon="mdi-minus"
-                  @click:append-outer="selectedPlayer.assists ++"
-                  @click:prepend="selectedPlayer.assists --"
+                  :hint="oldAssists + ' ' + '(' + assistsCount + ')'"
+                  persistent-hint
+                  @click:append-outer="selectedPlayer.assists ++, assistsCount++"
+                  @click:prepend="selectedPlayer.assists --, assistsCount--"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -89,7 +93,7 @@
       </template>
 
       <v-card>
-        <v-card-title> Speler toevoegen </v-card-title>
+        <v-card-title>Speler toevoegen</v-card-title>
 
         <v-divider />
         <v-form>
@@ -119,6 +123,7 @@
       :timeout="3000"
       :color="snackbar.color"
       rounded="pill"
+      content-class="text-center"
     >
       {{ snackbar.text }}
     </v-snackbar>
@@ -161,6 +166,12 @@ export default {
     const newPlayerDialog = ref(false);
     const newPlayerName = ref("");
 
+    const oldGoals = ref(null);
+    const goalsCount = ref(0)
+
+    const oldAssists = ref(null);
+    const assistsCount = ref(0)
+
     const selectedPlayer = ref({});
     const editPlayerDialog = ref(false);
 
@@ -171,38 +182,36 @@ export default {
     })
 
     onMounted(async () => {
-      try {
-        await store.dispatch("getPlayers");
-      } catch (error) {
-        console.error(error);
-      }
-      finally{
-        loading.value = false
-      }
+      await store.dispatch("getPlayers");
+      loading.value = false;
     });
 
     const editPlayer = async (currentPlayer) => {
       editPlayerDialog.value = true;
       selectedPlayer.value = currentPlayer;
+
+      oldGoals.value = currentPlayer.goals;
+      oldAssists.value = currentPlayer.assists;
     };
 
     const addPlayer = async () => {
+   
       try {
         await store.dispatch("addPlayer", newPlayerName.value);
         
         newPlayerDialog.value = false;
 
         snackbar.visible = true;
-        snackbar.color = 'success'
-        snackbar.text = `Speler ${newPlayerName.value} toegevoegd.`,
+        snackbar.color = 'success';
+        snackbar.text = `Speler ${newPlayerName.value} toegevoegd.`;
         
 
         newPlayerName.value = "";
         await store.dispatch("getPlayers");
       } catch (error) {
         snackbar.visible = true;
-        snackbar.color = 'error'
-        snackbar.text = `Het is niet gelukt om speler ${newPlayerName.value} toe te voegen.`,
+        snackbar.color = 'error';
+        snackbar.text = `Het is niet gelukt om speler ${newPlayerName.value} toe te voegen.`;
         console.error(error);
       }
     };
@@ -213,16 +222,16 @@ export default {
         editPlayerDialog.value = false;
 
         snackbar.visible = true;
-        snackbar.color = 'success'
-        snackbar.text = `Speler ${selectedPlayer.value.name} aangepast.`,
+        snackbar.color = 'success';
+        snackbar.text = `Speler ${selectedPlayer.value.name} aangepast.`;
 
         selectedPlayer.value = {};
         await store.dispatch("getPlayers");
       } catch (error) {
 
         snackbar.visible = true;
-        snackbar.color = 'error'
-        snackbar.text = `Het is niet gelukt om speler ${selectedPlayer.value.name} aan te passen.`,
+        snackbar.color = 'error';
+        snackbar.text = `Het is niet gelukt om speler ${selectedPlayer.value.name} aan te passen.`;
         console.error(error);
       }
     };
@@ -234,16 +243,16 @@ export default {
         editPlayerDialog.value = false;
         
         snackbar.visible = true;
-        snackbar.color = 'success'
-        snackbar.text = `Speler ${selectedPlayer.value.name} verwijderd.`,
+        snackbar.color = 'success';
+        snackbar.text = `Speler ${selectedPlayer.value.name} verwijderd.`;
 
         selectedPlayer.value = {};
         await store.dispatch("getPlayers");
       } catch (error) {
 
         snackbar.visible = true;
-        snackbar.color = 'error'
-        snackbar.text = `Het is niet gelukt om speler ${selectedPlayer.value.name} te verwijderen.`,
+        snackbar.color = 'error';
+        snackbar.text = `Het is niet gelukt om speler ${selectedPlayer.value.name} te verwijderen.`;
 
         console.log(error);
       }
@@ -255,6 +264,12 @@ export default {
       newPlayerDialog,
       newPlayerName,
       selectedPlayer,
+      oldGoals,
+        goalsCount,
+      oldAssists,
+    
+assistsCount,
+
       snackbar,
       editPlayer,
       editPlayerDialog,

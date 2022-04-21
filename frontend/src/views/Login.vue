@@ -26,7 +26,7 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-btn @click="login" color="primary">Login</v-btn>
+              <v-btn :loading="loading" @click="login" color="primary">Login</v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -41,6 +41,7 @@ import store from "@/store";
 
 export default {
   setup() {
+    const loading = ref(false);
     const user = reactive({
       email: "",
       password: "",
@@ -59,9 +60,18 @@ export default {
     const showPassword = ref(false);
 
     const login = async () => {
-        store.dispatch("signIn", user);
+      try{
+        loading.value = true
+        await store.dispatch("signIn", user);
+      }catch(err){
+        console.log(err)
+      }
+      finally{
+        loading.value = false;
+      }
     };
     return {
+      loading,
       user,
       emailRules,
       passwordRules,

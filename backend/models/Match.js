@@ -26,13 +26,13 @@ const matchesSchema = new mongoose.Schema({
     },
     shirtColor: {
         type: String,
-        enum : ['white','yellow'],
-        default: 'white'
+        enum : ['thuis','uit'],
+        default: 'thuis'
     },
    sockColor: {
         type: String,
-        enum : ['blue','white'],
-        default: 'blue'
+        enum : ['blauw','wit'],
+        default: 'blauw'
     },
     driverIDs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Players'}] 
 })
