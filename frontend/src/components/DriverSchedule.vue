@@ -17,12 +17,17 @@
               <strong class="subtitle-2">{{
                 moment(match.matchDateTime).format("DD/MM/YYYY")
               }}</strong>
-              <p class="subtitle-2 font-weight-light">
+              <p class="subtitle-2 font-weight-light mb-1">
                 {{
                   moment
                     .parseZone(match.matchDateTime)
                     .utc()
                     .format("HH:mm")
+                }}
+              </p>
+              <p class="caption font-weight-light">
+                {{
+                 match.field
                 }}
               </p>
             </v-col>

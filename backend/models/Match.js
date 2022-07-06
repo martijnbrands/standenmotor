@@ -5,9 +5,9 @@ const matchesSchema = new mongoose.Schema({
     createdAt: { 
         type: Date,
         default: Date.now ,
-        expires: function() {
-            return moment.duration(this.matchDateTime).add(12, 'hours');
-        }
+            // expires: function() {
+            //     return moment(this.matchDateTime).add(12, 'hours');
+            // }
     },
     matchId: {
         type: String

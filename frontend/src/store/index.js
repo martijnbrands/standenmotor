@@ -116,7 +116,7 @@ export default new Vuex.Store({
 
     getApiMatches({ commit }) {
       axios
-        .get(`https://mhc-oss-api.herokuapp.com/api/teams/Heren1`)
+        .get(`https://mhc-oss-api.herokuapp.com/api/teams/Heren2`)
         .then(response => {
           commit("SET_API_MATCHES", response.data.matches);
         })
