@@ -212,7 +212,6 @@ export default {
         snackbar.visible = true;
         snackbar.color = 'error';
         snackbar.text = `Het is niet gelukt om speler ${newPlayerName.value} toe te voegen.`;
-        console.error(error);
       }
     };
 
@@ -232,7 +231,6 @@ export default {
         snackbar.visible = true;
         snackbar.color = 'error';
         snackbar.text = `Het is niet gelukt om speler ${selectedPlayer.value.name} aan te passen.`;
-        console.error(error);
       }
     };
 
@@ -253,8 +251,6 @@ export default {
         snackbar.visible = true;
         snackbar.color = 'error';
         snackbar.text = `Het is niet gelukt om speler ${selectedPlayer.value.name} te verwijderen.`;
-
-        console.log(error);
       }
     };
 
@@ -265,10 +261,10 @@ export default {
       newPlayerName,
       selectedPlayer,
       oldGoals,
-        goalsCount,
+      goalsCount,
       oldAssists,
     
-assistsCount,
+      assistsCount,
 
       snackbar,
       editPlayer,

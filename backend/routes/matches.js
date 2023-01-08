@@ -4,107 +4,74 @@ const Match = require("../models/Match");
 const cron = require("node-cron");
 const axios = require("axios");
 
-cron.schedule("*/20 * * * * *", async () => {
-  let apiMatches = [
-    {
-      matchId: "12345",
-      matchDateTime: Date.now(),
-      homeTeam: "Oss",
-      awayTeam: "Rosmalen",
-    },
-    {
-      matchId: "67890",
-      matchDateTime: Date.now(),
-      homeTeam: "Uden",
-      awayTeam: "Venlo",
-    },
-  ];
-  const matches = await Match.find().populate("driverIDs")
-  if (!matches.length) {
-    // Add API matches if DB is empty
-    apiMatches.forEach(async (apiMatch) => {
-      const newMatch = new Match(apiMatch);
-      await newMatch.save();
-    });
-  } else {
-    for (let i = 0; i < apiMatches.length; i++) {
-       console.log(apiMatches[i].matchId)
-       console.log("____")
-       console.log(matches)
-      }
-    }
-    // for await (const apiMatch of apiMatches) {
-    //   console.log(apiMatch.matchId);
-    //   console.log("_______")
-    //   matches.map(dbMatch => {
-    //     return dbMatch.matchId
-    //   }).find( async (dbMatch) => {
-    //     console.log(dbMatch)
-    //   })
-    //   matches.filter(async (dbMatch) => {
-    //     console.log(dbMatch.matchId)
-    //     console.log("________________")
-    //     if (dbMatch.matchId === apiMatch.matchId) {
-    //         console.log("gevonden")
-    //         return
-    //     }
-    //     else{
-    //         console.log("Niet gevonden")
-    //         return
-    //     }
-        //         // Check of de wedstrijd bestaat
-        //         console.log(dbMatch.matchId, apiMatch.matchId)
-        //         if (dbMatch.matchId === apiMatch.matchId) {
-        //           // Check of de datum of tijd is gewijzigd
-        //           if (dbMatch.matchDateTime !== apiMatch.matchDateTime) {
-        //             console.log("Update de datum");
-        //             const updatedMatch = await Match.findByIdAndUpdate(dbMatch, {
-        //               matchDateTime: apiMatch.matchDateTime,
-        //             });
-        //             await updatedMatch.save();
-        //           }
-        //           console.log("Wedstrijd bestaat al in DB");
-        //           return true;
-        //         }
-        //         console.log("Wedstrijd bestaat nog niet in DB");
-        //         // const newMatch = new Match(apiMatch);
-        //         // await newMatch.save();
-        //         console.log("Nieuwe wedstrijd aangemaakt");
-        //         return false;
-    //   });
-    // }
-    //     apiMatches.forEach(async (apiMatch) => {
-    //       matches.find(async (dbMatch) => {
-    //         // Check of de wedstrijd bestaat
-    //         console.log(dbMatch.matchId, apiMatch.matchId)
-    //         if (dbMatch.matchId === apiMatch.matchId) {
-    //           // Check of de datum of tijd is gewijzigd
-    //           if (dbMatch.matchDateTime !== apiMatch.matchDateTime) {
-    //             console.log("Update de datum");
-    //             const updatedMatch = await Match.findByIdAndUpdate(dbMatch, {
-    //               matchDateTime: apiMatch.matchDateTime,
-    //             });
-    //             await updatedMatch.save();
-    //           }
-    //           console.log("Wedstrijd bestaat al in DB");
-    //           return true;
-    //         }
-    //         console.log("Wedstrijd bestaat nog niet in DB");
-    //         // const newMatch = new Match(apiMatch);
-    //         // await newMatch.save();
-    //         console.log("Nieuwe wedstrijd aangemaakt");
-    //         return false;
-    //       });
-    //     });
-//   }
-});
-
 // Haal API Matches op
 // Haal dan de database matches op
 // Loop over de database matches en kijk of de westrijd id bestaat
 // zo ja kijk of de API tijd anders is dan de DB tijd
 // zo ja update de tijd
 // bestaat de API match niet in de DB maak er dan een aan.
+
+// expires: function() {
+//     return moment(this.matchDateTime).add(12, 'hours');
+// }
+
+// task to run every 4 hours
+cron.schedule("*/5 * * * *", async () => {
+  try {
+    // Haal api data op
+    const response = await axios.get(
+      "https://publicaties.hockeyweerelt.nl/mc/teams/N5863/matches/upcoming"
+    );
+
+    // Format data
+    const apiMatches = response.data.data.filter(
+      (item) => item.home_team.id !== "N5863"
+    );
+
+    // Map naar ids
+    const ids = apiMatches.map((match) => match.id);
+
+    // Bekijk of de id bestaat in de database
+    ids.forEach((id) => {
+      Match.findOne({ id: id }, (err, match) => {
+        if (err) {
+          // handle error
+        }
+        if (match) {
+          // a match with the specified id exists
+          console.log("Deze wedstrijd bestaat bestaat al");
+
+          const databaseMatch = match;
+          const apiMatch = apiMatches.find((match) => match.id === id);
+          if (
+            databaseMatch.datetime.toString() ===
+            new Date(apiMatch.datetime).toString()
+          ) {
+            console.log("datum is niet gewijzigd");
+          } else {
+            console.log("datum is gewijzigd update de match");
+            Match.findOneAndUpdate({id: match.id},{$set: {datetime: apiMatch.datetime}},{new: true},
+              (error, doc) => {
+                if (error) {
+                } else {
+                  console.log(doc);
+                }
+              }
+            );
+          }
+        } else {
+          console.log("Deze wedstrijd bestaat nog niet maak hem aan");
+          const newMatch = apiMatches.find((match) => match.id === id);
+
+          const saveNewMatch = new Match(newMatch);
+          saveNewMatch.save();
+        }
+      });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}); 
 
 // GET ALL MATCHES
 router.get("/", async (req, res) => {

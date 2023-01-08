@@ -12,17 +12,19 @@
           small
           color="secondary"
         >
-          <v-row>
+       <template v-slot:icon>
+        <v-avatar  size="24">
+          <img :src="match.home_team.logo">
+        </v-avatar>
+      </template>
+        <v-row>
             <v-col cols="5" class="px-0">
               <strong class="subtitle-2">{{
-                moment(match.matchDateTime).format("DD/MM/YYYY")
+                moment(match.datetime).format("DD/MM/YYYY")
               }}</strong>
               <p class="subtitle-2 font-weight-light mb-1">
                 {{
-                  moment
-                    .parseZone(match.matchDateTime)
-                    .utc()
-                    .format("HH:mm")
+                  moment(match.datetime).local().format("HH:mm")            
                 }}
               </p>
               <p class="caption font-weight-light">
@@ -33,7 +35,7 @@
             </v-col>
             <v-col cols="6" class="px-0">
               <strong class="subtitle-2 d-block mb-2">{{
-                match.homeTeam
+                match.home_team.name
               }}</strong>
               <p
                 class="caption mb-1"
@@ -43,7 +45,7 @@
                 {{ driver.name }}
               </p>
             </v-col>
-            <v-col cols="1" class="px-0">
+            <!-- <v-col cols="1" class="px-0">
               <v-chip class="mr-1" x-small color="primary" :text-color="match.shirtColor === 'uit' ? 'yellow darken-1' : 'white'">
                 <v-icon>
                   fa-solid fa-shirt
@@ -54,7 +56,7 @@
                   fa-solid fa-socks
                 </v-icon>
               </v-chip>
-            </v-col>
+            </v-col> -->
           </v-row>
           <div v-if="authenticated">
             <v-select
@@ -122,7 +124,6 @@ import {
   computed,
   ref,
   reactive,
-  onBeforeMount
 } from "@vue/composition-api";
 import store from "@/store";
 import moment from "moment";
@@ -140,6 +141,11 @@ export default {
       text: ""
     });
 
+     onMounted(async () => {
+      await store.dispatch("getMatches");
+      loading.value = false;
+    });
+
     const updateMatch = async match => {
       try {
         updating.value = true;
@@ -148,51 +154,15 @@ export default {
 
         snackbar.visible = true;
         snackbar.color = "success";
-        snackbar.text = `Wedstrijd ${match.homeTeam} succesvol aangepast.`;
+        snackbar.text = `Wedstrijd ${match.home_team} succesvol aangepast.`;
       } catch (error) {
         snackbar.visible = true;
         snackbar.color = "error";
-        snackbar.text = `Het is niet gelukt om wedstrijd ${match.homeTeam} aan te passen.`;
-        console.log(error);
+        snackbar.text = `Het is niet gelukt om wedstrijd ${match.home_team} aan te passen.`;
       } finally {
         updating.value = false;
       }
     };
-
-    const databaseMatches = computed(() => {
-      return store.state.matches.map(match => {
-        return match.matchId;
-      });
-    });
-
-    const apiMatches = computed(() => {
-      return store.state.apiMatches;
-    });
-
-    const matchCheck = async () => {
-      apiMatches.value.forEach(match => {
-        if (databaseMatches.value.includes(match.matchId)) {
-          // HIER NOG DE DATUM EN TIJD UPDATE ALS DEZE GEWIJZIGD IS
-          console.log(match.matchId + "  Wedstrijd bestaat al");
-        } else {
-          store.dispatch("createMatch", match);
-          store.dispatch("getMatches");
-        }
-      });
-    };
-    onBeforeMount(async () => {
-      try {
-        await store.dispatch("getMatches");
-        await store.dispatch("getApiMatches");
-      } catch (error) {
-        console.log(error);
-      } finally {
-        loading.value = false;
-      }
-    });
-    onMounted(async () => {
-      matchCheck();
-    });
 
     return {
       loading,
@@ -200,8 +170,6 @@ export default {
       snackbar,
       shirtColors,
       sockColors,
-      databaseMatches,
-      apiMatches,
       updateMatch,
       moment,
       matches: computed(() => store.state.matches),

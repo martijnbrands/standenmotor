@@ -1,35 +1,30 @@
 const mongoose = require('mongoose');
-const moment = require('moment')
 
 const matchesSchema = new mongoose.Schema({
-    createdAt: { 
-        type: Date,
-        default: Date.now ,
-            // expires: function() {
-            //     return moment(this.matchDateTime).add(12, 'hours');
-            // }
-    },
-    matchId: {
+    id: {
         type: String
     },
-    matchDateTime: {
+    datetime: {
         type: Date,
     },
-    homeTeam: {
+    location: {
+        type: Object
+    },
+    home_team: {
+        type: Object
+    },
+    away_team: {
+        type: Object
+    },
+    status:{
         type: String
     },
-    awayTeam: {
-        type: String
-    },
-    field: {
-        type: String
-    },
-    shirtColor: {
+    shirt_color: {
         type: String,
         enum : ['thuis','uit'],
         default: 'thuis'
     },
-   sockColor: {
+   sock_color: {
         type: String,
         enum : ['blauw','wit'],
         default: 'blauw'
